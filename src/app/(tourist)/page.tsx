@@ -67,9 +67,10 @@ export default function Home() {
                 </button>
               </form>
 
-              <div className="mt-3 grid grid-cols-3 gap-2 lg:mt-4 lg:max-w-2xl">
+              <div className="mt-3 grid grid-cols-4 gap-2 lg:mt-4 lg:max-w-2xl">
                 <QuickAction href="/chat" icon="ti-message-chatbot" label={t("common.askAI")} />
                 <QuickAction href="/plan" icon="ti-route" label={t("common.planRoute")} />
+                <QuickAction href="/wellness" icon="ti-heart-handshake" label={t("nav.wellness")} />
                 <QuickAction href="/map" icon="ti-map-2" label={t("common.viewMap")} />
               </div>
 

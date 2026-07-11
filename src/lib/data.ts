@@ -91,4 +91,7 @@ export const TINT_HEX: Record<string, { bg: string; fg: string }> = {
   pink: { bg: "#f7e2eb", fg: "#993556" },
   blue: { bg: "#e0edfa", fg: "#185fa5" },
   purple: { bg: "#e9e7f7", fg: "#534ab7" },
+  green: { bg: "#e2f0dc", fg: "#3d6b1f" },
+  rose: { bg: "#f7e2eb", fg: "#993556" },
+  brown: { bg: "#efe6da", fg: "#6b4a24" },
 };

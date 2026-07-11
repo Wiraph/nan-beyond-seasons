@@ -93,6 +93,28 @@ export type Place = {
   }[];
 };
 
+/** A curated wellness / special-interest experience. Grounded in a real
+ *  place from places.json via placeId; display fields are self-contained. */
+export type WellnessEntry = {
+  id: string;
+  placeId: string;
+  /** spa | meditation | craft | nature | workation | food */
+  type: string;
+  name: { th: string; en: string };
+  district: string;
+  summary: { th: string; en: string };
+  /** moods this experience satisfies: relax, spirit, hands-on, nature, taste, focus */
+  moods: string[];
+  pace: "slow" | "active";
+  /** seasons where this shines; empty = great year-round */
+  bestSeasons: ("cool" | "hot" | "green")[];
+  indoor: boolean;
+  price: number;
+  duration?: number;
+  icon: string;
+  tint: string;
+};
+
 export type Business = {
   id: string;
   name: string;

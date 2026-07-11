@@ -7,6 +7,7 @@ import { useI18n } from "@/i18n/I18nProvider";
 const items = [
   { href: "/", icon: "ti-home", key: "nav.home" },
   { href: "/chat", icon: "ti-message-chatbot", key: "common.askAI" },
+  { href: "/wellness", icon: "ti-heart-handshake", key: "nav.wellness" },
   { href: "/map", icon: "ti-map-2", key: "nav.map" },
   { href: "/dashboard", icon: "ti-chart-pie", key: "nav.dashboard" },
 ];
@@ -16,7 +17,7 @@ export default function BottomNav() {
   const { t } = useI18n();
 
   return (
-    <nav className="sticky bottom-0 z-20 grid grid-cols-4 border-t border-line bg-white lg:hidden">
+    <nav className="sticky bottom-0 z-20 grid grid-cols-5 border-t border-line bg-white lg:hidden">
       {items.map((it) => {
         const active =
           it.href === "/" ? pathname === "/" : pathname.startsWith(it.href);
