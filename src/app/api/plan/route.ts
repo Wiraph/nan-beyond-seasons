@@ -103,7 +103,10 @@ ${context}`;
           model,
           stream: false,
           temperature: 0.4,
-          max_tokens: 700,
+          // Reasoning models spend tokens thinking before the JSON comes out;
+          // keep effort low and leave plenty of room so the answer isn't cut.
+          max_tokens: 2500,
+          reasoning: { effort: "low" },
           messages: [{ role: "system", content: system }],
         }),
       });
