@@ -5,7 +5,8 @@ import { usePathname } from "next/navigation";
 import { useI18n } from "@/i18n/I18nProvider";
 
 const items = [
-  { href: "/", icon: "ti-home", key: "nav.home" },
+  { href: "/", icon: "ti-home", key: "feed.title" },
+  { href: "/calendar", icon: "ti-calendar-bolt", key: "feed.nav.calendar" },
   { href: "/passport", icon: "ti-id-badge-2", key: "sport.passport" },
   { href: "/chat", icon: "ti-message-chatbot", key: "common.askAI" },
   { href: "/explore", icon: "ti-map-2", key: "sport.explore" },
@@ -16,7 +17,7 @@ export default function SportNav() {
   const { t } = useI18n();
 
   return (
-    <nav className="sticky bottom-0 z-20 grid grid-cols-4 border-t border-white/10 bg-pitch-800/95 backdrop-blur lg:hidden">
+    <nav className="sticky bottom-0 z-20 grid grid-cols-5 border-t border-white/10 bg-pitch-800/95 backdrop-blur lg:hidden">
       {items.map((it) => {
         const active =
           it.href === "/" ? pathname === "/" : pathname.startsWith(it.href);

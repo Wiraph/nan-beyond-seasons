@@ -1,45 +1,52 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import LangSwitcher from "@/components/LangSwitcher";
 import { useI18n } from "@/i18n/I18nProvider";
-import { LangCode } from "@/i18n/dictionaries";
-import { loc, districtLoc } from "@/lib/types";
+import { loc } from "@/lib/types";
 import {
   daysUntil,
-  eventsBySeason,
   eventStatus,
-  fmtRange,
+  getEvent,
   nextEvent,
   SEASON_ACCENT,
-  SPORT_TYPE_LABEL,
-  type SportEvent,
 } from "@/lib/sports";
-import { conditionLabel, type SeasonKey } from "@/lib/weather";
-import { useNanWeather } from "@/lib/useWeather";
-import seasonsData from "@/data/seasons.json";
+import { BADGES, usePassport } from "@/lib/PassportStore";
+import { displayName, initial, useProfile } from "@/lib/ProfileStore";
+import { useFeed, type FeedItem } from "@/lib/FeedStore";
 
-export default function SportHome() {
+/** Fictional community members on the demo leaderboard. */
+const RANK_SEED: { name: string; color: string; points: number }[] = [
+  { name: "น้องเมย์ เชียร์เก่ง", color: "#a78bfa", points: 450 },
+  { name: "ทีมเรือบ้านท่าลี่", color: "#38bdf8", points: 400 },
+  { name: "พี่หน่อง สายเทรล", color: "#4ade80", points: 300 },
+  { name: "บอส วิ่งเมืองเก่า", color: "#f472b6", points: 250 },
+  { name: "ครูแอน ปั่นเพลิน", color: "#fb923c", points: 150 },
+  { name: "จ๋า เที่ยวคนเดียวก็สนุก", color: "#60a5fa", points: 100 },
+];
+
+function timeAgo(at: number, t: (k: string) => string): string {
+  const mins = Math.max(0, Math.round((Date.now() - at) / 60000));
+  if (mins < 60) return t("feed.justNow");
+  const hours = Math.round(mins / 60);
+  if (hours < 48) return `${hours} ${t("feed.hoursAgo")}`;
+  return `${Math.round(hours / 24)} ${t("feed.daysAgo")}`;
+}
+
+export default function FeedHome() {
   const { t, lang } = useI18n();
-  const weather = useNanWeather();
-  // Countdown depends on the client clock — render after mount to avoid
-  // SSR/client hydration mismatch.
   const [now, setNow] = useState<Date | null>(null);
   useEffect(() => setNow(new Date()), []);
 
-  const hero = nextEvent(now ?? new Date("2026-07-11"));
-  const heroStatus = now ? eventStatus(hero, now) : "upcoming";
-  const heroDays = now ? daysUntil(hero, now) : null;
-  const seasons = eventsBySeason();
+  const [tab, setTab] = useState<"feed" | "rank">("feed");
 
-  // Live forecast for the hero event when it's inside the 7-day window.
-  const heroForecast = weather?.days.find((d) => d.date >= hero.dates.start && d.date <= hero.dates.end)
-    ?? weather?.days.find((d) => d.date === hero.dates.start);
+  const hero = nextEvent(now ?? new Date("2026-07-11"));
+  const heroDays = now ? daysUntil(hero, now) : null;
+  const heroLive = now ? eventStatus(hero, now) === "live" : false;
 
   return (
     <>
-      {/* Header */}
       <header className="sticky top-0 z-30 border-b border-white/10 bg-pitch/85 backdrop-blur">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 lg:px-8">
           <Link href="/" className="flex items-center gap-2">
@@ -54,199 +61,290 @@ export default function SportHome() {
         </div>
       </header>
 
-      <main className="mx-auto w-full max-w-7xl flex-1 px-4 pb-10 pt-5 lg:px-8">
-        <p className="anim-rise text-sm text-steel lg:text-base">{t("sport.tagline")}</p>
-
-        {/* Hero: next event + countdown */}
-        <section
-          aria-label={t("sport.nextEvent")}
-          className={`sport-card anim-rise mt-4 rounded-3xl p-5 lg:p-8 ${SEASON_ACCENT[hero.season].flag}`}
-        >
-          <div className="flex flex-wrap items-center gap-2 text-[11px] lg:text-xs">
-            {heroStatus === "live" ? (
-              <span className="flex items-center gap-1.5 rounded-full bg-[#e5484d] px-2.5 py-1 font-bold text-white">
-                <span className="sport-live-dot h-2 w-2 rounded-full bg-white" /> {t("sport.liveNow")}
-              </span>
-            ) : (
-              <span className="rounded-full bg-volt/15 px-2.5 py-1 font-semibold text-volt">
-                {t("sport.nextEvent")}
-              </span>
-            )}
-            <span className={`rounded-full bg-white/10 px-2.5 py-1 font-medium ${SEASON_ACCENT[hero.season].text}`}>
-              {loc(seasonsData.seasons[hero.season].name, lang)}
-            </span>
-            <span className="rounded-full bg-white/10 px-2.5 py-1 text-steel">
-              {loc(SPORT_TYPE_LABEL[hero.sportType] ?? { th: hero.sportType, en: hero.sportType }, lang)}
-            </span>
-          </div>
-
-          <div className="mt-4 flex flex-wrap items-end justify-between gap-5">
-            <div className="min-w-0 max-w-2xl">
-              <h1 className="text-2xl font-extrabold leading-snug text-frost lg:text-4xl">
-                {loc(hero.name, lang)}
-              </h1>
-              <p className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-steel">
-                <span className="inline-flex items-center gap-1">
-                  <i className="ti ti-calendar-event text-volt" aria-hidden /> {fmtRange(hero, lang)}
-                </span>
-                <span className="inline-flex items-center gap-1">
-                  <i className="ti ti-map-pin text-volt" aria-hidden />
-                  {districtLoc(hero.venue.district, lang)}
-                </span>
-              </p>
-              <p className="mt-2 text-sm leading-relaxed text-steel lg:text-base">{loc(hero.desc, lang)}</p>
-            </div>
-
-            {/* Countdown */}
-            <div className="flex items-center gap-4">
-              {heroStatus !== "live" && (
-                <div className="text-center" aria-label={`${t("sport.daysLeft")} ${heroDays ?? "—"} ${t("sport.days")}`}>
-                  <div className="sport-num text-5xl text-volt lg:text-7xl" suppressHydrationWarning>
-                    {heroDays ?? "—"}
-                  </div>
-                  <div className="text-xs font-medium uppercase tracking-widest text-steel">
-                    {heroDays === 0 ? t("sport.today") : t("sport.days")}
-                  </div>
-                </div>
-              )}
-              {(heroForecast || weather) && (
-                <div className="rounded-2xl bg-white/5 px-4 py-3 text-center">
-                  <div className="text-[10px] uppercase tracking-wider text-steel">{t("sport.raceDay")}</div>
-                  {heroForecast ? (
-                    <>
-                      <i className={`ti ${conditionLabel(heroForecast.condition).icon} mt-1 text-2xl text-volt`} aria-hidden />
-                      <div className="text-sm font-semibold text-frost">
-                        {heroForecast.tempMin}–{heroForecast.tempMax}°C
-                      </div>
-                      <div className="text-[10px] text-steel">
-                        {t("weather.rainChance")} {heroForecast.rainChance}%
-                      </div>
-                    </>
-                  ) : (
-                    <div className="mt-1 max-w-36 text-xs text-steel">
-                      {weather ? loc(seasonsData.months.find((m) => m.month === new Date(hero.dates.start).getMonth() + 1)?.weather ?? { th: "", en: "" }, lang) : ""}
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div className="mt-5 flex flex-wrap gap-2">
-            <Link
-              href={`/events/${hero.id}`}
-              className="flex items-center gap-1.5 rounded-full bg-volt px-5 py-2.5 text-sm font-bold text-pitch transition hover:bg-volt-600"
-            >
-              <i className="ti ti-flag-bolt text-base" aria-hidden /> {t("sport.viewEvent")}
-            </Link>
-            <Link
-              href={`/checkin/${hero.id}`}
-              className="flex items-center gap-1.5 rounded-full border border-white/20 px-5 py-2.5 text-sm font-semibold text-frost transition hover:border-volt hover:text-volt"
-            >
-              <i className="ti ti-qrcode text-base" aria-hidden /> {t("sport.checkin")}
-            </Link>
-          </div>
-        </section>
-
-        <div className="sport-ticker mt-6 h-1.5 rounded-full" aria-hidden />
-
-        {/* 12-month calendar grouped by season */}
-        <section className="mt-6">
-          <h2 className="flex items-center gap-2 text-lg font-extrabold text-frost lg:text-xl">
-            <i className="ti ti-calendar-bolt text-volt" aria-hidden /> {t("sport.calendar")}
-          </h2>
-
-          <div className="mt-4 flex flex-col gap-6">
-            {seasons.map(({ season, events }) => (
-              <SeasonBlock key={season} season={season} events={events} lang={lang as LangCode} t={t} now={now} />
-            ))}
-          </div>
-        </section>
-
-        {/* Passport CTA */}
+      <main className="mx-auto w-full max-w-2xl flex-1 px-4 pb-10 pt-4 lg:px-0">
+        {/* Compact next-event strip */}
         <Link
-          href="/passport"
-          className="sport-card mt-8 flex items-center gap-4 rounded-2xl p-4 transition hover:border-volt/40 lg:p-5"
+          href="/calendar"
+          className={`sport-card anim-rise flex items-center gap-3 rounded-2xl p-3.5 transition hover:border-volt/40 ${SEASON_ACCENT[hero.season].flag}`}
         >
-          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-volt/15 text-volt">
-            <i className="ti ti-id-badge-2 text-2xl" aria-hidden />
+          <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/8 ${SEASON_ACCENT[hero.season].text}`}>
+            <i className={`ti ${hero.icon} text-xl`} aria-hidden />
           </span>
           <span className="min-w-0 flex-1">
-            <span className="block font-bold text-frost">{t("sport.passport")}</span>
-            <span className="block text-sm text-steel">
-              {lang === "th"
-                ? "เช็คอินที่งานกีฬา สะสมแบดจ์ทุกฤดู แลกส่วนลดร้านชุมชน"
-                : "Check in at events, collect season badges, redeem local perks"}
+            <span className="block text-[10px] font-semibold uppercase tracking-wider text-steel">
+              {heroLive ? t("sport.liveNow") : t("sport.nextEvent")}
             </span>
+            <span className="block truncate text-sm font-bold text-frost">{loc(hero.name, lang)}</span>
           </span>
-          <i className="ti ti-chevron-right text-steel" aria-hidden />
+          {!heroLive && heroDays !== null && (
+            <span className="shrink-0 text-center" suppressHydrationWarning>
+              <span className="sport-num block text-2xl text-volt">{heroDays}</span>
+              <span className="block text-[9px] uppercase tracking-widest text-steel">
+                {heroDays === 0 ? t("sport.today") : t("sport.days")}
+              </span>
+            </span>
+          )}
+          <i className="ti ti-chevron-right shrink-0 text-steel" aria-hidden />
         </Link>
+
+        {/* Tabs */}
+        <div className="mt-4 grid grid-cols-2 rounded-full border border-white/10 bg-pitch-800 p-1 text-sm font-semibold">
+          {(["feed", "rank"] as const).map((k) => (
+            <button
+              key={k}
+              onClick={() => setTab(k)}
+              aria-pressed={tab === k}
+              className={`rounded-full py-1.5 transition ${
+                tab === k ? "bg-volt text-pitch" : "text-steel hover:text-frost"
+              }`}
+            >
+              {t(`feed.tab.${k}`)}
+            </button>
+          ))}
+        </div>
+
+        {tab === "feed" ? <FeedTab /> : <RankTab />}
       </main>
     </>
   );
 }
 
-function SeasonBlock({
-  season,
-  events,
-  lang,
-  t,
-  now,
-}: {
-  season: SeasonKey;
-  events: SportEvent[];
-  lang: LangCode;
-  t: (k: string) => string;
-  now: Date | null;
-}) {
-  const info = seasonsData.seasons[season];
-  const accent = SEASON_ACCENT[season];
-  if (!events.length) return null;
+function FeedTab() {
+  const { t, lang } = useI18n();
+  const { items, kudosed, addPost, toggleKudos, hydrated } = useFeed();
+  const { profile } = useProfile();
+  const [draft, setDraft] = useState("");
+
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const text = draft.trim();
+    if (!text) return;
+    addPost({ kind: "text", text });
+    setDraft("");
+  };
 
   return (
-    <div>
-      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-        <h3 className={`text-base font-bold ${accent.text}`}>{loc(info.name, lang)}</h3>
-        <p className="text-xs text-steel">{loc(info.pitch, lang)}</p>
+    <div className="mt-4">
+      {/* Composer */}
+      <form onSubmit={submit} className="sport-card flex items-center gap-2.5 rounded-2xl p-3">
+        <span
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-bold text-pitch"
+          style={{ backgroundColor: profile.color }}
+        >
+          {initial(displayName(profile, lang))}
+        </span>
+        <input
+          value={draft}
+          onChange={(e) => setDraft(e.target.value)}
+          placeholder={t("feed.composer")}
+          className="min-w-0 flex-1 bg-transparent text-sm text-frost outline-none placeholder:text-steel"
+        />
+        <button
+          type="submit"
+          disabled={!draft.trim()}
+          className="shrink-0 rounded-full bg-volt px-4 py-1.5 text-xs font-bold text-pitch transition hover:bg-volt-600 disabled:opacity-40"
+        >
+          {t("feed.post")}
+        </button>
+      </form>
+
+      {/* Posts */}
+      <div className="stagger mt-3 flex flex-col gap-3">
+        {hydrated &&
+          items.map((item) => (
+            <PostCard
+              key={item.id}
+              item={item}
+              kudosed={!!kudosed[item.id]}
+              onKudos={() => toggleKudos(item.id)}
+            />
+          ))}
       </div>
-      <div className="stagger mt-2.5 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
-        {events.map((e) => {
-          const status = now ? eventStatus(e, now) : "upcoming";
-          const days = now ? daysUntil(e, now) : null;
-          return (
-            <Link
-              key={e.id}
-              href={`/events/${e.id}`}
-              className={`sport-card hover-lift rounded-2xl p-4 ${accent.flag}`}
-            >
-              <div className="flex items-start gap-3">
-                <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/8 ${accent.text}`}>
-                  <i className={`ti ${e.icon} text-2xl`} aria-hidden />
-                </span>
-                <div className="min-w-0 flex-1">
-                  <div className="truncate font-bold text-frost">{loc(e.name, lang)}</div>
-                  <div className="mt-0.5 text-[11px] text-steel">
-                    {loc(e.monthLabel, lang)} · {districtLoc(e.venue.district, lang)}
-                  </div>
-                  <div className="mt-1.5 flex items-center gap-2 text-[11px]" suppressHydrationWarning>
-                    {status === "live" ? (
-                      <span className="flex items-center gap-1 font-bold text-[#ff8f92]">
-                        <span className="sport-live-dot h-1.5 w-1.5 rounded-full bg-[#e5484d]" /> {t("sport.liveNow")}
-                      </span>
-                    ) : status === "past" ? (
-                      <span className="text-steel">{t("sport.pastEvent")}</span>
-                    ) : (
-                      <span className="font-semibold text-volt">
-                        {t("sport.daysLeft")} {days} {t("sport.days")}
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </div>
+    </div>
+  );
+}
+
+function PostCard({
+  item,
+  kudosed,
+  onKudos,
+}: {
+  item: FeedItem;
+  kudosed: boolean;
+  onKudos: () => void;
+}) {
+  const { t, lang } = useI18n();
+  const { profile } = useProfile();
+  const event = item.eventId ? getEvent(item.eventId) : undefined;
+  const accent = event ? SEASON_ACCENT[event.season] : null;
+
+  const name = item.own ? displayName(profile, lang) : item.author!;
+  const color = item.own ? profile.color : item.avatarColor!;
+  const text =
+    typeof item.text === "string" ? item.text : item.text ? loc(item.text, lang) : "";
+  const kudosCount = item.baseKudos + (kudosed ? 1 : 0);
+
+  return (
+    <article className={`sport-card rounded-2xl p-4 ${accent ? accent.flag : ""}`}>
+      {/* Header */}
+      <div className="flex items-center gap-2.5">
+        <span
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-bold text-pitch"
+          style={{ backgroundColor: color }}
+        >
+          {initial(name)}
+        </span>
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-center gap-x-2">
+            <span className="truncate text-sm font-bold text-frost">{name}</span>
+            {item.own && (
+              <span className="rounded-full bg-volt/15 px-1.5 py-0.5 text-[9px] font-semibold text-volt">
+                {t("feed.you")}
+              </span>
+            )}
+            {item.demo && (
+              <span className="rounded-full bg-white/8 px-1.5 py-0.5 text-[9px] text-steel">
+                {t("feed.demo")}
+              </span>
+            )}
+          </div>
+          <div className="text-[10px] text-steel" suppressHydrationWarning>
+            {timeAgo(item.at, t)}
+          </div>
+        </div>
+      </div>
+
+      {/* Check-in banner */}
+      {item.kind === "checkin" && event && (
+        <div className="mt-3 flex items-center gap-2 rounded-xl bg-white/5 p-2.5">
+          <i className={`ti ${event.icon} text-xl ${accent!.text}`} aria-hidden />
+          <span className="min-w-0 flex-1 text-[12px] text-steel">
+            {t("feed.checkedInAt")}{" "}
+            <Link href={`/events/${event.id}`} className="font-semibold text-frost hover:text-volt hover:underline">
+              {loc(event.name, lang)}
             </Link>
-          );
-        })}
+          </span>
+          {item.points ? (
+            <span className="sport-num shrink-0 text-sm text-volt">+{item.points}</span>
+          ) : null}
+        </div>
+      )}
+
+      {/* Body */}
+      {text && <p className="mt-2.5 text-sm leading-relaxed text-frost">{text}</p>}
+
+      {/* Badges earned */}
+      {item.badgeIds && item.badgeIds.length > 0 && (
+        <div className="mt-2 flex flex-wrap gap-1.5">
+          {item.badgeIds.map((id) => {
+            const b = BADGES.find((x) => x.id === id);
+            if (!b) return null;
+            return (
+              <span
+                key={id}
+                className="flex items-center gap-1 rounded-full bg-volt/12 px-2 py-1 text-[10px] font-semibold text-volt"
+              >
+                <i className={`ti ${b.icon}`} aria-hidden /> {loc(b.name, lang)}
+              </span>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Event chip for text posts */}
+      {item.kind === "text" && event && (
+        <Link
+          href={`/events/${event.id}`}
+          className={`mt-2.5 inline-flex items-center gap-1.5 rounded-full bg-white/8 px-2.5 py-1 text-[11px] font-medium transition hover:bg-white/12 ${accent!.text}`}
+        >
+          <i className={`ti ${event.icon}`} aria-hidden /> {loc(event.name, lang)}
+        </Link>
+      )}
+
+      {/* Footer */}
+      <div className="mt-3 border-t border-white/8 pt-2.5">
+        <button
+          onClick={onKudos}
+          aria-pressed={kudosed}
+          className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition ${
+            kudosed ? "bg-volt/15 text-volt" : "text-steel hover:bg-white/8 hover:text-frost"
+          }`}
+        >
+          <i className={`ti ${kudosed ? "ti-flame-filled" : "ti-flame"} text-base`} aria-hidden />
+          {kudosCount > 0 ? kudosCount : ""} {t("feed.kudos")}
+        </button>
       </div>
+    </article>
+  );
+}
+
+function RankTab() {
+  const { t, lang } = useI18n();
+  const { points, hydrated } = usePassport();
+  const { profile } = useProfile();
+
+  const rows = useMemo(() => {
+    const me = {
+      name: displayName(profile, lang),
+      color: profile.color,
+      points,
+      me: true,
+    };
+    return [...RANK_SEED.map((r) => ({ ...r, me: false })), me].sort(
+      (a, b) => b.points - a.points
+    );
+  }, [profile, lang, points]);
+
+  if (!hydrated) return null;
+
+  return (
+    <div className="mt-4">
+      <h2 className="flex items-center gap-2 text-base font-extrabold text-frost">
+        <i className="ti ti-trophy text-volt" aria-hidden /> {t("feed.rankTitle")}
+      </h2>
+      <p className="mt-0.5 text-xs text-steel">{t("feed.rankSub")}</p>
+
+      <div className="stagger mt-3 flex flex-col gap-2">
+        {rows.map((r, i) => (
+          <div
+            key={`${r.name}-${i}`}
+            className={`sport-card flex items-center gap-3 rounded-xl p-3 ${
+              r.me ? "border-volt/50" : ""
+            }`}
+          >
+            <span
+              className={`sport-num w-7 shrink-0 text-center text-lg ${
+                i === 0 ? "text-volt" : i < 3 ? "text-frost" : "text-steel"
+              }`}
+            >
+              {i + 1}
+            </span>
+            <span
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-bold text-pitch"
+              style={{ backgroundColor: r.color }}
+            >
+              {initial(r.name)}
+            </span>
+            <span className="min-w-0 flex-1 truncate text-sm font-semibold text-frost">
+              {r.name}
+              {r.me && (
+                <span className="ml-1.5 rounded-full bg-volt/15 px-1.5 py-0.5 text-[9px] font-semibold text-volt">
+                  {t("feed.you")}
+                </span>
+              )}
+            </span>
+            <span className="sport-num shrink-0 text-base text-volt">{r.points}</span>
+            <span className="shrink-0 text-[10px] text-steel">{t("sport.points")}</span>
+          </div>
+        ))}
+      </div>
+
+      <Link
+        href="/calendar"
+        className="mt-4 flex items-center justify-center gap-1.5 rounded-full border border-white/15 py-2.5 text-sm font-semibold text-frost transition hover:border-volt hover:text-volt"
+      >
+        <i className="ti ti-calendar-bolt text-base" aria-hidden /> {t("sport.calendar")}
+      </Link>
     </div>
   );
 }

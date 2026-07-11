@@ -7,6 +7,7 @@ import { useI18n } from "@/i18n/I18nProvider";
 import { districtLoc, loc } from "@/lib/types";
 import { getEvent, SEASON_ACCENT } from "@/lib/sports";
 import { BADGES, POINTS_PER_CHECKIN, usePassport } from "@/lib/PassportStore";
+import { useFeed } from "@/lib/FeedStore";
 import seasonsData from "@/data/seasons.json";
 
 export default function CheckinPage({
@@ -18,6 +19,7 @@ export default function CheckinPage({
   const { t, lang } = useI18n();
   const router = useRouter();
   const { hasCheckedIn, checkIn, hydrated } = usePassport();
+  const { addPost } = useFeed();
   const [newBadges, setNewBadges] = useState<string[] | null>(null);
 
   const event = getEvent(eventId);
@@ -28,7 +30,15 @@ export default function CheckinPage({
   const justChecked = newBadges !== null;
 
   const doCheckIn = () => {
-    setNewBadges(checkIn(event.id));
+    const earned = checkIn(event.id);
+    setNewBadges(earned);
+    // Strava-style: finishing an activity auto-shares it to the feed.
+    addPost({
+      kind: "checkin",
+      eventId: event.id,
+      badgeIds: earned,
+      points: POINTS_PER_CHECKIN,
+    });
   };
 
   return (
@@ -84,12 +94,23 @@ export default function CheckinPage({
                 </div>
               )}
             </div>
-            <Link
-              href="/passport"
-              className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-volt px-6 py-2.5 text-sm font-bold text-pitch transition hover:bg-volt-600"
-            >
-              <i className="ti ti-id-badge-2 text-base" aria-hidden /> {t("sport.passport")}
-            </Link>
+            <p className="mt-3 flex items-center justify-center gap-1.5 text-[12px] text-steel">
+              <i className="ti ti-share text-volt" aria-hidden /> {t("feed.sharedToFeed")}
+            </p>
+            <div className="mt-3 flex flex-wrap justify-center gap-2">
+              <Link
+                href="/"
+                className="inline-flex items-center gap-1.5 rounded-full bg-volt px-6 py-2.5 text-sm font-bold text-pitch transition hover:bg-volt-600"
+              >
+                <i className="ti ti-home text-base" aria-hidden /> {t("feed.viewFeed")}
+              </Link>
+              <Link
+                href="/passport"
+                className="inline-flex items-center gap-1.5 rounded-full border border-white/20 px-6 py-2.5 text-sm font-semibold text-frost transition hover:border-volt hover:text-volt"
+              >
+                <i className="ti ti-id-badge-2 text-base" aria-hidden /> {t("sport.passport")}
+              </Link>
+            </div>
           </div>
         ) : already ? (
           <div className="mt-8 w-full">

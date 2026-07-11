@@ -7,6 +7,8 @@ import { DataStoreProvider } from "@/lib/DataStore";
 import { PlanStoreProvider } from "@/lib/PlanStore";
 import { PostStoreProvider } from "@/lib/PostStore";
 import { PassportProvider } from "@/lib/PassportStore";
+import { ProfileProvider } from "@/lib/ProfileStore";
+import { FeedProvider } from "@/lib/FeedStore";
 
 const notoThai = Noto_Sans_Thai({
   variable: "--font-noto-thai",
@@ -43,7 +45,11 @@ export default function RootLayout({
           <DataStoreProvider>
             <PlanStoreProvider>
               <PostStoreProvider>
-                <PassportProvider>{children}</PassportProvider>
+                <PassportProvider>
+                  <ProfileProvider>
+                    <FeedProvider>{children}</FeedProvider>
+                  </ProfileProvider>
+                </PassportProvider>
               </PostStoreProvider>
             </PlanStoreProvider>
           </DataStoreProvider>
