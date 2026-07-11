@@ -21,6 +21,18 @@
 
   --font-sans: var(--font-noto-thai), system-ui, sans-serif;
   --font-lanna: var(--font-lanna-src), var(--font-noto-thai), serif;
+
+  /* ---- Nan Game On (sport pivot) ---- */
+  --color-pitch: #0b1220; /* near-black blue backdrop */
+  --color-pitch-800: #111c30;
+  --color-pitch-700: #182741;
+  --color-frost: #f2f6fa; /* light text on pitch */
+  --color-steel: #8fa1b8; /* muted text on pitch */
+  --color-volt: #c8f135; /* brand accent — electric volt */
+  --color-volt-600: #a8d31c;
+  --color-season-green: #4ade80;
+  --color-season-cool: #38bdf8;
+  --color-season-hot: #fb923c;
 }
 
 :root {
@@ -383,6 +395,72 @@ body {
   .hover-lift:hover {
     transform: none;
     box-shadow: none;
+  }
+}
+
+/* ---------- Nan Game On (sport pivot) ---------- */
+
+/* Dark pitch backdrop with subtle diagonal speed lines */
+.sport-bg {
+  background-color: var(--color-pitch);
+  background-image:
+    radial-gradient(1200px 500px at 85% -10%, rgba(200, 241, 53, 0.08), transparent 60%),
+    repeating-linear-gradient(115deg, rgba(255, 255, 255, 0.02) 0 2px, transparent 2px 18px);
+}
+
+/* Big display numbers (countdown, points) */
+.sport-num {
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+/* Volt-edged card on dark surfaces */
+.sport-card {
+  background: linear-gradient(160deg, var(--color-pitch-800), var(--color-pitch-700));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+.sport-card::after {
+  background: linear-gradient(180deg, var(--color-volt), transparent);
+  content: "";
+  inset: 0 auto 0 0;
+  opacity: 0;
+  position: absolute;
+  transition: opacity 0.2s ease;
+  width: 3px;
+}
+.sport-card:hover::after {
+  opacity: 1;
+}
+
+/* Angled "speed" ticker strip */
+.sport-ticker {
+  background-image: repeating-linear-gradient(
+    -60deg,
+    var(--color-volt) 0 14px,
+    transparent 14px 26px
+  );
+  opacity: 0.85;
+}
+
+/* Season accent helpers (border-left flag on timeline cards) */
+.season-flag-green { box-shadow: inset 4px 0 0 var(--color-season-green); }
+.season-flag-cool { box-shadow: inset 4px 0 0 var(--color-season-cool); }
+.season-flag-hot { box-shadow: inset 4px 0 0 var(--color-season-hot); }
+
+@keyframes sport-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+.sport-live-dot {
+  animation: sport-pulse 1.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sport-live-dot {
+    animation: none;
   }
 }
 

@@ -6,6 +6,7 @@ import { I18nProvider } from "@/i18n/I18nProvider";
 import { DataStoreProvider } from "@/lib/DataStore";
 import { PlanStoreProvider } from "@/lib/PlanStore";
 import { PostStoreProvider } from "@/lib/PostStore";
+import { PassportProvider } from "@/lib/PassportStore";
 
 const notoThai = Noto_Sans_Thai({
   variable: "--font-noto-thai",
@@ -21,9 +22,9 @@ const chonburi = Chonburi({
 });
 
 export const metadata: Metadata = {
-  title: "Nan Connect — One Scan, Endless Journeys",
+  title: "Nan Game On — น่านเล่นได้ทั้งปี",
   description:
-    "แพลตฟอร์ม AI ยกระดับการท่องเที่ยวจังหวัดน่าน — สแกน QR เดียว เที่ยวน่านได้ทั้งจังหวัด",
+    "ปฏิทินเทศกาลกีฬาจังหวัดน่านทุกฤดู พร้อม AI จัดทริปรอบงานแข่งตามสภาพอากาศจริง และพาสปอร์ตเช็คอินสะสมแบดจ์",
 };
 
 export default function RootLayout({
@@ -41,7 +42,9 @@ export default function RootLayout({
         <I18nProvider>
           <DataStoreProvider>
             <PlanStoreProvider>
-              <PostStoreProvider>{children}</PostStoreProvider>
+              <PostStoreProvider>
+                <PassportProvider>{children}</PassportProvider>
+              </PostStoreProvider>
             </PlanStoreProvider>
           </DataStoreProvider>
         </I18nProvider>

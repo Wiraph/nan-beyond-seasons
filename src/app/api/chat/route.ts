@@ -1,5 +1,6 @@
 import type { NextRequest } from "next/server";
 import { places } from "@/lib/data";
+import { sportEvents } from "@/lib/sports";
 import { buildWeatherContext, getNanForecast } from "@/lib/weather";
 
 export const runtime = "nodejs";
@@ -21,6 +22,14 @@ const PLACE_CONTEXT = places
   .map(
     (p) =>
       `- ${p.name.en} (${p.name.th}) | ${p.district} | ${p.craftType} | ${p.summary.en}`
+  )
+  .join("\n");
+
+// Sports festival calendar — the core of Nan Game On.
+const EVENT_CONTEXT = sportEvents
+  .map(
+    (e) =>
+      `- ${e.name.en} (${e.name.th}) | ${e.dates.start} to ${e.dates.end} | ${e.venue.district} | season:${e.season} | ${e.desc.en}`
   )
   .join("\n");
 
@@ -50,16 +59,19 @@ export async function POST(req: NextRequest) {
   const forecast = await getNanForecast();
   const weatherContext = buildWeatherContext(forecast, new Date().getMonth() + 1);
 
-  const system = `You are the Nan Beyond Seasons AI travel guide for Nan province, Northern Thailand.
+  const system = `You are the Nan Game On AI concierge — the sports-tourism guide for Nan province, Northern Thailand.
 Rules:
-- Only help with travelling in Nan (places, food, stays, crafts, routes, culture).
-- Treat the list below as ground truth. Recommend real places by name from the list. Do not invent places that are not in the list.
-- Nan is a year-round destination. Use the season and weather context below to tailor advice: on rainy days steer to temples, museums, weaving houses, markets and cafés; in Green Season proactively sell its unique draws (emerald rice fields, post-rain mist, powerful waterfalls, quiet slow life).
-- Be warm and friendly. For simple questions, answer in 2-4 sentences.
-- When the user asks for an itinerary, a multi-day plan, or "a week", give a clear day-by-day plan: label each day (Day 1, Day 2, …), list real place names grouped sensibly by area, and add a one-line reason each. Put each day and each item on its own line.
+- Help with Nan's sports festivals (dates, what to expect, spectating vs competing, how to prepare) and travelling in Nan (places, food, stays, routes, culture).
+- Treat the lists below as ground truth. Recommend real events and places by name. Do not invent events or places that are not listed. If dates are asked, note they may await official announcement.
+- Nan plays all year: use the season and weather context to tailor advice — longboat racing and rafting shine in Green Season, trails and cycling in the cool months. On rainy days steer to indoor culture and food.
+- Be warm, energetic and friendly. For simple questions, answer in 2-4 sentences.
+- When the user asks for an itinerary or multi-day plan, give a clear day-by-day plan: label each day, list real event/place names grouped sensibly by area, one-line reason each, each item on its own line.
 - Always reply in ${langName}, regardless of the language of the question.
 
 ${weatherContext}
+
+Sports festivals in Nan:
+${EVENT_CONTEXT}
 
 Places in Nan:
 ${PLACE_CONTEXT}`;
