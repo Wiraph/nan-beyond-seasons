@@ -1,0 +1,402 @@
+@import "tailwindcss";
+
+@theme {
+  --color-navy: #1b2a4a;
+  --color-navy-600: #26395f;
+  --color-navy-300: #5a6b8c;
+  --color-gold: #c9a227;
+  --color-gold-700: #7a5a0b;
+  --color-cream: #f5f1e6;
+  --color-cream-200: #e9e2cd;
+  --color-ink: #33302a;
+  --color-muted: #6b6655;
+  --color-line: #d8d0b8;
+
+  /* Lanna หม้อห้อม indigo — tertiary accent for culture/festival */
+  --color-indigo: #2b3a67;
+  --color-indigo-600: #3a4c80;
+  --color-indigo-100: #e3e6f0;
+  --color-lacquer: #8f2f22;
+  --color-teak: #49613a;
+
+  --font-sans: var(--font-noto-thai), system-ui, sans-serif;
+  --font-lanna: var(--font-lanna-src), var(--font-noto-thai), serif;
+}
+
+:root {
+  color-scheme: light;
+}
+
+/* Global UI scale — every rem-based size (text, spacing, cards, max-widths)
+   grows together. Bump/lower this single value to scale the whole system. */
+html {
+  font-size: 112.5%; /* 18px base (default 16px) */
+}
+
+html,
+body {
+  background: var(--color-cream);
+  color: var(--color-ink);
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Decorative Nan woven-textile strip */
+.weave-strip {
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--color-navy) 0 10px,
+    var(--color-gold) 10px 20px
+  );
+}
+
+/* Lanna "lai nam lai" (flowing-water) zigzag — a thin refined textile border */
+.lanna-strip {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='10' viewBox='0 0 28 10'%3E%3Cpath d='M0 7 L7 2 L14 7 L21 2 L28 7' fill='none' stroke='%23c9a227' stroke-width='1.6'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-position: center;
+}
+
+/* Soft gold Lanna diamond motif for light surfaces (chat background) */
+.lanna-soft {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='46' height='46' viewBox='0 0 46 46'%3E%3Cpath d='M23 7 L39 23 L23 39 L7 23 Z' fill='none' stroke='%23c9a227' stroke-width='1'/%3E%3Cpath d='M23 15 L31 23 L23 31 L15 23 Z' fill='none' stroke='%231b2a4a' stroke-width='0.8'/%3E%3C/svg%3E");
+  background-size: 48px 48px;
+}
+
+/* Faint Lanna diamond/kanok motif — hero watermark */
+.lanna-watermark {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cpath d='M24 5 L43 24 L24 43 L5 24 Z' fill='none' stroke='%23ffffff' stroke-width='1'/%3E%3Cpath d='M24 14 L34 24 L24 34 L14 24 Z' fill='none' stroke='%23c9a227' stroke-width='1'/%3E%3C/svg%3E");
+  background-size: 52px 52px;
+}
+
+.lanna-subnav-surface {
+  background-color: var(--color-navy);
+  background-image:
+    linear-gradient(90deg, rgba(143, 47, 34, 0.22), transparent 36%, rgba(73, 97, 58, 0.16)),
+    repeating-linear-gradient(
+      135deg,
+      rgba(201, 162, 39, 0.12) 0 1px,
+      transparent 1px 15px
+    );
+}
+
+.lanna-subnav-link {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.lanna-subnav-link::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='10' viewBox='0 0 36 10'%3E%3Cpath d='M0 5 H7 L9 2 L12 8 L15 2 L18 8 L21 2 L24 8 L27 2 L29 5 H36' fill='none' stroke='%23c9a227' stroke-width='1.2'/%3E%3C/svg%3E");
+  background-position: center;
+  background-repeat: repeat-x;
+  content: "";
+  inset: 0 10px auto;
+  height: 8px;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  transition: opacity 0.2s ease;
+}
+
+.lanna-subnav-link:hover::before,
+.lanna-subnav-link[aria-current="page"]::before {
+  opacity: 0.8;
+}
+
+.lanna-mainnav-link {
+  position: relative;
+  overflow: hidden;
+}
+
+.lanna-mainnav-link:hover {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='10' viewBox='0 0 36 10'%3E%3Cpath d='M0 5 H7 L9 2 L12 8 L15 2 L18 8 L21 2 L24 8 L27 2 L29 5 H36' fill='none' stroke='%23c9a227' stroke-width='1.2'/%3E%3C/svg%3E"),
+    repeating-linear-gradient(
+      135deg,
+      rgba(201, 162, 39, 0.14) 0 1px,
+      transparent 1px 13px
+    );
+  background-position:
+    center 2px,
+    center;
+  background-repeat:
+    repeat-x,
+    repeat;
+}
+
+.plan-timeline-line {
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(201, 162, 39, 0.85) 0 6px,
+    transparent 6px 12px
+  );
+  border-radius: 2px;
+  bottom: 2.6rem;
+  left: 25px;
+  opacity: 0.9;
+  pointer-events: none;
+  position: absolute;
+  top: 2.6rem;
+  width: 2px;
+}
+
+.plan-lanna-hero {
+  background-image:
+    linear-gradient(90deg, rgba(143, 47, 34, 0.18), transparent 38%, rgba(73, 97, 58, 0.16)),
+    repeating-linear-gradient(
+      135deg,
+      rgba(201, 162, 39, 0.1) 0 1px,
+      transparent 1px 16px
+    );
+}
+
+.lanna-plan-action {
+  background-position:
+    center 2px,
+    center;
+  background-repeat:
+    repeat-x,
+    repeat;
+  overflow: hidden;
+  position: relative;
+}
+
+.lanna-plan-action:hover {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='10' viewBox='0 0 36 10'%3E%3Cpath d='M0 5 H7 L9 2 L12 8 L15 2 L18 8 L21 2 L24 8 L27 2 L29 5 H36' fill='none' stroke='%23c9a227' stroke-width='1.2'/%3E%3C/svg%3E"),
+    repeating-linear-gradient(
+      135deg,
+      rgba(201, 162, 39, 0.12) 0 1px,
+      transparent 1px 13px
+    );
+}
+
+.plan-route-card,
+.plan-recommend-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.plan-route-card::before,
+.plan-recommend-card::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='42' height='10' viewBox='0 0 42 10'%3E%3Cpath d='M0 5 H7 L10 2 L13 8 L16 2 L19 8 L22 2 L25 8 L28 2 L31 8 L34 5 H42' fill='none' stroke='%23c9a227' stroke-width='1'/%3E%3C/svg%3E");
+  background-position: center;
+  background-repeat: repeat-x;
+  content: "";
+  height: 8px;
+  left: 0;
+  opacity: 0.32;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.plan-route-card::after,
+.plan-recommend-card::after {
+  background: linear-gradient(180deg, rgba(201, 162, 39, 0.55), rgba(143, 47, 34, 0.28));
+  bottom: 0.85rem;
+  content: "";
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0.85rem;
+  transition: opacity 0.2s ease;
+  width: 3px;
+}
+
+.plan-route-card:hover::after,
+.plan-recommend-card:hover::after {
+  opacity: 1;
+}
+
+@media (min-width: 1024px) {
+  .plan-timeline-line {
+    left: 37px;
+  }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.leaflet-container {
+  font-family: var(--font-sans);
+}
+
+.leaflet-control-attribution {
+  font-size: 10px;
+}
+
+.nan-map-marker-wrapper {
+  background: transparent;
+  border: 0;
+}
+
+.nan-map-marker {
+  align-items: center;
+  background: var(--marker-bg, var(--color-navy));
+  border: 3px solid #fff;
+  border-radius: 999px;
+  box-shadow: 0 8px 18px rgba(27, 42, 74, 0.28);
+  color: #fff;
+  display: inline-flex;
+  height: 36px;
+  justify-content: center;
+  transition:
+    box-shadow 0.2s ease,
+    height 0.2s ease,
+    width 0.2s ease;
+  width: 36px;
+}
+
+.nan-map-marker i {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.nan-map-marker.is-active {
+  border-color: var(--color-gold);
+  box-shadow:
+    0 0 0 6px rgba(201, 162, 39, 0.22),
+    0 12px 24px rgba(27, 42, 74, 0.32);
+  height: 44px;
+  width: 44px;
+}
+
+.nan-map-marker.is-active i {
+  font-size: 22px;
+}
+
+.place-mini-map-marker-wrapper {
+  background: transparent;
+  border: 0;
+}
+
+.place-mini-map-marker {
+  align-items: center;
+  color: #d85a30;
+  display: inline-flex;
+  filter: drop-shadow(0 4px 8px rgba(27, 42, 74, 0.28));
+  font-size: 36px;
+  height: 36px;
+  justify-content: center;
+  line-height: 1;
+  text-shadow: 0 0 0 #fff;
+  width: 36px;
+}
+
+/* ---------- Animations ---------- */
+@keyframes nc-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes nc-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes nc-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes nc-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.anim-rise {
+  animation: nc-rise 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+.anim-pop {
+  animation: nc-pop 0.32s ease both;
+}
+.anim-slide-up {
+  animation: nc-slide-up 0.34s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+.anim-fade {
+  animation: nc-fade 0.5s ease both;
+}
+
+/* Staggered entrance for direct children of a list/grid */
+.stagger > * {
+  animation: nc-rise 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+.stagger > *:nth-child(1) { animation-delay: 0.02s; }
+.stagger > *:nth-child(2) { animation-delay: 0.06s; }
+.stagger > *:nth-child(3) { animation-delay: 0.1s; }
+.stagger > *:nth-child(4) { animation-delay: 0.14s; }
+.stagger > *:nth-child(5) { animation-delay: 0.18s; }
+.stagger > *:nth-child(6) { animation-delay: 0.22s; }
+.stagger > *:nth-child(7) { animation-delay: 0.26s; }
+.stagger > *:nth-child(8) { animation-delay: 0.3s; }
+.stagger > *:nth-child(9) { animation-delay: 0.34s; }
+.stagger > *:nth-child(n + 10) { animation-delay: 0.38s; }
+
+/* Lift on hover for cards/tiles */
+.hover-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 22px rgba(27, 42, 74, 0.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-rise,
+  .anim-pop,
+  .anim-slide-up,
+  .anim-fade,
+  .stagger > * {
+    animation: none !important;
+  }
+  .hover-lift:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+/* Branded backdrop behind the mobile app frame on large screens */
+.tourist-bg {
+  background-color: var(--color-cream);
+}
+@media (min-width: 1024px) {
+  .tourist-bg {
+    background-color: #101a30;
+    background-image: repeating-linear-gradient(
+      45deg,
+      rgba(201, 162, 39, 0.07) 0 2px,
+      transparent 2px 16px
+    );
+  }
+}
