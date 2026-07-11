@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import AppHeader from "@/components/AppHeader";
 import PlaceCard from "@/components/PlaceCard";
+import WeatherStrip from "@/components/WeatherStrip";
 import { useI18n } from "@/i18n/I18nProvider";
 import { contentCategories, craftTypes } from "@/lib/data";
 import { useDataStore } from "@/lib/DataStore";
@@ -164,6 +165,11 @@ export default function Home() {
               </div>
             </div>
           </div>
+        </section>
+
+        {/* Live weather + season */}
+        <section className="mx-auto w-full max-w-7xl px-4 pt-5 lg:px-8 lg:pt-8">
+          <WeatherStrip variant="full" />
         </section>
 
         {/* Categories */}

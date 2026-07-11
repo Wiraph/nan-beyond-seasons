@@ -1,5 +1,6 @@
 import type { NextRequest } from "next/server";
 import { places } from "@/lib/data";
+import { buildWeatherContext, getNanForecast, isOutdoorPlace } from "@/lib/weather";
 
 export const runtime = "nodejs";
 export const maxDuration = 30;
@@ -53,16 +54,22 @@ export async function POST(req: NextRequest) {
   const context = chosen
     .map(
       (p) =>
-        `- id:${p.id} | ${p.name.en} (${p.name.th}) | ${p.district} | ${p.craftType} | hours:${p.visit.hours.en || p.visit.hours.th} | lat:${p.lat} lon:${p.lon}`
+        `- id:${p.id} | ${p.name.en} (${p.name.th}) | ${p.district} | ${p.craftType} | ${isOutdoorPlace(p) ? "outdoor" : "indoor/all-weather"} | hours:${p.visit.hours.en || p.visit.hours.th} | lat:${p.lat} lon:${p.lon}`
     )
     .join("\n");
+
+  const forecast = await getNanForecast();
+  const weatherContext = buildWeatherContext(forecast, new Date().getMonth() + 1);
 
   const system = `You are a trip planner for Nan province, Thailand.
 Given a set of chosen places, order them into a sensible one-day itinerary that minimises back-tracking and respects opening hours.
 Start the day around ${body.startTime ?? "08:30"}.
+Adapt the plan to the real weather below: on rainy/stormy days schedule outdoor places in the morning (rain usually falls in the afternoon) or warn about them, and prefer indoor/all-weather places for wet slots. Mention weather in a note only when it changed your ordering.
 Reply with STRICT JSON ONLY, no prose, no markdown fences, in this exact shape:
-{"stops":[{"id":"<place id>","time":"HH:MM","note":"<one short reason in ${langName}>"}],"warnings":["<short ${langName} warning if a place may be hard to reach in time, else omit>"]}
+{"stops":[{"id":"<place id>","time":"HH:MM","note":"<one short reason in ${langName}>"}],"warnings":["<short ${langName} warning about timing or weather, else omit>"]}
 Use only the provided place ids. Keep notes under 12 words. Write all text in ${langName}.
+
+${weatherContext}
 
 Chosen places:
 ${context}`;

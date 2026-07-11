@@ -1,0 +1,138 @@
+{
+  "seasons": {
+    "cool": {
+      "name": { "th": "ฤดูหนาว", "en": "Cool Season" },
+      "months": [11, 12, 1, 2],
+      "pitch": {
+        "th": "ฟ้าใส อากาศเย็น ขึ้นดอยชมทะเลหมอก ดูดาว",
+        "en": "Clear skies and cool air — mountain mists and stargazing"
+      }
+    },
+    "hot": {
+      "name": { "th": "ฤดูร้อน", "en": "Hot Season" },
+      "months": [3, 4, 5],
+      "pitch": {
+        "th": "เที่ยววัด ชมเมืองเก่า เล่นน้ำตกคลายร้อน คนไม่แน่น",
+        "en": "Temples, old town charm and cooling waterfalls — without the crowds"
+      }
+    },
+    "green": {
+      "name": { "th": "กรีนซีซัน (ฤดูฝน)", "en": "Green Season" },
+      "months": [6, 7, 8, 9, 10],
+      "pitch": {
+        "th": "นาข้าวเขียวมรกต ทะเลหมอกหลังฝน น้ำตกทรงพลัง สโลว์ไลฟ์แบบส่วนตัว",
+        "en": "Emerald rice fields, post-rain mists, thundering waterfalls and private slow life"
+      }
+    }
+  },
+  "months": [
+    {
+      "month": 1,
+      "season": "cool",
+      "weather": { "th": "หนาวเย็นและแห้งที่สุดของปี ท้องฟ้าโปร่งใส", "en": "Coldest, driest month — crystal-clear skies" },
+      "highlights": {
+        "th": ["ตั้งแคมป์ ดูดาว ชมทะเลหมอกที่ดอยเสมอดาว", "เทศกาลปีใหม่ม้ง (ถึง 1 ม.ค.)"],
+        "en": ["Camping, stargazing and sea of mist at Doi Samer Dao", "Hmong New Year festival (until Jan 1)"]
+      }
+    },
+    {
+      "month": 2,
+      "season": "cool",
+      "weather": { "th": "เย็นสบาย ท้องฟ้าแจ่มใส", "en": "Pleasantly cool with clear skies" },
+      "highlights": {
+        "th": ["ชมดอกชมพูภูคาบานปีละครั้ง ที่อุทยานแห่งชาติดอยภูคา"],
+        "en": ["Once-a-year Chomphu Phu Kha bloom at Doi Phu Kha National Park"]
+      }
+    },
+    {
+      "month": 3,
+      "season": "hot",
+      "weather": { "th": "เริ่มร้อน อากาศแห้ง อาจมีหมอกควันบดบังวิว", "en": "Getting hot and dry; haze may limit mountain views" },
+      "highlights": {
+        "th": ["เทศกาลหกเป็งนมัสการพระธาตุแช่แห้ง ขบวนแห่ตุงล้านนา"],
+        "en": ["Hok Peng festival at Wat Phra That Chae Haeng with Lanna tung parades"]
+      }
+    },
+    {
+      "month": 4,
+      "season": "hot",
+      "weather": { "th": "ร้อนที่สุดของปี (35–40°C) แห้งแล้ง", "en": "Hottest month of the year (35–40°C), very dry" },
+      "highlights": {
+        "th": ["เทศกาลสงกรานต์ สาดน้ำคลายร้อนกลางเมืองน่าน"],
+        "en": ["Songkran water festival in Nan old town"]
+      }
+    },
+    {
+      "month": 5,
+      "season": "hot",
+      "weather": { "th": "รอยต่อฤดูกาล ร้อนชื้น ฝนแรกเริ่มตก", "en": "Transition month — hot, humid, first rains arrive" },
+      "highlights": {
+        "th": ["พักผ่อนริมหาดแม่น้ำน่าน เล่นน้ำตกในอุทยาน คนน้อยมาก"],
+        "en": ["River beaches and shaded waterfalls, with very few visitors"]
+      }
+    },
+    {
+      "month": 6,
+      "season": "green",
+      "weather": { "th": "เข้าฤดูฝน ฝนเริ่มตกชุก ธรรมชาติกลับมาเขียว", "en": "Rainy season begins — nature turns green again" },
+      "highlights": {
+        "th": ["นาข้าวช่วงน้ำสะท้อนเงาฟ้า (Reflecting Fields) ที่ปัวและสะปัน"],
+        "en": ["Mirror-like flooded rice fields (Reflecting Fields) at Pua and Sapan"]
+      }
+    },
+    {
+      "month": 7,
+      "season": "green",
+      "weather": { "th": "ฝนตกชุก เมฆมาก เขียวชอุ่มเต็มที่", "en": "Frequent rain, lush green everywhere" },
+      "highlights": {
+        "th": ["จิบกาแฟชมทะเลหมอกลอยต่ำเหนือทุ่งนาเขียวขจี"],
+        "en": ["Café views of low mist drifting over green paddies"]
+      }
+    },
+    {
+      "month": 8,
+      "season": "green",
+      "weather": { "th": "ฝนชุกที่สุดของปี ความชื้นสูง", "en": "Wettest month with highest humidity" },
+      "highlights": {
+        "th": ["ทุ่งนาสีเขียวมรกต (Emerald Phase)", "น้ำตกน้ำเยอะทรงพลังที่สุด เหมาะถ่ายภาพ"],
+        "en": ["Emerald-phase rice fields", "Waterfalls at their most powerful — great for photos"]
+      }
+    },
+    {
+      "month": 9,
+      "season": "green",
+      "weather": { "th": "ปลายฤดูฝน ฝนเริ่มลดแต่ยังชุ่มฉ่ำ", "en": "Late rainy season — showers easing but still lush" },
+      "highlights": {
+        "th": ["ประเพณีตานก๋วยสลาก ทำบุญตะกร้าไม้ไผ่", "เริ่มฤดูแข่งเรือยาวเอกลักษณ์น่าน หัวพญานาค"],
+        "en": ["Tan Kuai Salak merit-making tradition", "Start of Nan's iconic naga-prow longboat racing season"]
+      }
+    },
+    {
+      "month": 10,
+      "season": "green",
+      "weather": { "th": "ปลายฝนต้นหนาว ฝนทิ้งช่วง ฟ้าเริ่มเปิด", "en": "Rain tapering off, skies opening up, cooler air" },
+      "highlights": {
+        "th": ["ทุ่งรวงทอง (Golden Phase) ก่อนเก็บเกี่ยว", "แข่งเรือยาวคึกคักทั่วลำน้ำน่าน"],
+        "en": ["Golden-phase rice fields before harvest", "Longboat races along the Nan River"]
+      }
+    },
+    {
+      "month": 11,
+      "season": "cool",
+      "weather": { "th": "เข้าฤดูหนาว อากาศเย็นแห้งสบาย", "en": "Cool season begins — dry and comfortable" },
+      "highlights": {
+        "th": ["ประเพณีลอยกระทงคืนเพ็ญเดือน 12", "ฤดูเก็บเกี่ยวข้าว"],
+        "en": ["Loy Krathong on the full moon night", "Rice harvest season"]
+      }
+    },
+    {
+      "month": 12,
+      "season": "cool",
+      "weather": { "th": "หนาวจัด ยอดดอยต่ำกว่า 10°C ฟ้าโปร่งไร้ฝน", "en": "Coldest peaks below 10°C, cloudless skies" },
+      "highlights": {
+        "th": ["งานเทศกาลส้มสีทองน่าน (กลางเดือน)", "เทศกาลปีใหม่ม้ง (25 ธ.ค. เป็นต้นไป)", "กางเต็นท์ชมทะเลหมอก ดูดาว"],
+        "en": ["Nan Golden Orange festival (mid-month)", "Hmong New Year (from Dec 25)", "Peak month for camping, mists and stargazing"]
+      }
+    }
+  ]
+}

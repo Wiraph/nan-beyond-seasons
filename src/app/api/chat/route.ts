@@ -1,5 +1,6 @@
 import type { NextRequest } from "next/server";
 import { places } from "@/lib/data";
+import { buildWeatherContext, getNanForecast } from "@/lib/weather";
 
 export const runtime = "nodejs";
 export const maxDuration = 30;
@@ -46,13 +47,19 @@ export async function POST(req: NextRequest) {
     .filter((m) => m && typeof m.content === "string" && m.content.trim())
     .slice(-8);
 
-  const system = `You are the Nan Connect AI travel guide for Nan province, Northern Thailand.
+  const forecast = await getNanForecast();
+  const weatherContext = buildWeatherContext(forecast, new Date().getMonth() + 1);
+
+  const system = `You are the Nan Beyond Seasons AI travel guide for Nan province, Northern Thailand.
 Rules:
 - Only help with travelling in Nan (places, food, stays, crafts, routes, culture).
 - Treat the list below as ground truth. Recommend real places by name from the list. Do not invent places that are not in the list.
+- Nan is a year-round destination. Use the season and weather context below to tailor advice: on rainy days steer to temples, museums, weaving houses, markets and cafés; in Green Season proactively sell its unique draws (emerald rice fields, post-rain mist, powerful waterfalls, quiet slow life).
 - Be warm and friendly. For simple questions, answer in 2-4 sentences.
 - When the user asks for an itinerary, a multi-day plan, or "a week", give a clear day-by-day plan: label each day (Day 1, Day 2, …), list real place names grouped sensibly by area, and add a one-line reason each. Put each day and each item on its own line.
 - Always reply in ${langName}, regardless of the language of the question.
+
+${weatherContext}
 
 Places in Nan:
 ${PLACE_CONTEXT}`;

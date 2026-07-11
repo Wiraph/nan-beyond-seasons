@@ -87,7 +87,7 @@ export function orderRoute(ids: string[], places: Place[]): string[] {
   return ordered;
 }
 
-export type ScheduleWarning = "closed" | "tight" | "late";
+export type ScheduleWarning = "closed" | "tight" | "late" | "rain";
 
 export type ScheduleStop = {
   place: Place;
@@ -148,6 +148,36 @@ export function buildSchedule(
     prev = place;
   }
   return stops;
+}
+
+/** Rain-day variant of orderRoute: outdoor (nature) stops keep the morning
+ *  slots — Nan's rain usually builds in the afternoon — and indoor stops
+ *  fill the rest of the day, each group still ordered nearest-neighbour. */
+export function orderRouteForRain(
+  ids: string[],
+  places: Place[],
+  isOutdoor: (p: Place) => boolean
+): string[] {
+  const map = byId(places);
+  const pool = ids.filter((id) => map.has(id));
+  const outdoor = pool.filter((id) => isOutdoor(map.get(id)!));
+  const indoor = pool.filter((id) => !isOutdoor(map.get(id)!));
+  if (!outdoor.length || !indoor.length) return orderRoute(pool, places);
+  return [...orderRoute(outdoor, places), ...orderRoute(indoor, places)];
+}
+
+/** Flag outdoor stops scheduled after noon on a rainy day. Existing
+ *  warnings (closed/tight/late) take priority over the rain flag. */
+export function applyRainWarnings(
+  stops: ScheduleStop[],
+  isOutdoor: (p: Place) => boolean
+): ScheduleStop[] {
+  const NOON = 12 * 60;
+  return stops.map((s) =>
+    !s.warning && isOutdoor(s.place) && s.arrivalMin >= NOON
+      ? { ...s, warning: "rain" as ScheduleWarning }
+      : s
+  );
 }
 
 export type Recommendation = {

@@ -10,13 +10,18 @@ import { craftTypes, getCraft, TINT_HEX } from "@/lib/data";
 import { districtLoc, loc, Place } from "@/lib/types";
 import { LangCode } from "@/i18n/dictionaries";
 import {
+  applyRainWarnings,
   buildSchedule,
   minutesToHHMM,
   orderRoute,
+  orderRouteForRain,
   recommendNearby,
   type ScheduleStop,
   type TravelMode,
 } from "@/lib/planner";
+import { isOutdoorPlace, isRainy } from "@/lib/weather";
+import { useNanWeather } from "@/lib/useWeather";
+import WeatherStrip from "@/components/WeatherStrip";
 
 function travelLabel(t: (k: string) => string, mode: TravelMode, minutes: number, km: number) {
   const verb = mode === "walk" ? t("plan.byWalk") : t("plan.byCar");
@@ -40,11 +45,14 @@ export default function PlanPage() {
   const [draggedId, setDraggedId] = useState<string | null>(null);
   const [dragOverId, setDragOverId] = useState<string | null>(null);
 
+  const weather = useNanWeather();
+  const rainyToday = isRainy(weather?.days[0]);
+
   // placeIds is the canonical order; schedule walks it directly.
-  const schedule = useMemo(
-    () => buildSchedule(placeIds, places, { startMin }),
-    [placeIds, places, startMin]
-  );
+  const schedule = useMemo(() => {
+    const stops = buildSchedule(placeIds, places, { startMin });
+    return rainyToday ? applyRainWarnings(stops, isOutdoorPlace) : stops;
+  }, [placeIds, places, startMin, rainyToday]);
   const recs = useMemo(() => recommendNearby(placeIds, places, 6), [placeIds, places]);
   const available = useMemo(
     () => places.filter((p) => !placeIds.includes(p.id)),
@@ -142,6 +150,10 @@ export default function PlanPage() {
           </div>
         </div>
 
+        <div className="mt-4">
+          <WeatherStrip />
+        </div>
+
         {/* Actions */}
         <div className="mt-4 flex flex-wrap gap-2">
           <button
@@ -166,6 +178,18 @@ export default function PlanPage() {
             <i className="ti ti-map-2 text-base text-gold" aria-hidden />
             {t("plan.viewMap")}
           </Link>
+          {rainyToday && placeIds.length > 1 && (
+            <button
+              onClick={() => {
+                resetAi();
+                setPlan(orderRouteForRain(placeIds, places, isOutdoorPlace));
+              }}
+              className="lanna-plan-action flex items-center gap-1.5 rounded-full border border-navy bg-white px-4 py-2 text-sm font-medium text-navy hover:bg-cream"
+            >
+              <i className="ti ti-cloud-rain text-base text-gold" aria-hidden />
+              {t("plan.rainReorder")}
+            </button>
+          )}
         </div>
 
         {aiState === "fallback" && (
@@ -512,6 +536,12 @@ function PlanStop({
                 {t("plan.arrive")} {minutesToHHMM(stop.arrivalMin)}
               </span>
               {craft && <span className="text-[10px] text-muted lg:text-xs">{loc(craft.name, lang)}</span>}
+              {stop.warning && (
+                <span className="inline-flex items-center gap-1 rounded-full bg-[#f6e3da] px-2 py-0.5 text-[10px] font-medium text-[#993c1d]">
+                  <i className={`ti ${stop.warning === "rain" ? "ti-cloud-rain" : "ti-alert-triangle"} text-[11px]`} aria-hidden />
+                  {t(`plan.warn.${stop.warning}`)}
+                </span>
+              )}
             </div>
             <Link href={`/place/${stop.place.id}`} className="mt-0.5 block truncate font-semibold text-navy hover:underline lg:text-lg">
               {loc(stop.place.name, lang)}
