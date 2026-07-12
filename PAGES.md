@@ -9,6 +9,7 @@
 | `/events/[id]` | `src/app/(sport)/events/[id]/page.tsx` | รายละเอียดงาน + AI Race-cation Planner |
 | `/checkin/[eventId]` | `src/app/(sport)/checkin/[eventId]/page.tsx` | เช็คอิน (จำลองสแกน QR ณ งาน) → แต้ม+แบดจ์+แชร์ลงฟีด |
 | `/passport` | `src/app/(sport)/passport/page.tsx` | โปรไฟล์ (ตั้งชื่อ/สี avatar) · แต้ม · แบดจ์ · ประวัติเช็คอิน |
+| `/rewards` | `src/app/(sport)/rewards/page.tsx` | แลกแต้มรับสิทธิ์ร้านชุมชน + โค้ดส่วนลด (mockup) |
 | `/chat` | `src/app/(sport)/chat/page.tsx` | AI 2 บอท: คู่หูสายกีฬา / ผู้ช่วยแอป |
 
 ## API routes

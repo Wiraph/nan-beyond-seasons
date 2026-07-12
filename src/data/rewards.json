@@ -1,0 +1,50 @@
+[
+  {
+    "id": "rw-coffee-sagad",
+    "icon": "ti-coffee",
+    "cost": 50,
+    "partner": { "th": "กาแฟสกาด Highlands", "en": "Sagad Highlands Coffee" },
+    "district": "อ.ปัว",
+    "reward": { "th": "กาแฟดริปฟรี 1 แก้ว", "en": "Free drip coffee" }
+  },
+  {
+    "id": "rw-khaolam-pakham",
+    "icon": "ti-bowl",
+    "cost": 50,
+    "partner": { "th": "โฮมสเตย์ป้าคำ สะปัน", "en": "Pa Kham Homestay, Sapan" },
+    "district": "อ.บ่อเกลือ",
+    "reward": { "th": "ข้าวหลามน่านฟรี 1 กระบอก", "en": "Free bamboo sticky rice" }
+  },
+  {
+    "id": "rw-saltspa-bokluea",
+    "icon": "ti-ripple",
+    "cost": 100,
+    "partner": { "th": "สปาเกลือบ่อเกลือ", "en": "Bo Kluea Salt Spa" },
+    "district": "อ.บ่อเกลือ",
+    "reward": { "th": "ส่วนลดสครับเกลือ 50 บาท", "en": "50 THB off a salt scrub" }
+  },
+  {
+    "id": "rw-homestay-nan",
+    "icon": "ti-home",
+    "cost": 200,
+    "partner": { "th": "โฮมสเตย์ชุมชนริมน้ำน่าน", "en": "Nan Riverside Community Homestay" },
+    "district": "อ.เมืองน่าน",
+    "reward": { "th": "ส่วนลดที่พัก 10% (1 คืน)", "en": "10% off one night's stay" }
+  },
+  {
+    "id": "rw-raft-maecharim",
+    "icon": "ti-kayak",
+    "cost": 300,
+    "partner": { "th": "ล่องแก่งชุมชนแม่จริม", "en": "Mae Charim Community Rafting" },
+    "district": "อ.แม่จริม",
+    "reward": { "th": "ส่วนลดทริปล่องแก่ง 150 บาท", "en": "150 THB off a rafting trip" }
+  },
+  {
+    "id": "rw-weaving-workshop",
+    "icon": "ti-needle-thread",
+    "cost": 250,
+    "partner": { "th": "ลำดวนผ้าทอ บ้านไทลื้อ", "en": "Lamduan Weaving, Tai Lue Village" },
+    "district": "อ.ปัว",
+    "reward": { "th": "เวิร์กช็อปทอผ้าลายน้ำไหลฟรี", "en": "Free flowing-water weaving workshop" }
+  }
+]

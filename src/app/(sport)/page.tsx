@@ -17,14 +17,16 @@ import { displayName, initial, useProfile } from "@/lib/ProfileStore";
 import { useFeed, type FeedItem } from "@/lib/FeedStore";
 import { useLeaderboard } from "@/lib/useLeaderboard";
 
-/** Fictional community members on the demo leaderboard. */
+// Fictional community members on the demo leaderboard. Point tiers are
+// spaced so every 50-point check-in visibly climbs the user past someone
+// (0 → last, 50 → passes the 30 tier, 100 → passes 80, and so on).
 const RANK_SEED: { name: string; color: string; points: number }[] = [
-  { name: "น้องเมย์ เชียร์เก่ง", color: "#7c3aed", points: 450 },
-  { name: "ทีมเรือบ้านท่าลี่", color: "#0284c7", points: 400 },
-  { name: "พี่หน่อง สายเทรล", color: "#059669", points: 300 },
-  { name: "บอส วิ่งเมืองเก่า", color: "#db2777", points: 250 },
-  { name: "ครูแอน ปั่นเพลิน", color: "#ea580c", points: 150 },
-  { name: "จ๋า เที่ยวคนเดียวก็สนุก", color: "#2563eb", points: 100 },
+  { name: "น้องเมย์ เชียร์เก่ง", color: "#7c3aed", points: 320 },
+  { name: "ทีมเรือบ้านท่าลี่", color: "#0284c7", points: 240 },
+  { name: "พี่หน่อง สายเทรล", color: "#059669", points: 180 },
+  { name: "บอส วิ่งเมืองเก่า", color: "#db2777", points: 130 },
+  { name: "ครูแอน ปั่นเพลิน", color: "#ea580c", points: 80 },
+  { name: "จ๋า เที่ยวคนเดียวก็สนุก", color: "#2563eb", points: 30 },
 ];
 
 function timeAgo(at: number, t: (k: string) => string): string {

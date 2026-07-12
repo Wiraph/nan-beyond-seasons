@@ -25,21 +25,7 @@
       "en": "Morning paddle practice on the Nan River — the mist was unreal. 70 days to the season opener, come cheer for us!"
     },
     "kudos": 41,
-    "hoursAgo": 6
-  },
-  {
-    "id": "seed-3",
-    "demo": true,
-    "author": "ครูแอน ปั่นเพลิน",
-    "avatarColor": "#ea580c",
-    "kind": "checkin",
-    "eventId": "cycling-route-1715",
-    "text": {
-      "th": "ลงทะเบียนปั่น 1715 แล้ว! ปีที่แล้วขาแทบขาด ปีนี้ขอแก้มือ ใครไปบ้าง ✌️",
-      "en": "Signed up for Route 1715! Last year destroyed my legs — this year I'm ready. Who's in?"
-    },
-    "kudos": 18,
-    "hoursAgo": 11
+    "hoursAgo": 8
   },
   {
     "id": "seed-4",
@@ -56,48 +42,6 @@
     "hoursAgo": 20
   },
   {
-    "id": "seed-5",
-    "demo": true,
-    "author": "บอส วิ่งเมืองเก่า",
-    "avatarColor": "#db2777",
-    "kind": "text",
-    "eventId": "nan-marathon",
-    "text": {
-      "th": "เปิดตารางซ้อมน่านมาราธอนแล้ว 155 วันพอทัน! เป้าปีนี้ sub-4 🏃 วิ่งผ่านวัดภูมินทร์ตอนพระอาทิตย์ขึ้นคือที่สุด",
-      "en": "Nan Marathon training block starts now — 155 days is plenty! Sub-4 or bust. Sunrise past Wat Phumin is unbeatable."
-    },
-    "kudos": 33,
-    "hoursAgo": 28
-  },
-  {
-    "id": "seed-6",
-    "demo": true,
-    "author": "น้องเมย์ เชียร์เก่ง",
-    "avatarColor": "#7c3aed",
-    "kind": "text",
-    "eventId": "boat-race-royal-cup",
-    "text": {
-      "th": "ปีนี้จะพาแม่ไปดูชิงถ้วยพระราชทานเป็นปีที่ 10 ติดต่อกัน 👑 จองโฮมสเตย์ริมน้ำไว้แล้ว ใครยังไม่จองรีบเลย เต็มไวมาก",
-      "en": "Taking mom to the Royal Cup finals for the 10th year straight! Riverside homestay booked — they fill up fast."
-    },
-    "kudos": 62,
-    "hoursAgo": 45
-  },
-  {
-    "id": "seed-7",
-    "demo": true,
-    "author": "ลุงติ่ง เสือภูเขา",
-    "avatarColor": "#0d9488",
-    "kind": "text",
-    "eventId": "doi-phu-kha-trail",
-    "text": {
-      "th": "สำรวจเส้นเทรลดอยภูคาเมื่อวาน ทางชุ่มฝนแต่วิวหลักล้าน เดือนกุมภาฯ ดอกชมพูภูคาบานพอดี ห้ามพลาด 🌸",
-      "en": "Scouted the Doi Phu Kha trail yesterday — muddy but the views are priceless. February = Chomphu Phu Kha bloom. Don't miss it."
-    },
-    "kudos": 29,
-    "hoursAgo": 52
-  },
-  {
     "id": "seed-8",
     "demo": true,
     "author": "กาแฟสกาด Highlands",
@@ -109,20 +53,6 @@
       "en": "Cyclists on Route 1715 — refuel at our farm! Show your team jersey for 10% off all Green Season."
     },
     "kudos": 37,
-    "hoursAgo": 70
-  },
-  {
-    "id": "seed-9",
-    "demo": true,
-    "author": "จ๋า เที่ยวคนเดียวก็สนุก",
-    "avatarColor": "#2563eb",
-    "kind": "text",
-    "eventId": "songkran-fun-run",
-    "text": {
-      "th": "เพิ่งรู้ว่าน่านมีวิ่งสาดน้ำสงกรานต์ด้วย 555 ปีหน้าจัดไปแน่นอน ใส่ชุดลายดอกวิ่งให้สุด 🌺💦",
-      "en": "Just found out Nan has a Songkran splash run?! Next April I'm THERE in my flower shirt 🌺💦"
-    },
-    "kudos": 15,
-    "hoursAgo": 90
+    "hoursAgo": 34
   }
 ]

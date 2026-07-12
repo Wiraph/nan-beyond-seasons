@@ -106,6 +106,12 @@ export default function PassportPage() {
               ? "สะสมแต้มจากการเช็คอิน แลกส่วนลดร้านค้า/โฮมสเตย์ชุมชนที่ร่วมรายการ"
               : "Earn points from check-ins and redeem them with participating community businesses"}
           </p>
+          <Link
+            href="/rewards"
+            className="mt-3 flex items-center justify-center gap-1.5 rounded bg-volt py-2.5 text-sm font-bold text-white transition hover:bg-volt-600"
+          >
+            <i className="ti ti-gift text-base" aria-hidden /> {t("rewards.open")}
+          </Link>
         </section>
 
         {/* Badges */}
@@ -149,7 +155,7 @@ export default function PassportPage() {
                     <span className="min-w-0 flex-1 truncate text-sm font-semibold text-frost">
                       {loc(e.name, lang)}
                     </span>
-                    <span className="shrink-0 text-[11px] text-steel">{fmtDate(c.at.slice(0, 10), lang)}</span>
+                    <span className="shrink-0 text-[11px] text-steel">{fmtDate(c.at, lang)}</span>
                   </Link>
                 );
               })}

@@ -124,12 +124,18 @@ export default function CheckinPage({
             </div>
           </div>
         ) : (
-          <button
-            onClick={doCheckIn}
-            className="mt-8 flex items-center gap-2 rounded bg-volt px-8 py-3 text-base font-bold text-pitch transition hover:bg-volt-600"
-          >
-            <i className="ti ti-qrcode text-xl" aria-hidden /> {t("sport.checkin")}
-          </button>
+          <>
+            <button
+              onClick={doCheckIn}
+              className="mt-8 flex items-center gap-2 rounded bg-volt px-8 py-3 text-base font-bold text-white transition hover:bg-volt-600"
+            >
+              <i className="ti ti-qrcode text-xl" aria-hidden /> {t("sport.checkin")}
+            </button>
+            <p className="mt-4 flex max-w-xs items-start gap-1.5 text-[11px] text-steel">
+              <i className="ti ti-shield-lock mt-0.5 shrink-0 text-volt" aria-hidden />
+              {t("sport.checkinAntiFake")}
+            </p>
+          </>
         )}
       </main>
     </>

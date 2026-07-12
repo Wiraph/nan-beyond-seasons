@@ -88,7 +88,11 @@ const MONTH_TH = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค
 const MONTH_EN = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 export function fmtDate(iso: string, lang: string): string {
-  const d = new Date(`${iso}T00:00:00`);
+  // Date-only strings (event dates like "2026-09-19") are shown literally.
+  // Full timestamps (check-ins, stored as UTC ISO) are converted to the
+  // viewer's LOCAL date so a check-in just after Thai midnight shows today,
+  // not yesterday's UTC date.
+  const d = iso.includes("T") ? new Date(iso) : new Date(`${iso}T00:00:00`);
   const months = lang === "th" ? MONTH_TH : MONTH_EN;
   const year = lang === "th" ? d.getFullYear() + 543 : d.getFullYear();
   return `${d.getDate()} ${months[d.getMonth()]} ${year}`;
