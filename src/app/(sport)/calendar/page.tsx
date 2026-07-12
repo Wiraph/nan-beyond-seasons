@@ -40,7 +40,7 @@ export default function CalendarPage() {
   return (
     <>
       {/* Header */}
-      <header className="sticky top-0 z-30 border-b border-white/10 bg-pitch/85 backdrop-blur">
+      <header className="sticky top-0 z-30 border-b border-black/10 bg-pitch/85 backdrop-blur">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 lg:px-8">
           <Link href="/" className="flex items-center gap-2">
             <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-volt text-pitch">
@@ -72,10 +72,10 @@ export default function CalendarPage() {
                 {t("sport.nextEvent")}
               </span>
             )}
-            <span className={`rounded-full bg-white/10 px-2.5 py-1 font-medium ${SEASON_ACCENT[hero.season].text}`}>
+            <span className={`rounded-full bg-black/5 px-2.5 py-1 font-medium ${SEASON_ACCENT[hero.season].text}`}>
               {loc(seasonsData.seasons[hero.season].name, lang)}
             </span>
-            <span className="rounded-full bg-white/10 px-2.5 py-1 text-steel">
+            <span className="rounded-full bg-black/5 px-2.5 py-1 text-steel">
               {loc(SPORT_TYPE_LABEL[hero.sportType] ?? { th: hero.sportType, en: hero.sportType }, lang)}
             </span>
           </div>
@@ -110,7 +110,7 @@ export default function CalendarPage() {
                 </div>
               )}
               {(heroForecast || weather) && (
-                <div className="rounded-2xl bg-white/5 px-4 py-3 text-center">
+                <div className="rounded-2xl bg-black/5 px-4 py-3 text-center">
                   <div className="text-[10px] uppercase tracking-wider text-steel">{t("sport.raceDay")}</div>
                   {heroForecast ? (
                     <>
@@ -141,7 +141,7 @@ export default function CalendarPage() {
             </Link>
             <Link
               href={`/checkin/${hero.id}`}
-              className="flex items-center gap-1.5 rounded-full border border-white/20 px-5 py-2.5 text-sm font-semibold text-frost transition hover:border-volt hover:text-volt"
+              className="flex items-center gap-1.5 rounded-full border border-black/15 px-5 py-2.5 text-sm font-semibold text-frost transition hover:border-volt hover:text-volt"
             >
               <i className="ti ti-qrcode text-base" aria-hidden /> {t("sport.checkin")}
             </Link>
@@ -220,7 +220,7 @@ function SeasonBlock({
               className={`sport-card hover-lift rounded-2xl p-4 ${accent.flag}`}
             >
               <div className="flex items-start gap-3">
-                <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/8 ${accent.text}`}>
+                <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-black/5 ${accent.text}`}>
                   <i className={`ti ${e.icon} text-2xl`} aria-hidden />
                 </span>
                 <div className="min-w-0 flex-1">
@@ -230,7 +230,7 @@ function SeasonBlock({
                   </div>
                   <div className="mt-1.5 flex items-center gap-2 text-[11px]" suppressHydrationWarning>
                     {status === "live" ? (
-                      <span className="flex items-center gap-1 font-bold text-[#ff8f92]">
+                      <span className="flex items-center gap-1 font-bold text-[#e5484d]">
                         <span className="sport-live-dot h-1.5 w-1.5 rounded-full bg-[#e5484d]" /> {t("sport.liveNow")}
                       </span>
                     ) : status === "past" ? (

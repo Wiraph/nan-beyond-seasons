@@ -18,7 +18,7 @@ export default function PassportPage() {
 
   return (
     <>
-      <header className="sticky top-0 z-30 border-b border-white/10 bg-pitch/85 backdrop-blur">
+      <header className="sticky top-0 z-30 border-b border-black/10 bg-pitch/85 backdrop-blur">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 lg:px-8">
           <h1 className="flex items-center gap-2 text-lg font-extrabold text-frost">
             <i className="ti ti-id-badge-2 text-volt" aria-hidden /> {t("sport.passport")}
@@ -31,7 +31,7 @@ export default function PassportPage() {
         {/* Score card */}
         <section className="sport-card anim-rise rounded-3xl p-5 lg:p-6">
           {/* Profile row */}
-          <div className="mb-4 flex items-center gap-3 border-b border-white/8 pb-4">
+          <div className="mb-4 flex items-center gap-3 border-b border-black/8 pb-4">
             <span
               className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-lg font-bold text-pitch"
               style={{ backgroundColor: profile.color }}
@@ -46,7 +46,7 @@ export default function PassportPage() {
                   onChange={(e) => setName(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && setEditing(false)}
                   placeholder={t("feed.editName")}
-                  className="w-full rounded-lg border border-white/15 bg-pitch-800 px-3 py-1.5 text-sm text-frost outline-none placeholder:text-steel focus:border-volt"
+                  className="w-full rounded-lg border border-black/15 bg-pitch-800 px-3 py-1.5 text-sm text-frost outline-none placeholder:text-steel focus:border-volt"
                 />
                 <div className="mt-2 flex items-center gap-1.5">
                   {AVATAR_COLORS.map((c) => (
@@ -79,7 +79,7 @@ export default function PassportPage() {
                 <button
                   onClick={() => setEditing(true)}
                   aria-label={t("feed.editName")}
-                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-steel transition hover:bg-white/10 hover:text-volt"
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-steel transition hover:bg-black/5 hover:text-volt"
                 >
                   <i className="ti ti-pencil text-lg" aria-hidden />
                 </button>
@@ -158,7 +158,7 @@ export default function PassportPage() {
         )}
 
         {hydrated && checkins.length === 0 && (
-          <div className="mt-6 rounded-2xl border border-dashed border-white/15 p-8 text-center">
+          <div className="mt-6 rounded-2xl border border-dashed border-black/15 p-8 text-center">
             <i className="ti ti-qrcode text-4xl text-steel" aria-hidden />
             <p className="mt-2 text-sm text-steel">
               {lang === "th"

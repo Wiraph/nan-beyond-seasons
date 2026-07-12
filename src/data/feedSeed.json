@@ -3,7 +3,7 @@
     "id": "seed-1",
     "demo": true,
     "author": "พี่หน่อง สายเทรล",
-    "avatarColor": "#4ade80",
+    "avatarColor": "#059669",
     "kind": "text",
     "eventId": "wa-river-rafting",
     "text": {
@@ -17,7 +17,7 @@
     "id": "seed-2",
     "demo": true,
     "author": "ทีมเรือบ้านท่าลี่",
-    "avatarColor": "#38bdf8",
+    "avatarColor": "#0284c7",
     "kind": "text",
     "eventId": "boat-race-opening",
     "text": {
@@ -31,7 +31,7 @@
     "id": "seed-3",
     "demo": true,
     "author": "ครูแอน ปั่นเพลิน",
-    "avatarColor": "#fb923c",
+    "avatarColor": "#ea580c",
     "kind": "checkin",
     "eventId": "cycling-route-1715",
     "text": {
@@ -45,7 +45,7 @@
     "id": "seed-4",
     "demo": true,
     "author": "โฮมสเตย์ป้าคำ สะปัน",
-    "avatarColor": "#c8f135",
+    "avatarColor": "#fc5200",
     "kind": "text",
     "eventId": "wa-river-rafting",
     "text": {
@@ -59,7 +59,7 @@
     "id": "seed-5",
     "demo": true,
     "author": "บอส วิ่งเมืองเก่า",
-    "avatarColor": "#f472b6",
+    "avatarColor": "#db2777",
     "kind": "text",
     "eventId": "nan-marathon",
     "text": {
@@ -73,7 +73,7 @@
     "id": "seed-6",
     "demo": true,
     "author": "น้องเมย์ เชียร์เก่ง",
-    "avatarColor": "#a78bfa",
+    "avatarColor": "#7c3aed",
     "kind": "text",
     "eventId": "boat-race-royal-cup",
     "text": {
@@ -87,7 +87,7 @@
     "id": "seed-7",
     "demo": true,
     "author": "ลุงติ่ง เสือภูเขา",
-    "avatarColor": "#34d399",
+    "avatarColor": "#0d9488",
     "kind": "text",
     "eventId": "doi-phu-kha-trail",
     "text": {
@@ -101,7 +101,7 @@
     "id": "seed-8",
     "demo": true,
     "author": "กาแฟสกาด Highlands",
-    "avatarColor": "#fbbf24",
+    "avatarColor": "#d97706",
     "kind": "text",
     "eventId": "cycling-route-1715",
     "text": {
@@ -115,7 +115,7 @@
     "id": "seed-9",
     "demo": true,
     "author": "จ๋า เที่ยวคนเดียวก็สนุก",
-    "avatarColor": "#60a5fa",
+    "avatarColor": "#2563eb",
     "kind": "text",
     "eventId": "songkran-fun-run",
     "text": {

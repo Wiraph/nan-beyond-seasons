@@ -43,12 +43,12 @@ export default function CheckinPage({
 
   return (
     <>
-      <header className="sticky top-0 z-30 border-b border-white/10 bg-pitch/85 backdrop-blur">
+      <header className="sticky top-0 z-30 border-b border-black/10 bg-pitch/85 backdrop-blur">
         <div className="mx-auto flex w-full max-w-7xl items-center px-4 py-3 lg:px-8">
           <button
             onClick={() => router.back()}
             aria-label={t("common.back")}
-            className="flex h-9 w-9 items-center justify-center rounded-full text-steel transition hover:bg-white/10 hover:text-frost"
+            className="flex h-9 w-9 items-center justify-center rounded-full text-steel transition hover:bg-black/5 hover:text-frost"
           >
             <i className="ti ti-arrow-left text-xl" aria-hidden />
           </button>
@@ -56,7 +56,7 @@ export default function CheckinPage({
       </header>
 
       <main className="mx-auto flex w-full max-w-lg flex-1 flex-col items-center px-4 pb-10 pt-8 text-center">
-        <span className={`flex h-16 w-16 items-center justify-center rounded-2xl bg-white/8 ${accent.text}`}>
+        <span className={`flex h-16 w-16 items-center justify-center rounded-2xl bg-black/5 ${accent.text}`}>
           <i className={`ti ${event.icon} text-4xl`} aria-hidden />
         </span>
         <p className="mt-3 text-xs text-steel">
@@ -66,7 +66,7 @@ export default function CheckinPage({
         <p className="mt-1 text-sm text-steel">
           {loc(event.venue.name, lang)} · {districtLoc(event.venue.district, lang)}
         </p>
-        <span className={`mt-2 rounded-full bg-white/10 px-2.5 py-1 text-[11px] font-medium ${accent.text}`}>
+        <span className={`mt-2 rounded-full bg-black/5 px-2.5 py-1 text-[11px] font-medium ${accent.text}`}>
           {loc(seasonsData.seasons[event.season].name, lang)}
         </span>
 
@@ -106,7 +106,7 @@ export default function CheckinPage({
               </Link>
               <Link
                 href="/passport"
-                className="inline-flex items-center gap-1.5 rounded-full border border-white/20 px-6 py-2.5 text-sm font-semibold text-frost transition hover:border-volt hover:text-volt"
+                className="inline-flex items-center gap-1.5 rounded-full border border-black/15 px-6 py-2.5 text-sm font-semibold text-frost transition hover:border-volt hover:text-volt"
               >
                 <i className="ti ti-id-badge-2 text-base" aria-hidden /> {t("sport.passport")}
               </Link>
@@ -114,7 +114,7 @@ export default function CheckinPage({
           </div>
         ) : already ? (
           <div className="mt-8 w-full">
-            <p className="inline-flex items-center gap-1.5 rounded-full bg-white/8 px-4 py-2 text-sm text-steel">
+            <p className="inline-flex items-center gap-1.5 rounded-full bg-black/5 px-4 py-2 text-sm text-steel">
               <i className="ti ti-circle-check text-volt" aria-hidden /> {t("sport.checkedIn")}
             </p>
             <div className="mt-4">

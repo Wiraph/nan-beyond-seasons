@@ -71,12 +71,12 @@ export default function EventPage({
 
   return (
     <>
-      <header className="sticky top-0 z-30 border-b border-white/10 bg-pitch/85 backdrop-blur">
+      <header className="sticky top-0 z-30 border-b border-black/10 bg-pitch/85 backdrop-blur">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 lg:px-8">
           <button
             onClick={() => router.back()}
             aria-label={t("common.back")}
-            className="flex h-9 w-9 items-center justify-center rounded-full text-steel transition hover:bg-white/10 hover:text-frost"
+            className="flex h-9 w-9 items-center justify-center rounded-full text-steel transition hover:bg-black/5 hover:text-frost"
           >
             <i className="ti ti-arrow-left text-xl" aria-hidden />
           </button>
@@ -93,10 +93,10 @@ export default function EventPage({
                 <span className="sport-live-dot h-2 w-2 rounded-full bg-white" /> {t("sport.liveNow")}
               </span>
             )}
-            <span className={`rounded-full bg-white/10 px-2.5 py-1 font-medium ${accent.text}`}>
+            <span className={`rounded-full bg-black/5 px-2.5 py-1 font-medium ${accent.text}`}>
               {loc(seasonsData.seasons[event.season].name, lang)}
             </span>
-            <span className="rounded-full bg-white/10 px-2.5 py-1 text-steel">
+            <span className="rounded-full bg-black/5 px-2.5 py-1 text-steel">
               {loc(SPORT_TYPE_LABEL[event.sportType] ?? { th: event.sportType, en: event.sportType }, lang)}
             </span>
             {event.mode.map((m) => (
@@ -156,7 +156,7 @@ export default function EventPage({
             <i className="ti ti-star text-volt" aria-hidden /> {loc(event.highlight, lang)}
           </p>
           {!event.verified && (
-            <p className="mt-3 inline-flex items-center gap-1.5 rounded-lg bg-white/5 px-2.5 py-1.5 text-[11px] text-steel">
+            <p className="mt-3 inline-flex items-center gap-1.5 rounded-lg bg-black/5 px-2.5 py-1.5 text-[11px] text-steel">
               <i className="ti ti-info-circle" aria-hidden /> {t("sport.unverified")}
             </p>
           )}
@@ -175,7 +175,7 @@ export default function EventPage({
             </button>
             <Link
               href={`/checkin/${event.id}`}
-              className="flex items-center gap-1.5 rounded-full border border-white/20 px-5 py-2.5 text-sm font-semibold text-frost transition hover:border-volt hover:text-volt"
+              className="flex items-center gap-1.5 rounded-full border border-black/15 px-5 py-2.5 text-sm font-semibold text-frost transition hover:border-volt hover:text-volt"
             >
               <i className="ti ti-qrcode text-base" aria-hidden /> {t("sport.checkin")}
             </Link>
@@ -202,7 +202,7 @@ export default function EventPage({
                     {day.stops.map((s, si) => (
                       <div key={si} className="flex gap-3">
                         <span className="sport-num w-14 shrink-0 pt-0.5 text-sm text-volt">{s.time}</span>
-                        <div className="min-w-0 flex-1 border-l border-white/10 pl-3">
+                        <div className="min-w-0 flex-1 border-l border-black/10 pl-3">
                           {s.placeId ? (
                             <Link href={`/place/${s.placeId}`} className="font-semibold text-frost hover:text-volt hover:underline">
                               {s.title}

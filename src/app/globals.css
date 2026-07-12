@@ -22,17 +22,19 @@
   --font-sans: var(--font-noto-thai), system-ui, sans-serif;
   --font-lanna: var(--font-lanna-src), var(--font-noto-thai), serif;
 
-  /* ---- Nan Game On (sport pivot) ---- */
-  --color-pitch: #0b1220; /* near-black blue backdrop */
-  --color-pitch-800: #111c30;
-  --color-pitch-700: #182741;
-  --color-frost: #f2f6fa; /* light text on pitch */
-  --color-steel: #8fa1b8; /* muted text on pitch */
-  --color-volt: #c8f135; /* brand accent — electric volt */
-  --color-volt-600: #a8d31c;
-  --color-season-green: #4ade80;
-  --color-season-cool: #38bdf8;
-  --color-season-hot: #fb923c;
+  /* ---- Nan Game On (sport pivot) — light, Strava-like ----
+     Same token names the sport pages were built with; values flipped
+     from the original dark palette to a clean light theme. */
+  --color-pitch: #f6f7f9; /* page background */
+  --color-pitch-800: #ffffff; /* card / input surfaces */
+  --color-pitch-700: #f1f3f6;
+  --color-frost: #17202b; /* primary text */
+  --color-steel: #5f6b7a; /* muted text */
+  --color-volt: #fc5200; /* brand accent — Strava orange */
+  --color-volt-600: #d94700;
+  --color-season-green: #15803d;
+  --color-season-cool: #0284c7;
+  --color-season-hot: #ea580c;
 }
 
 :root {
@@ -400,12 +402,12 @@ body {
 
 /* ---------- Nan Game On (sport pivot) ---------- */
 
-/* Dark pitch backdrop with subtle diagonal speed lines */
+/* Light backdrop with a faint orange glow and diagonal speed lines */
 .sport-bg {
   background-color: var(--color-pitch);
   background-image:
-    radial-gradient(1200px 500px at 85% -10%, rgba(200, 241, 53, 0.08), transparent 60%),
-    repeating-linear-gradient(115deg, rgba(255, 255, 255, 0.02) 0 2px, transparent 2px 18px);
+    radial-gradient(1200px 500px at 85% -10%, rgba(252, 82, 0, 0.05), transparent 60%),
+    repeating-linear-gradient(115deg, rgba(23, 32, 43, 0.015) 0 2px, transparent 2px 18px);
 }
 
 /* Big display numbers (countdown, points) */
@@ -415,10 +417,11 @@ body {
   letter-spacing: -0.03em;
 }
 
-/* Volt-edged card on dark surfaces */
+/* White card, Strava-style: quiet border + soft shadow, accent bar on hover */
 .sport-card {
-  background: linear-gradient(160deg, var(--color-pitch-800), var(--color-pitch-700));
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--color-pitch-800);
+  border: 1px solid rgba(23, 32, 43, 0.08);
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
   position: relative;
   overflow: hidden;
 }

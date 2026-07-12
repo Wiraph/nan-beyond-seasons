@@ -140,7 +140,7 @@ function ChatInner() {
 
   return (
     <>
-      <header className="sticky top-0 z-30 border-b border-white/10 bg-pitch/85 backdrop-blur">
+      <header className="sticky top-0 z-30 border-b border-black/10 bg-pitch/85 backdrop-blur">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 lg:px-8">
           <h1 className="flex items-center gap-2 text-lg font-extrabold text-frost">
             <i className="ti ti-message-chatbot text-volt" aria-hidden /> {t("sport.chatTitle")}
@@ -206,7 +206,7 @@ function ChatInner() {
                 <button
                   key={s}
                   onClick={() => send(s)}
-                  className="flex shrink-0 items-center gap-1.5 rounded-full border border-white/15 px-3 py-1.5 text-xs text-steel transition hover:border-volt hover:text-volt lg:px-4 lg:text-sm"
+                  className="flex shrink-0 items-center gap-1.5 rounded-full border border-black/15 px-3 py-1.5 text-xs text-steel transition hover:border-volt hover:text-volt lg:px-4 lg:text-sm"
                 >
                   <i
                     className={`ti ${["ti-sailboat", "ti-cloud-rain", "ti-map-pin"][i] ?? "ti-sparkles"} text-sm`}
@@ -222,7 +222,7 @@ function ChatInner() {
               e.preventDefault();
               send(input);
             }}
-            className="flex items-center gap-2 rounded-full border border-white/15 bg-pitch-800 py-1.5 pl-4 pr-1.5"
+            className="flex items-center gap-2 rounded-full border border-black/15 bg-pitch-800 py-1.5 pl-4 pr-1.5"
           >
             <input
               value={input}
@@ -261,7 +261,7 @@ function PlaceMini({ place, lang }: { place: Place; lang: LangCode }) {
   return (
     <Link
       href={`/place/${place.id}`}
-      className="flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/5 p-2.5 transition hover:border-volt/50"
+      className="flex items-center gap-2.5 rounded-xl border border-black/10 bg-black/5 p-2.5 transition hover:border-volt/50"
     >
       <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-volt/12 text-volt">
         <i className={`ti ${place.icon} text-xl`} aria-hidden />

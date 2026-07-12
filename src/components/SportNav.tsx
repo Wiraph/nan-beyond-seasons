@@ -17,7 +17,7 @@ export default function SportNav() {
   const { t } = useI18n();
 
   return (
-    <nav className="sticky bottom-0 z-20 grid grid-cols-5 border-t border-white/10 bg-pitch-800/95 backdrop-blur lg:hidden">
+    <nav className="sticky bottom-0 z-20 grid grid-cols-5 border-t border-black/10 bg-pitch-800/95 backdrop-blur lg:hidden">
       {items.map((it) => {
         const active =
           it.href === "/" ? pathname === "/" : pathname.startsWith(it.href);

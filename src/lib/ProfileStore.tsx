@@ -7,16 +7,16 @@ export type Profile = {
   color: string;
 };
 
-const DEFAULT_PROFILE: Profile = { name: "", color: "#c8f135" };
+const DEFAULT_PROFILE: Profile = { name: "", color: "#fc5200" };
 
 export const AVATAR_COLORS = [
-  "#c8f135",
-  "#4ade80",
-  "#38bdf8",
-  "#fb923c",
-  "#f472b6",
-  "#a78bfa",
-  "#fbbf24",
+  "#fc5200",
+  "#059669",
+  "#0284c7",
+  "#ea580c",
+  "#db2777",
+  "#7c3aed",
+  "#d97706",
 ];
 
 /** Display name with a sensible default per language. */
