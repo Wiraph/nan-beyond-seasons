@@ -12,6 +12,7 @@ export type FeedSeedPost = {
   kind: "text" | "checkin";
   eventId?: string;
   text: { th: string; en: string };
+  image?: string;
   kudos: number;
   hoursAgo: number;
 };
@@ -23,6 +24,7 @@ export type UserPost = {
   kind: "text" | "checkin";
   eventId?: string;
   text?: string;
+  imageUrl?: string;
   badgeIds?: string[];
   points?: number;
   at: string; // ISO datetime
@@ -36,6 +38,7 @@ type RemotePost = {
   kind: "text" | "checkin";
   event_id: string | null;
   text: string | null;
+  image_url: string | null;
   badge_ids: string[] | null;
   points: number | null;
   at: string;
@@ -51,6 +54,7 @@ export type FeedItem = {
   kind: "text" | "checkin";
   eventId?: string;
   text?: { th: string; en: string } | string;
+  imageUrl?: string;
   badgeIds?: string[];
   points?: number;
   at: number; // epoch ms, for sorting
@@ -148,6 +152,7 @@ export function FeedProvider({ children }: { children: React.ReactNode }) {
         kind: p.kind,
         eventId: p.eventId,
         text: p.text,
+        imageUrl: p.imageUrl,
         badgeIds: p.badgeIds,
         points: p.points,
         at: new Date(p.at).getTime(),
@@ -166,6 +171,7 @@ export function FeedProvider({ children }: { children: React.ReactNode }) {
           kind: r.kind,
           eventId: r.event_id ?? undefined,
           text: r.text ?? undefined,
+          imageUrl: r.image_url ?? undefined,
           badgeIds: Array.isArray(r.badge_ids) ? r.badge_ids : undefined,
           points: r.points ?? undefined,
           at: new Date(r.at).getTime(),
@@ -180,6 +186,7 @@ export function FeedProvider({ children }: { children: React.ReactNode }) {
         kind: p.kind,
         eventId: p.eventId,
         text: p.text,
+        imageUrl: p.image,
         at: now - p.hoursAgo * 3600_000,
         baseKudos: p.kudos + (remoteKudos[p.id] ?? 0),
       })),
@@ -214,6 +221,8 @@ export function FeedProvider({ children }: { children: React.ReactNode }) {
               kind: post.kind,
               event_id: post.eventId ?? null,
               text: post.text ?? null,
+              // Only real URLs go to the DB; local data URLs stay on-device.
+              image_url: post.imageUrl?.startsWith("http") ? post.imageUrl : null,
               badge_ids: post.badgeIds ?? [],
               points: post.points ?? 0,
             })

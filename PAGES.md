@@ -33,6 +33,7 @@
 `sportsEvents.json` งานกีฬา 7 งาน · `seasons.json` ปฏิทินฤดู 12 เดือน · `feedSeed.json` โพสต์ตัวอย่าง ·
 `places.json` สถานที่ 15 แห่ง · `wellness.json` ประสบการณ์ 15 รายการ · `hotels/operators.json` ผู้ประกอบการจริง 300+ ราย
 
-## Supabase (`supabase/schema.sql`)
+## Supabase (`supabase/schema.sql` + `supabase/storage.sql`)
 
-`profiles` · `checkins` · `posts` · `kudos` — RLS เปิด (anon policy สำหรับ prototype)
+`profiles` · `checkins` · `posts` (มี `image_url`) · `kudos` — RLS เปิด (anon policy สำหรับ prototype)
+Storage bucket `post-images` (public) สำหรับรูปในฟีด — โพสต์รูปผ่าน `src/lib/uploadImage.ts` (บีบอัด client → อัปโหลด / fallback dataURL)

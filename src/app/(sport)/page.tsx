@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import LangSwitcher from "@/components/LangSwitcher";
+import { uploadPostImage } from "@/lib/uploadImage";
 import { useI18n } from "@/i18n/I18nProvider";
 import { loc } from "@/lib/types";
 import {
@@ -213,38 +214,109 @@ function FeedTab() {
   const { items, kudosed, addPost, toggleKudos, hydrated } = useFeed();
   const { profile } = useProfile();
   const [draft, setDraft] = useState("");
+  const [file, setFile] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
 
-  const submit = (e: React.FormEvent) => {
+  const pickFile = (f: File | null) => {
+    setErr(null);
+    if (!f) return;
+    if (!f.type.startsWith("image/")) return;
+    setFile(f);
+    if (preview) URL.revokeObjectURL(preview);
+    setPreview(URL.createObjectURL(f));
+  };
+
+  const clearImage = () => {
+    if (preview) URL.revokeObjectURL(preview);
+    setFile(null);
+    setPreview(null);
+    if (fileRef.current) fileRef.current.value = "";
+  };
+
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     const text = draft.trim();
-    if (!text) return;
-    addPost({ kind: "text", text });
+    if (!text && !file) return;
+
+    let imageUrl: string | undefined;
+    if (file) {
+      setUploading(true);
+      try {
+        imageUrl = await uploadPostImage(file);
+      } catch {
+        // compress/upload failed (too large, decode error) — surface and stop
+        setUploading(false);
+        setErr(t("feed.imageTooLarge"));
+        return;
+      }
+      setUploading(false);
+    }
+
+    addPost({ kind: "text", text: text || undefined, imageUrl });
     setDraft("");
+    clearImage();
   };
 
   return (
     <div className="mt-4">
       {/* Composer */}
-      <form onSubmit={submit} className="sport-card flex items-center gap-2.5 rounded-md p-3">
-        <span
-          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-bold text-pitch"
-          style={{ backgroundColor: profile.color }}
-        >
-          {initial(displayName(profile, lang))}
-        </span>
-        <input
-          value={draft}
-          onChange={(e) => setDraft(e.target.value)}
-          placeholder={t("feed.composer")}
-          className="min-w-0 flex-1 bg-transparent text-sm text-frost outline-none placeholder:text-steel"
-        />
-        <button
-          type="submit"
-          disabled={!draft.trim()}
-          className="shrink-0 rounded bg-volt px-4 py-1.5 text-xs font-bold text-pitch transition hover:bg-volt-600 disabled:opacity-40"
-        >
-          {t("feed.post")}
-        </button>
+      <form onSubmit={submit} className="sport-card rounded-md p-3">
+        <div className="flex items-center gap-2.5">
+          <span
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white"
+            style={{ backgroundColor: profile.color }}
+          >
+            {initial(displayName(profile, lang))}
+          </span>
+          <input
+            value={draft}
+            onChange={(e) => setDraft(e.target.value)}
+            placeholder={t("feed.composer")}
+            className="min-w-0 flex-1 bg-transparent text-sm text-frost outline-none placeholder:text-steel"
+          />
+          <input
+            ref={fileRef}
+            type="file"
+            accept="image/*"
+            hidden
+            onChange={(e) => pickFile(e.target.files?.[0] ?? null)}
+          />
+          <button
+            type="button"
+            onClick={() => fileRef.current?.click()}
+            aria-label={t("feed.addPhoto")}
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded text-steel transition hover:bg-black/5 hover:text-volt"
+          >
+            <i className="ti ti-photo text-lg" aria-hidden />
+          </button>
+          <button
+            type="submit"
+            disabled={(!draft.trim() && !file) || uploading}
+            className="flex shrink-0 items-center gap-1 rounded bg-volt px-4 py-1.5 text-xs font-bold text-white transition hover:bg-volt-600 disabled:opacity-40"
+          >
+            {uploading && <i className="ti ti-loader-2 animate-spin" aria-hidden />}
+            {uploading ? t("feed.uploading") : t("feed.post")}
+          </button>
+        </div>
+
+        {preview && (
+          <div className="relative mt-2.5 w-fit">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={preview} alt="" className="max-h-56 rounded-md border border-black/10 object-cover" />
+            <button
+              type="button"
+              onClick={clearImage}
+              aria-label={t("feed.removePhoto")}
+              className="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-full bg-black/60 text-white transition hover:bg-black/80"
+            >
+              <i className="ti ti-x text-sm" aria-hidden />
+            </button>
+          </div>
+        )}
+        {err && <p className="mt-2 text-[11px] text-[#e5484d]">{err}</p>}
       </form>
 
       {/* Posts */}
@@ -331,6 +403,17 @@ function PostCard({
 
       {/* Body */}
       {text && <p className="mt-2.5 text-sm leading-relaxed text-frost">{text}</p>}
+
+      {/* Photo */}
+      {item.imageUrl && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={item.imageUrl}
+          alt=""
+          loading="lazy"
+          className="mt-2.5 max-h-96 w-full rounded-md border border-black/10 object-cover"
+        />
+      )}
 
       {/* Badges earned */}
       {item.badgeIds && item.badgeIds.length > 0 && (

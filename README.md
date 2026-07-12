@@ -23,7 +23,7 @@
 | 🗓️ **ปฏิทินกีฬา 12 เดือน** | 1 | จัดกลุ่มตามฤดู + countdown + พยากรณ์อากาศวันงานจริง (Open-Meteo) |
 | 🤖 **AI Race-cation Planner** | 1 | กดปุ่มเดียว AI จัดทริป 2 วันรอบงานแข่ง ปรับตามอากาศจริง เน้นร้าน/ที่พักชุมชน |
 | 💬 **AI Chat 2 บอท** | 1–2 | คู่หูสายกีฬา (งานแข่ง+ที่เที่ยว พร้อมการ์ดกดต่อได้) + ผู้ช่วยแอป |
-| 📱 **ฟีด Social แบบ Strava** | 3 | โพสต์/kudos/เห็นกันข้ามเครื่องจริงผ่าน Supabase — ชุมชนนักกีฬา+ผู้ประกอบการ |
+| 📱 **ฟีด Social แบบ Strava** | 3 | โพสต์ข้อความ+รูปภาพ / kudos / เห็นกันข้ามเครื่องจริงผ่าน Supabase (Storage) — ชุมชนนักกีฬา+ผู้ประกอบการ |
 | 🎫 **Check-in Passport** | 3 | สแกน QR ที่งาน +50 แต้ม แบดจ์ตามฤดู ("ครบ 3 ฤดู = All-Season Athlete") |
 | 🎁 **แลกแต้ม (Rewards)** | 3 | เอาแต้มแลกสิทธิ์จริงจากร้าน/โฮมสเตย์/ล่องแก่งชุมชน → ได้โค้ดไปแสดงที่ร้าน ปิด loop ธุรกิจ |
 | 🏆 **Leaderboard** | 3 | อันดับแต้มจริงจากผู้ใช้ทุกเครื่อง จูงใจกลับมาเที่ยวซ้ำนอกฤดู |
@@ -56,7 +56,7 @@ npm run dev                  # → http://localhost:3000
 1. Import repo นี้ใน Vercel (zero-config)
 2. Settings → Environment Variables ใส่ 3 ตัว:
    `OPENROUTER_API_KEY` · `NEXT_PUBLIC_SUPABASE_URL` · `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-3. รัน `supabase/schema.sql` ใน Supabase Dashboard → SQL Editor (ครั้งเดียว)
+3. รัน `supabase/schema.sql` แล้วตามด้วย `supabase/storage.sql` ใน Supabase Dashboard → SQL Editor (ครั้งเดียว — storage.sql เปิดระบบโพสต์รูป)
 
 ## 🔑 สำหรับกรรมการ (Test Account)
 
@@ -72,6 +72,7 @@ npm run dev                  # → http://localhost:3000
 - ไม่มี secret ใน repo — ทุก key อยู่ใน env variables (`.env*` ถูก gitignore)
 - Supabase ใช้ anon key + RLS policy แบบเปิดสำหรับ prototype — production ต้องเพิ่ม auth จริง
 - โพสต์ตัวอย่างในฟีดติดป้าย "ตัวอย่าง" ทุกโพสต์ และไม่ใช้รูปภาพบุคคลจริง
+- โพสต์รูปเป็น prototype (บีบอัดฝั่ง client + เก็บ Supabase Storage) — production ต้องเพิ่มการตรวจสอบเนื้อหารูป (moderation)
 - ข้อมูลสถานที่/ประสบการณ์ curate จากข้อมูลจริงของจังหวัดน่าน (TAT)
 
 ---
