@@ -1,55 +1,37 @@
-# Nan Connect — แผนที่ path ของทุกหน้า
+# แผนผังหน้า — Nan Game On
 
-อ้างอิงว่าโค้ดของแต่ละหน้า/เมนูอยู่ที่ไฟล์ไหน (Next.js App Router — ทุกหน้าคือไฟล์ `page.tsx`)
+## แอปหลัก (ธีมกีฬา, กลุ่ม route `(sport)`)
 
-## เว็บนักท่องเที่ยว (Tourist — mobile-first)
-| URL | หน้า | ไฟล์โค้ด |
-|-----|------|----------|
-| `/` | หน้าแรก / สำรวจ | `src/app/(tourist)/page.tsx` |
-| `/chat` | แชต AI (มัคคุเทศก์) | `src/app/(tourist)/chat/page.tsx` |
-| `/plan` | จัดเส้นทาง / Itinerary | `src/app/(tourist)/plan/page.tsx` |
-| `/map` | แผนที่ (Leaflet + OSM) | `src/app/(tourist)/map/page.tsx` |
-| `/search` | ค้นหา (ข้ามภาษา) | `src/app/(tourist)/search/page.tsx` |
-| `/place/[id]` | รายละเอียดสถานที่ (5 หมวด) | `src/app/(tourist)/place/[id]/page.tsx` |
-| `/category/[type]` | รายการตามหมวด | `src/app/(tourist)/category/[type]/page.tsx` |
-| `/biz/[id]` | รายละเอียดผู้ประกอบการ | `src/app/(tourist)/biz/[id]/page.tsx` |
-| `/s/[qrId]` | หน้าหลังสแกน QR | `src/app/s/[qrId]/page.tsx` |
-| — | layout มือถือ (bottom nav) | `src/app/(tourist)/layout.tsx` |
+| Route | ไฟล์ | หน้าที่ |
+|---|---|---|
+| `/` | `src/app/(sport)/page.tsx` | ฟีด social แบบ Strava + แถบงานถัดไป · desktop เป็น dashboard 3 คอลัมน์ (โปรไฟล์ / ฟีด / งานถัดไป+อันดับ) |
+| `/calendar` | `src/app/(sport)/calendar/page.tsx` | ปฏิทินกีฬา 12 เดือนตามฤดู + countdown + อากาศวันงาน |
+| `/events/[id]` | `src/app/(sport)/events/[id]/page.tsx` | รายละเอียดงาน + AI Race-cation Planner |
+| `/checkin/[eventId]` | `src/app/(sport)/checkin/[eventId]/page.tsx` | เช็คอิน (จำลองสแกน QR ณ งาน) → แต้ม+แบดจ์+แชร์ลงฟีด |
+| `/passport` | `src/app/(sport)/passport/page.tsx` | โปรไฟล์ (ตั้งชื่อ/สี avatar) · แต้ม · แบดจ์ · ประวัติเช็คอิน |
+| `/chat` | `src/app/(sport)/chat/page.tsx` | AI 2 บอท: คู่หูสายกีฬา / ผู้ช่วยแอป |
 
-## แดชบอร์ด (Big Data)
-| URL | หน้า | ไฟล์โค้ด |
-|-----|------|----------|
-| `/dashboard` | ภาพรวม KPI | `src/app/dashboard/page.tsx` |
-| `/dashboard/heatmap` | ความหนาแน่นการสแกน | `src/app/dashboard/heatmap/page.tsx` |
-| `/dashboard/intent` | วิเคราะห์ความสนใจ | `src/app/dashboard/intent/page.tsx` |
-| `/dashboard/feedback` | เสียงตอบรับ | `src/app/dashboard/feedback/page.tsx` |
-| — | layout + แถบเมนู | `src/app/dashboard/layout.tsx`, `src/components/DashboardNav.tsx` |
+## API routes
 
-## ระบบหลังบ้าน (Admin / ผู้ประกอบการใส่ข้อมูลเอง)
-| URL | หน้า | ไฟล์โค้ด |
-|-----|------|----------|
-| `/admin` | ภาพรวม + login (mock) | `src/app/admin/page.tsx`, `src/app/admin/layout.tsx` |
-| `/admin/places` | รายการสถานที่ | `src/app/admin/places/page.tsx` |
-| `/admin/places/new` | เพิ่มสถานที่ | `src/app/admin/places/new/page.tsx` |
-| `/admin/places/[id]/edit` | แก้ไขสถานที่ | `src/app/admin/places/[id]/edit/page.tsx` |
-| `/admin/businesses` | รายการผู้ประกอบการ | `src/app/admin/businesses/page.tsx` |
-| `/admin/businesses/new` | เพิ่มผู้ประกอบการ | `src/app/admin/businesses/new/page.tsx` |
-| `/admin/businesses/[id]/edit` | แก้ไขผู้ประกอบการ | `src/app/admin/businesses/[id]/edit/page.tsx` |
-| — | auth / nav / ฟอร์ม | `src/lib/adminAuth.tsx`, `src/components/admin/AdminNav.tsx`, `PlaceForm.tsx`, `BusinessForm.tsx` |
+| Route | หน้าที่ |
+|---|---|
+| `/api/chat` | แชท streaming (SSE) — `mode: "sport" | "help"` |
+| `/api/raceplan` | AI จัดทริป 2 วันรอบงานแข่ง (STRICT JSON + validate) |
+| `/api/plan` | AI จัดเส้นทาง 1 วัน (ฝั่ง explore) |
+| `/api/match` | AI จับคู่ประสบการณ์ wellness (ฝั่ง explore) |
+| `/api/weather` | พยากรณ์น่าน 7 วัน (Open-Meteo, cache 30 นาที) |
 
-## แกนระบบ (ใช้ร่วมทุกหน้า)
-| ส่วน | ไฟล์โค้ด |
-|------|----------|
-| API แชต AI จริง (OpenRouter) | `src/app/api/chat/route.ts` |
-| ข้อมูลรวม overlay (admin↔เว็บจริง) | `src/lib/DataStore.tsx` |
-| seed data + helper | `src/lib/data.ts`, `src/data/*.json` |
-| ค้นหา / mock AI / types | `src/lib/search.ts`, `src/lib/mockAI.ts`, `src/lib/types.ts` |
-| i18n 8 ภาษา + แปลเนื้อหา | `src/i18n/dictionaries.ts`, `I18nProvider.tsx`, `contentTranslations.ts`, `placeDetailTranslations.ts` |
-| ธีม / ฟอนต์ / Leaflet CSS | `src/app/layout.tsx`, `src/app/globals.css` |
-| คอมโพเนนต์ร่วม | `src/components/` (AppHeader, BottomNav, PlaceCard, BusinessCard, PlaceIllustration, FeedbackModal, LangSwitcher, StarRating, dashboard/*) |
-| ขอบเขตจังหวัดน่าน (แผนที่) | `src/lib/nanBoundary.ts` |
+## ส่วนเสริม (คอนเทนต์ท่องเที่ยว, กลุ่ม route `(tourist)`)
 
-## รัน / Deploy
-- `npm run dev` → http://localhost:3000 · `npm run build`
-- AI จริง: ใส่ `OPENROUTER_API_KEY` ใน `.env.local` (ดู `.env.example`) / บน Vercel ใส่ใน Environment Variables
-- Deploy: push GitHub → import ที่ Vercel (zero-config)
+`/explore` สำรวจสถานที่ · `/plan` จัดเส้นทางเที่ยว · `/wellness` จับคู่ประสบการณ์ ·
+`/map` แผนที่ · `/place/[id]` รายละเอียดสถานที่ · `/search` ค้นหา ·
+`/dashboard*` แดชบอร์ดสถิติ · `/admin*` ระบบหลังบ้านผู้ประกอบการ (mock)
+
+## ข้อมูล (`src/data/`)
+
+`sportsEvents.json` งานกีฬา 7 งาน · `seasons.json` ปฏิทินฤดู 12 เดือน · `feedSeed.json` โพสต์ตัวอย่าง ·
+`places.json` สถานที่ 15 แห่ง · `wellness.json` ประสบการณ์ 15 รายการ · `hotels/operators.json` ผู้ประกอบการจริง 300+ ราย
+
+## Supabase (`supabase/schema.sql`)
+
+`profiles` · `checkins` · `posts` · `kudos` — RLS เปิด (anon policy สำหรับ prototype)

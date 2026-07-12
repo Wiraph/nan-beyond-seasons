@@ -1,61 +1,78 @@
-# Nan Connect — Mock-up Web
+# ⚡ Nan Game On — น่านเล่นได้ทั้งปี
 
-แพลตฟอร์ม AI ยกระดับการท่องเที่ยวจังหวัดน่าน — *One Scan, Endless Journeys*
-ตัว mock-up นี้สร้างจากไฟล์นำเสนอโครงการ Nan Connect และข้อมูลจริงของจังหวัดน่าน
+**แพลตฟอร์ม Social Sports Tourism สำหรับ Nan Beyond Seasons Hackathon 2026**
 
-## ส่วนประกอบ
+> เปลี่ยน "เทศกาลกีฬาของน่าน" ให้เป็นเครื่องยนต์ดึงนักท่องเที่ยวตลอด 12 เดือน —
+> แข่งเรือยาวหน้าฝน · ล่องแก่งน้ำหลาก · เทรลหน้าหนาว · วิ่งสาดน้ำหน้าร้อน
+> แล้วให้ AI พาเที่ยวต่อ กิน พัก กับชุมชนรอบสนามแข่ง
 
-**A. เว็บนักท่องเที่ยว (AI Hub) — mobile-first**
-- `/` หน้าแรก/สำรวจ · ค้นหา · หมวดหมู่ · ตัวกรองงานคราฟ · สถานที่แนะนำ
-- `/s/[qrId]` หน้าจำลองหลังสแกน QR (ลองที่ `/s/42`)
-- `/chat` มัคคุเทศก์ AI (คำตอบจำลอง — rule-based ใน `src/lib/mockAI.ts`)
-- `/plan` Smart Recommendation — เส้นทางท่องเที่ยว 1 วัน
-- `/map` แผนที่หมุดสถานที่ทั่ว 15 อำเภอ
-- `/place/[id]` รายละเอียดสถานที่ จัดตาม content model 5 หมวด (About & Culture / Experiences / Shopping / Visit & Services / News & Events)
-- `/category/[type]`, `/biz/[id]` รายการและรายละเอียดผู้ประกอบการ
+สอดคล้องนโยบายงบประมาณปี 2570: **การทูต → การท่องเที่ยว → กีฬา (ใช้อีเวนต์ดึงคน) → รายได้ถึงชุมชน**
 
-**C. Dashboard ข้อมูลเชิงลึก (Big Data)**
-- `/dashboard` ภาพรวม KPI
-- `/dashboard/heatmap` ความหนาแน่นการสแกนรายอำเภอ
-- `/dashboard/intent` วิเคราะห์ความสนใจ (โดนัทชาร์ต)
-- `/dashboard/feedback` เสียงตอบรับและเรตติ้ง
+---
 
-## เทคโนโลยี
-- Next.js 16 (App Router) · React 19 · TypeScript
-- Tailwind CSS v4 — ธีมแม่สีจากเดค: กรมท่า `#1B2A4A` · ทอง `#C9A227` · ครีม `#F5F1E6`
-- Recharts (โดนัทชาร์ต) · Tabler Icons (webfont)
-- รองรับ 8 ภาษา (ไทย/อังกฤษ/จีน/ญี่ปุ่น/ลาว/อินโด/เวียดนาม/พม่า) — `src/i18n/`
-- ข้อมูลทั้งหมดเป็น static JSON ใน `src/data/`
-- มี serverless route เดียว `/api/chat` (ต่อ OpenRouter) — นอกนั้นเป็น static
+## ปัญหาที่แก้
 
-> AI: ถ้าไม่ตั้ง `OPENROUTER_API_KEY` จะใช้ **คำตอบจำลอง (mock)**; ถ้าตั้ง key จะต่อโมเดลจริงบน OpenRouter (ดูหัวข้อ AI ด้านล่าง)
+นักท่องเที่ยวกระจุกตัวที่น่านเฉพาะฤดูหนาว ทั้งที่น่านมี "ของดีเฉพาะฤดู" ทั้งปี โดยเฉพาะกีฬา-กิจกรรม
+ที่**เล่นได้เฉพาะกรีนซีซัน** เช่น ล่องแก่งลำน้ำว้าระดับ 3–5 (น้ำหลาก ก.ค.–ต.ค.) และประเพณีแข่งเรือยาว
+เอกลักษณ์หัวพญานาค (ก.ย.–ต.ค.) — แต่ไม่มีแพลตฟอร์มที่รวบรวม บอกจังหวะเวลา และจูงใจให้คนมา
 
-## AI chat (OpenRouter — ออปชัน)
-ค่าเริ่มต้นใช้คำตอบจำลอง ถ้าอยากต่อโมเดลจริง:
-1. คัดลอก `.env.example` → `.env.local` แล้วใส่ `OPENROUTER_API_KEY` (รับ key ที่ https://openrouter.ai/keys)
-2. (ออปชัน) เปลี่ยน `OPENROUTER_MODEL` — ค่าเริ่มต้น `openai/gpt-oss-120b:free`
-3. รีสตาร์ท `npm run dev`
+## โซลูชัน (ครอบ 3 Tracks)
 
-- เรียกผ่าน server route `/api/chat` เท่านั้น (key ไม่หลุดไป browser) · คำตอบ stream ทีละ token · ผูกกับข้อมูลสถานที่น่าน · ตอบตามภาษาที่เลือก
-- โควต้าฟรี OpenRouter: 20 req/นาที, 50 req/วัน (เติม $10 ครั้งเดียว → 1,000/วัน) — เมื่อหมดโควต้า/ไม่มี key ระบบ **fallback เป็น mock** อัตโนมัติ
-- บน Vercel: ใส่ env เดียวกันที่ Project Settings → Environment Variables
+| Feature | Track | รายละเอียด |
+|---|---|---|
+| 🗓️ **ปฏิทินกีฬา 12 เดือน** | 1 | จัดกลุ่มตามฤดู + countdown + พยากรณ์อากาศวันงานจริง (Open-Meteo) |
+| 🤖 **AI Race-cation Planner** | 1 | กดปุ่มเดียว AI จัดทริป 2 วันรอบงานแข่ง ปรับตามอากาศจริง เน้นร้าน/ที่พักชุมชน |
+| 💬 **AI Chat 2 บอท** | 1–2 | คู่หูสายกีฬา (งานแข่ง+ที่เที่ยว พร้อมการ์ดกดต่อได้) + ผู้ช่วยแอป |
+| 📱 **ฟีด Social แบบ Strava** | 3 | โพสต์/kudos/เห็นกันข้ามเครื่องจริงผ่าน Supabase — ชุมชนนักกีฬา+ผู้ประกอบการ |
+| 🎫 **Check-in Passport** | 3 | สแกน QR ที่งาน +50 แต้ม แบดจ์ตามฤดู ("ครบ 3 ฤดู = All-Season Athlete") แลกส่วนลดร้านชุมชน |
+| 🏆 **Leaderboard** | 3 | อันดับแต้มจริงจากผู้ใช้ทุกเครื่อง จูงใจกลับมาเที่ยวซ้ำนอกฤดู |
 
-## ข้อมูลที่ใช้ seed
-- `src/data/places.json` — สถานที่จริงของน่าน 14 จุด (วัดภูมินทร์, บ่อเกลือ, ดอยภูคา, สะปัน ฯลฯ)
-- `src/data/hotels.json` — โรงแรมในน่าน ~223 แห่ง (จากไฟล์ข้อมูลจริง)
-- `src/data/operators.json` — ผู้ประกอบการชมรมท่องเที่ยวสะปัน
-- `src/data/categories.json`, `craftTypes.json`, `districts.json`, `dashboard.json`
+## การใช้ AI (Grounded Generation — ไม่มี hallucination)
 
-## รันในเครื่อง
+ทุกคำตอบ AI ถูก ground ด้วยข้อมูลจริงที่ inject เข้า system prompt:
+- **`/api/raceplan`** — จัดทริปรอบงานแข่ง: รับ event + พยากรณ์ 7 วันจริง + สถานที่ใกล้สนาม (คำนวณ haversine) → ตอบ STRICT JSON validate id ทุกตัวก่อนแสดง
+- **`/api/chat`** — แชท 2 โหมด ground ด้วยปฏิทินกีฬา + สถานที่ 15 แห่ง + กติกาแต้ม/แบดจ์จริงจากโค้ด
+- **โมเดล:** OpenRouter free-model chain (ไล่ลำดับอัตโนมัติเมื่อติด rate limit) + rule-based fallback ทุกจุด — **ระบบไม่มีวันตาย** แม้ AI ไม่ว่าง
+- วันจัดงานที่ยังไม่ประกาศเป็นทางการ ติดป้าย "กำหนดการรอประกาศ" ทุกจุด (Responsible AI)
+
+## Tech Stack
+
+Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4 · Supabase (Postgres + RLS) ·
+OpenRouter (free LLM chain) · Open-Meteo API (ฟรี ไม่ต้องมี key) · Leaflet · i18n 8 ภาษา
+
+## วิธีรัน
+
 ```bash
 npm install
-npm run dev      # http://localhost:3000
-npm run build    # production build
+cp .env.example .env.local   # แล้วเติมค่าตามคอมเมนต์ในไฟล์
+npm run dev                  # → http://localhost:3000
 ```
 
-## Deploy ขึ้น Vercel
-ขึ้น Vercel ได้แบบ zero-config (static เป็นหลัก + 1 serverless route):
-1. push โค้ดขึ้น GitHub
-2. import repo ที่ [vercel.com/new](https://vercel.com/new) — Vercel ตรวจเจอ Next.js อัตโนมัติ
-3. (ออปชัน) ใส่ `OPENROUTER_API_KEY` ใน Environment Variables เพื่อเปิด AI จริง — ไม่ใส่ก็ deploy ได้ (ใช้ mock)
-4. กด Deploy
+ไม่ใส่ key ก็รันได้: AI ใช้คำตอบ rule-based, ข้อมูล social เก็บใน localStorage
+
+### Deploy บน Vercel
+
+1. Import repo นี้ใน Vercel (zero-config)
+2. Settings → Environment Variables ใส่ 3 ตัว:
+   `OPENROUTER_API_KEY` · `NEXT_PUBLIC_SUPABASE_URL` · `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+3. รัน `supabase/schema.sql` ใน Supabase Dashboard → SQL Editor (ครั้งเดียว)
+
+## 🔑 สำหรับกรรมการ (Test Account)
+
+**ไม่ต้องล็อกอิน** — ระบบสร้างตัวตนอัตโนมัติต่อเบราว์เซอร์ (anonymous UUID)
+เปิดแอปแล้วใช้ได้ทันทีทุกฟีเจอร์: ตั้งชื่อได้ที่หน้า Passport → เช็คอินจำลองได้ที่ปุ่ม "เช็คอินที่งาน" ในหน้างานแข่ง
+
+**เส้นทางทดลองแนะนำ (2 นาที):**
+หน้าแรก (ฟีด) → แท็บอันดับ → ปฏิทิน → เข้างาน "ฤดูล่องแก่งลำน้ำว้า" → กด "จัดทริปรอบงานนี้" (AI) →
+"เช็คอินที่งาน" → ดูแบดจ์ใน Passport → กลับฟีดเห็นโพสต์ตัวเอง → ถาม AI ที่แท็บ "ถาม AI"
+
+## หมายเหตุความปลอดภัย / ข้อจำกัด prototype
+
+- ไม่มี secret ใน repo — ทุก key อยู่ใน env variables (`.env*` ถูก gitignore)
+- Supabase ใช้ anon key + RLS policy แบบเปิดสำหรับ prototype — production ต้องเพิ่ม auth จริง
+- โพสต์ตัวอย่างในฟีดติดป้าย "ตัวอย่าง" ทุกโพสต์ และไม่ใช้รูปภาพบุคคลจริง
+- ข้อมูลสถานที่/ประสบการณ์ curate จากข้อมูลจริงของจังหวัดน่าน (TAT)
+
+---
+
+*สร้างเพื่อ Nan Beyond Seasons Challenge 2026 — Track 1+2+3 · ทีม: Wiraphat (solo + Claude Code)*
