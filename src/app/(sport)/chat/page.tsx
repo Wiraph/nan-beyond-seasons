@@ -192,7 +192,7 @@ function ChatInner() {
     <>
       <header className="sticky top-0 z-30 border-b border-black/10 bg-pitch/85 backdrop-blur">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 lg:px-8">
-          <h1 className="flex items-center gap-2 text-lg font-extrabold text-frost">
+          <h1 className="flex items-center gap-2 text-lg font-bold text-frost">
             <i className="ti ti-message-chatbot text-volt" aria-hidden />
             {mode === "sport" ? t("sport.botSport") : t("sport.botHelp")}
           </h1>
@@ -202,13 +202,13 @@ function ChatInner() {
 
       <main className="mx-auto flex w-full max-w-4xl flex-1 flex-col px-4 pb-6 pt-4 lg:px-8">
         {/* Bot switcher */}
-        <div className="grid grid-cols-2 rounded-full border border-black/10 bg-pitch-800 p-1 text-sm font-semibold">
+        <div className="grid grid-cols-2 rounded-md border border-black/10 bg-pitch-800 p-1 text-sm font-semibold">
           {(["sport", "help"] as const).map((k) => (
             <button
               key={k}
               onClick={() => setMode(k)}
               aria-pressed={mode === k}
-              className={`flex items-center justify-center gap-1.5 rounded-full py-1.5 transition ${
+              className={`flex items-center justify-center gap-1.5 rounded py-1.5 transition ${
                 mode === k ? "bg-volt text-white" : "text-steel hover:text-frost"
               }`}
             >
@@ -220,8 +220,8 @@ function ChatInner() {
 
         <div className="mt-4 flex-1 space-y-4 overflow-y-auto">
           {/* Intro bubble */}
-          <div className="sport-card anim-rise flex items-start gap-3 rounded-2xl p-4">
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-volt text-white">
+          <div className="sport-card anim-rise flex items-start gap-3 rounded-md p-4">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-volt text-white">
               <i className={`ti ${mode === "sport" ? "ti-bolt" : "ti-help-circle"} text-xl`} aria-hidden />
             </span>
             <div>
@@ -238,7 +238,7 @@ function ChatInner() {
           {messages.map((m, i) =>
             m.from === "user" ? (
               <div key={i} className="anim-rise flex justify-end">
-                <div className="max-w-[82%] rounded-2xl rounded-tr-sm bg-volt px-4 py-2.5 text-sm font-medium text-white lg:max-w-[62%]">
+                <div className="max-w-[82%] rounded-md rounded-tr-sm bg-volt px-4 py-2.5 text-sm font-medium text-white lg:max-w-[62%]">
                   {m.text}
                 </div>
               </div>
@@ -283,7 +283,7 @@ function ChatInner() {
                 <button
                   key={s}
                   onClick={() => send(s)}
-                  className="flex shrink-0 items-center gap-1.5 rounded-full border border-black/15 bg-pitch-800 px-3 py-1.5 text-xs text-steel transition hover:border-volt hover:text-volt lg:px-4 lg:text-sm"
+                  className="flex shrink-0 items-center gap-1.5 rounded border border-black/15 bg-pitch-800 px-3 py-1.5 text-xs text-steel transition hover:border-volt hover:text-volt lg:px-4 lg:text-sm"
                 >
                   <i className={`ti ${suggestionIcons[i] ?? "ti-sparkles"} text-sm`} aria-hidden />
                   {s}
@@ -321,10 +321,10 @@ function ChatInner() {
 function AiBubble({ children, mode }: { children: React.ReactNode; mode: BotMode }) {
   return (
     <div className="anim-rise flex items-start gap-2 lg:gap-3">
-      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-volt/15 text-volt">
+      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-volt/15 text-volt">
         <i className={`ti ${mode === "sport" ? "ti-bolt" : "ti-help-circle"} text-base`} aria-hidden />
       </span>
-      <div className="sport-card max-w-[88%] rounded-2xl rounded-tl-sm px-4 py-2.5 lg:max-w-[72%]">
+      <div className="sport-card max-w-[88%] rounded-md rounded-tl-sm px-4 py-2.5 lg:max-w-[72%]">
         {children}
       </div>
     </div>
@@ -345,9 +345,9 @@ function EventMini({
   return (
     <Link
       href={`/events/${event.id}`}
-      className={`flex items-center gap-2.5 rounded-xl border border-black/10 bg-black/5 p-2.5 transition hover:border-volt/50 ${accent.flag}`}
+      className={`flex items-center gap-2.5 rounded-md border border-black/10 bg-black/5 p-2.5 transition hover:border-volt/50 ${accent.flag}`}
     >
-      <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white ${accent.text}`}>
+      <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded bg-white ${accent.text}`}>
         <i className={`ti ${event.icon} text-xl`} aria-hidden />
       </span>
       <span className="min-w-0 flex-1">
@@ -368,9 +368,9 @@ function PlaceMini({ place, lang }: { place: Place; lang: LangCode }) {
   return (
     <Link
       href={`/place/${place.id}`}
-      className="flex items-center gap-2.5 rounded-xl border border-black/10 bg-black/5 p-2.5 transition hover:border-volt/50"
+      className="flex items-center gap-2.5 rounded-md border border-black/10 bg-black/5 p-2.5 transition hover:border-volt/50"
     >
-      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-volt/12 text-volt">
+      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded bg-volt/12 text-volt">
         <i className={`ti ${place.icon} text-xl`} aria-hidden />
       </span>
       <span className="min-w-0 flex-1">

@@ -51,10 +51,10 @@ export default function FeedHome() {
       <header className="sticky top-0 z-30 border-b border-black/10 bg-pitch/85 backdrop-blur">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 lg:px-8">
           <Link href="/" className="flex items-center gap-2">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-volt text-pitch">
+            <span className="flex h-9 w-9 items-center justify-center rounded-md bg-volt text-pitch">
               <i className="ti ti-bolt text-xl" aria-hidden />
             </span>
-            <span className="text-lg font-extrabold tracking-tight text-frost">
+            <span className="text-lg font-bold tracking-tight text-frost">
               NAN <span className="text-volt">GAME ON</span>
             </span>
           </Link>
@@ -75,9 +75,9 @@ export default function FeedHome() {
             {/* Next-event strip (mobile only — desktop shows it on the right) */}
             <Link
               href="/calendar"
-              className={`sport-card anim-rise flex items-center gap-3 rounded-2xl p-3.5 transition hover:border-volt/40 lg:hidden ${SEASON_ACCENT[hero.season].flag}`}
+              className={`sport-card anim-rise flex items-center gap-3 rounded-md p-3.5 transition hover:border-volt/40 lg:hidden ${SEASON_ACCENT[hero.season].flag}`}
             >
-              <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-black/5 ${SEASON_ACCENT[hero.season].text}`}>
+              <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-black/5 ${SEASON_ACCENT[hero.season].text}`}>
                 <i className={`ti ${hero.icon} text-xl`} aria-hidden />
               </span>
               <span className="min-w-0 flex-1">
@@ -98,13 +98,13 @@ export default function FeedHome() {
             </Link>
 
             {/* Tabs (mobile only — desktop shows ranking on the right) */}
-            <div className="mt-4 grid grid-cols-2 rounded-full border border-black/10 bg-pitch-800 p-1 text-sm font-semibold lg:hidden">
+            <div className="mt-4 grid grid-cols-2 rounded-md border border-black/10 bg-pitch-800 p-1 text-sm font-semibold lg:hidden">
               {(["feed", "rank"] as const).map((k) => (
                 <button
                   key={k}
                   onClick={() => setTab(k)}
                   aria-pressed={tab === k}
-                  className={`rounded-full py-1.5 transition ${
+                  className={`rounded py-1.5 transition ${
                     tab === k ? "bg-volt text-pitch" : "text-steel hover:text-frost"
                   }`}
                 >
@@ -125,13 +125,13 @@ export default function FeedHome() {
           <aside className="hidden lg:flex lg:flex-col lg:gap-5">
             <Link
               href="/calendar"
-              className={`sport-card flex flex-col rounded-2xl p-4 transition hover:border-volt/40 ${SEASON_ACCENT[hero.season].flag}`}
+              className={`sport-card flex flex-col rounded-md p-4 transition hover:border-volt/40 ${SEASON_ACCENT[hero.season].flag}`}
             >
               <span className="text-[10px] font-semibold uppercase tracking-wider text-steel">
                 {heroLive ? t("sport.liveNow") : t("sport.nextEvent")}
               </span>
               <span className="mt-1.5 flex items-center gap-3">
-                <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-black/5 ${SEASON_ACCENT[hero.season].text}`}>
+                <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-black/5 ${SEASON_ACCENT[hero.season].text}`}>
                   <i className={`ti ${hero.icon} text-2xl`} aria-hidden />
                 </span>
                 <span className="min-w-0 flex-1 text-sm font-bold leading-snug text-frost">
@@ -165,7 +165,7 @@ function ProfileCard() {
   const { points, earnedBadges, checkins, hydrated } = usePassport();
 
   return (
-    <div className="sport-card rounded-2xl p-5">
+    <div className="sport-card rounded-md p-5">
       <div className="flex flex-col items-center text-center">
         <span
           className="flex h-16 w-16 items-center justify-center rounded-full text-2xl font-bold text-white"
@@ -173,7 +173,7 @@ function ProfileCard() {
         >
           {initial(displayName(profile, lang))}
         </span>
-        <div className="mt-2.5 text-base font-extrabold text-frost">{displayName(profile, lang)}</div>
+        <div className="mt-2.5 text-base font-bold text-frost">{displayName(profile, lang)}</div>
         <div className="text-[11px] text-steel">Nan Game On</div>
       </div>
       <div className="mt-4 grid grid-cols-3 divide-x divide-black/8 border-y border-black/8 py-3 text-center">
@@ -223,7 +223,7 @@ function FeedTab() {
   return (
     <div className="mt-4">
       {/* Composer */}
-      <form onSubmit={submit} className="sport-card flex items-center gap-2.5 rounded-2xl p-3">
+      <form onSubmit={submit} className="sport-card flex items-center gap-2.5 rounded-md p-3">
         <span
           className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-bold text-pitch"
           style={{ backgroundColor: profile.color }}
@@ -239,7 +239,7 @@ function FeedTab() {
         <button
           type="submit"
           disabled={!draft.trim()}
-          className="shrink-0 rounded-full bg-volt px-4 py-1.5 text-xs font-bold text-pitch transition hover:bg-volt-600 disabled:opacity-40"
+          className="shrink-0 rounded bg-volt px-4 py-1.5 text-xs font-bold text-pitch transition hover:bg-volt-600 disabled:opacity-40"
         >
           {t("feed.post")}
         </button>
@@ -282,7 +282,7 @@ function PostCard({
   const kudosCount = item.baseKudos + (kudosed ? 1 : 0);
 
   return (
-    <article className={`sport-card rounded-2xl p-4 ${accent ? accent.flag : ""}`}>
+    <article className={`sport-card rounded-md p-4 ${accent ? accent.flag : ""}`}>
       {/* Header */}
       <div className="flex items-center gap-2.5">
         <span
@@ -295,12 +295,12 @@ function PostCard({
           <div className="flex flex-wrap items-center gap-x-2">
             <span className="truncate text-sm font-bold text-frost">{name}</span>
             {item.own && (
-              <span className="rounded-full bg-volt/15 px-1.5 py-0.5 text-[9px] font-semibold text-volt">
+              <span className="rounded bg-volt/15 px-1.5 py-0.5 text-[9px] font-semibold text-volt">
                 {t("feed.you")}
               </span>
             )}
             {item.demo && (
-              <span className="rounded-full bg-black/5 px-1.5 py-0.5 text-[9px] text-steel">
+              <span className="rounded bg-black/5 px-1.5 py-0.5 text-[9px] text-steel">
                 {t("feed.demo")}
               </span>
             )}
@@ -313,7 +313,7 @@ function PostCard({
 
       {/* Check-in banner */}
       {item.kind === "checkin" && event && (
-        <div className="mt-3 flex items-center gap-2 rounded-xl bg-black/5 p-2.5">
+        <div className="mt-3 flex items-center gap-2 rounded-md bg-black/5 p-2.5">
           <i className={`ti ${event.icon} text-xl ${accent!.text}`} aria-hidden />
           <span className="min-w-0 flex-1 text-[12px] text-steel">
             {t("feed.checkedInAt")}{" "}
@@ -339,7 +339,7 @@ function PostCard({
             return (
               <span
                 key={id}
-                className="flex items-center gap-1 rounded-full bg-volt/12 px-2 py-1 text-[10px] font-semibold text-volt"
+                className="flex items-center gap-1 rounded bg-volt/12 px-2 py-1 text-[10px] font-semibold text-volt"
               >
                 <i className={`ti ${b.icon}`} aria-hidden /> {loc(b.name, lang)}
               </span>
@@ -352,7 +352,7 @@ function PostCard({
       {item.kind === "text" && event && (
         <Link
           href={`/events/${event.id}`}
-          className={`mt-2.5 inline-flex items-center gap-1.5 rounded-full bg-black/5 px-2.5 py-1 text-[11px] font-medium transition hover:bg-black/8 ${accent!.text}`}
+          className={`mt-2.5 inline-flex items-center gap-1.5 rounded bg-black/5 px-2.5 py-1 text-[11px] font-medium transition hover:bg-black/8 ${accent!.text}`}
         >
           <i className={`ti ${event.icon}`} aria-hidden /> {loc(event.name, lang)}
         </Link>
@@ -363,11 +363,11 @@ function PostCard({
         <button
           onClick={onKudos}
           aria-pressed={kudosed}
-          className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition ${
+          className={`flex items-center gap-1.5 rounded px-3 py-1.5 text-xs font-semibold transition ${
             kudosed ? "bg-volt/15 text-volt" : "text-steel hover:bg-black/5 hover:text-frost"
           }`}
         >
-          <i className={`ti ${kudosed ? "ti-flame-filled" : "ti-flame"} text-base`} aria-hidden />
+          <i className={`ti ${kudosed ? "ti-thumb-up-filled" : "ti-thumb-up"} text-base`} aria-hidden />
           {kudosCount > 0 ? kudosCount : ""} {t("feed.kudos")}
         </button>
       </div>
@@ -399,7 +399,7 @@ function RankTab() {
 
   return (
     <div className="mt-4">
-      <h2 className="flex items-center gap-2 text-base font-extrabold text-frost">
+      <h2 className="flex items-center gap-2 text-base font-bold text-frost">
         <i className="ti ti-trophy text-volt" aria-hidden /> {t("feed.rankTitle")}
       </h2>
       <p className="mt-0.5 text-xs text-steel">{t("feed.rankSub")}</p>
@@ -408,7 +408,7 @@ function RankTab() {
         {rows.map((r, i) => (
           <div
             key={`${r.name}-${i}`}
-            className={`sport-card flex items-center gap-3 rounded-xl p-3 ${
+            className={`sport-card flex items-center gap-3 rounded-md p-3 ${
               r.me ? "border-volt/50" : ""
             }`}
           >
@@ -428,7 +428,7 @@ function RankTab() {
             <span className="min-w-0 flex-1 truncate text-sm font-semibold text-frost">
               {r.name}
               {r.me && (
-                <span className="ml-1.5 rounded-full bg-volt/15 px-1.5 py-0.5 text-[9px] font-semibold text-volt">
+                <span className="ml-1.5 rounded bg-volt/15 px-1.5 py-0.5 text-[9px] font-semibold text-volt">
                   {t("feed.you")}
                 </span>
               )}

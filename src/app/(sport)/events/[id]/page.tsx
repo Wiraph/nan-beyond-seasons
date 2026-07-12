@@ -86,28 +86,28 @@ export default function EventPage({
 
       <main className="mx-auto w-full max-w-4xl flex-1 px-4 pb-10 pt-5 lg:px-8">
         {/* Event hero */}
-        <section className={`sport-card anim-rise rounded-3xl p-5 lg:p-7 ${accent.flag}`}>
+        <section className={`sport-card anim-rise rounded-md p-5 lg:p-7 ${accent.flag}`}>
           <div className="flex flex-wrap items-center gap-2 text-[11px]">
             {status === "live" && (
-              <span className="flex items-center gap-1.5 rounded-full bg-[#e5484d] px-2.5 py-1 font-bold text-white">
+              <span className="flex items-center gap-1.5 rounded bg-[#e5484d] px-2.5 py-1 font-bold text-white">
                 <span className="sport-live-dot h-2 w-2 rounded-full bg-white" /> {t("sport.liveNow")}
               </span>
             )}
-            <span className={`rounded-full bg-black/5 px-2.5 py-1 font-medium ${accent.text}`}>
+            <span className={`rounded bg-black/5 px-2.5 py-1 font-medium ${accent.text}`}>
               {loc(seasonsData.seasons[event.season].name, lang)}
             </span>
             <span className="rounded-full bg-black/5 px-2.5 py-1 text-steel">
               {loc(SPORT_TYPE_LABEL[event.sportType] ?? { th: event.sportType, en: event.sportType }, lang)}
             </span>
             {event.mode.map((m) => (
-              <span key={m} className="rounded-full bg-volt/12 px-2.5 py-1 font-medium text-volt">
+              <span key={m} className="rounded bg-volt/12 px-2.5 py-1 font-medium text-volt">
                 {t(`sport.${m}`)}
               </span>
             ))}
           </div>
 
           <div className="mt-3 flex flex-wrap items-start justify-between gap-4">
-            <h1 className="max-w-xl text-2xl font-extrabold leading-snug text-frost lg:text-3xl">
+            <h1 className="max-w-xl text-2xl font-bold leading-snug text-frost lg:text-3xl">
               {loc(event.name, lang)}
             </h1>
             {status === "upcoming" && days !== null && (
@@ -156,7 +156,7 @@ export default function EventPage({
             <i className="ti ti-star text-volt" aria-hidden /> {loc(event.highlight, lang)}
           </p>
           {!event.verified && (
-            <p className="mt-3 inline-flex items-center gap-1.5 rounded-lg bg-black/5 px-2.5 py-1.5 text-[11px] text-steel">
+            <p className="mt-3 inline-flex items-center gap-1.5 rounded bg-black/5 px-2.5 py-1.5 text-[11px] text-steel">
               <i className="ti ti-info-circle" aria-hidden /> {t("sport.unverified")}
             </p>
           )}
@@ -165,7 +165,7 @@ export default function EventPage({
             <button
               onClick={buildPlan}
               disabled={planState === "loading"}
-              className="flex items-center gap-1.5 rounded-full bg-volt px-5 py-2.5 text-sm font-bold text-pitch transition hover:bg-volt-600 disabled:opacity-60"
+              className="flex items-center gap-1.5 rounded bg-volt px-5 py-2.5 text-sm font-bold text-pitch transition hover:bg-volt-600 disabled:opacity-60"
             >
               <i
                 className={`ti ${planState === "loading" ? "ti-loader-2 animate-spin" : "ti-sparkles"} text-base`}
@@ -175,7 +175,7 @@ export default function EventPage({
             </button>
             <Link
               href={`/checkin/${event.id}`}
-              className="flex items-center gap-1.5 rounded-full border border-black/15 px-5 py-2.5 text-sm font-semibold text-frost transition hover:border-volt hover:text-volt"
+              className="flex items-center gap-1.5 rounded border border-black/15 px-5 py-2.5 text-sm font-semibold text-frost transition hover:border-volt hover:text-volt"
             >
               <i className="ti ti-qrcode text-base" aria-hidden /> {t("sport.checkin")}
             </Link>
@@ -186,17 +186,17 @@ export default function EventPage({
         {plan && (
           <section className="anim-slide-up mt-6">
             <div className="flex items-center justify-between gap-3">
-              <h2 className="flex items-center gap-2 text-lg font-extrabold text-frost">
+              <h2 className="flex items-center gap-2 text-lg font-bold text-frost">
                 <i className="ti ti-route text-volt" aria-hidden /> {t("sport.tripAround")}
               </h2>
-              <span className="rounded-full bg-volt/12 px-2.5 py-1 text-[11px] font-medium text-volt">
+              <span className="rounded bg-volt/12 px-2.5 py-1 text-[11px] font-medium text-volt">
                 {planState === "ai" ? t("wellness.aiPicked") : t("plan.aiFallback")}
               </span>
             </div>
 
             <div className="mt-3 flex flex-col gap-4">
               {plan.days.map((day, di) => (
-                <div key={di} className="sport-card rounded-2xl p-4 lg:p-5">
+                <div key={di} className="sport-card rounded-md p-4 lg:p-5">
                   <h3 className="font-bold text-volt">{day.label || `Day ${di + 1}`}</h3>
                   <div className="mt-2.5 flex flex-col gap-2.5">
                     {day.stops.map((s, si) => (

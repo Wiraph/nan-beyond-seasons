@@ -402,50 +402,30 @@ body {
 
 /* ---------- Nan Game On (sport pivot) ---------- */
 
-/* Light backdrop with a faint orange glow and diagonal speed lines */
+/* Flat light backdrop — Strava-style, no decoration */
 .sport-bg {
-  background-color: var(--color-pitch);
-  background-image:
-    radial-gradient(1200px 500px at 85% -10%, rgba(252, 82, 0, 0.05), transparent 60%),
-    repeating-linear-gradient(115deg, rgba(23, 32, 43, 0.015) 0 2px, transparent 2px 18px);
+  background-color: #fafafa;
 }
 
-/* Big display numbers (countdown, points) */
+/* Big display numbers (countdown, points) — Strava stats are large but
+   not heavy */
 .sport-num {
   font-variant-numeric: tabular-nums;
-  font-weight: 800;
-  letter-spacing: -0.03em;
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
-/* White card, Strava-style: quiet border + soft shadow, accent bar on hover */
+/* White card, Strava-style: flat, hairline border, no hover flourish */
 .sport-card {
   background: var(--color-pitch-800);
-  border: 1px solid rgba(23, 32, 43, 0.08);
-  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
+  border: 1px solid #e5e5e5;
   position: relative;
-  overflow: hidden;
-}
-.sport-card::after {
-  background: linear-gradient(180deg, var(--color-volt), transparent);
-  content: "";
-  inset: 0 auto 0 0;
-  opacity: 0;
-  position: absolute;
-  transition: opacity 0.2s ease;
-  width: 3px;
-}
-.sport-card:hover::after {
-  opacity: 1;
 }
 
-/* Angled "speed" ticker strip */
+/* Once an angled orange strip; now a quiet Strava-style divider */
 .sport-ticker {
-  background-image: repeating-linear-gradient(
-    -60deg,
-    var(--color-volt) 0 14px,
-    transparent 14px 26px
-  );
-  opacity: 0.85;
+  background: #e5e5e5;
+  height: 1px !important;
 }
 
 /* Season accent helpers (border-left flag on timeline cards) */

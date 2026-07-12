@@ -56,25 +56,25 @@ export default function CheckinPage({
       </header>
 
       <main className="mx-auto flex w-full max-w-lg flex-1 flex-col items-center px-4 pb-10 pt-8 text-center">
-        <span className={`flex h-16 w-16 items-center justify-center rounded-2xl bg-black/5 ${accent.text}`}>
+        <span className={`flex h-16 w-16 items-center justify-center rounded-md bg-black/5 ${accent.text}`}>
           <i className={`ti ${event.icon} text-4xl`} aria-hidden />
         </span>
         <p className="mt-3 text-xs text-steel">
           {lang === "th" ? "จุดเช็คอินงานกีฬา (จำลองการสแกน QR ณ งาน)" : "Event check-in point (simulated on-site QR scan)"}
         </p>
-        <h1 className="mt-1 text-xl font-extrabold text-frost lg:text-2xl">{loc(event.name, lang)}</h1>
+        <h1 className="mt-1 text-xl font-bold text-frost lg:text-2xl">{loc(event.name, lang)}</h1>
         <p className="mt-1 text-sm text-steel">
           {loc(event.venue.name, lang)} · {districtLoc(event.venue.district, lang)}
         </p>
-        <span className={`mt-2 rounded-full bg-black/5 px-2.5 py-1 text-[11px] font-medium ${accent.text}`}>
+        <span className={`mt-2 rounded bg-black/5 px-2.5 py-1 text-[11px] font-medium ${accent.text}`}>
           {loc(seasonsData.seasons[event.season].name, lang)}
         </span>
 
         {!hydrated ? null : justChecked ? (
           <div className="anim-pop mt-8 w-full">
-            <div className="sport-card rounded-3xl p-6">
+            <div className="sport-card rounded-md p-6">
               <i className="ti ti-circle-check text-5xl text-volt" aria-hidden />
-              <div className="mt-2 text-lg font-extrabold text-frost">
+              <div className="mt-2 text-lg font-bold text-frost">
                 {t("sport.checkedIn")} +{POINTS_PER_CHECKIN} {t("sport.points")}
               </div>
               {newBadges!.length > 0 && (
@@ -82,7 +82,7 @@ export default function CheckinPage({
                   {newBadges!.map((id) => {
                     const b = BADGES.find((x) => x.id === id)!;
                     return (
-                      <div key={id} className="flex items-center gap-3 rounded-xl bg-volt/10 p-3 text-left">
+                      <div key={id} className="flex items-center gap-3 rounded-md bg-volt/10 p-3 text-left">
                         <i className={`ti ${b.icon} text-2xl text-volt`} aria-hidden />
                         <div>
                           <div className="text-sm font-bold text-volt">{loc(b.name, lang)}</div>
@@ -100,13 +100,13 @@ export default function CheckinPage({
             <div className="mt-3 flex flex-wrap justify-center gap-2">
               <Link
                 href="/"
-                className="inline-flex items-center gap-1.5 rounded-full bg-volt px-6 py-2.5 text-sm font-bold text-pitch transition hover:bg-volt-600"
+                className="inline-flex items-center gap-1.5 rounded bg-volt px-6 py-2.5 text-sm font-bold text-pitch transition hover:bg-volt-600"
               >
                 <i className="ti ti-home text-base" aria-hidden /> {t("feed.viewFeed")}
               </Link>
               <Link
                 href="/passport"
-                className="inline-flex items-center gap-1.5 rounded-full border border-black/15 px-6 py-2.5 text-sm font-semibold text-frost transition hover:border-volt hover:text-volt"
+                className="inline-flex items-center gap-1.5 rounded border border-black/15 px-6 py-2.5 text-sm font-semibold text-frost transition hover:border-volt hover:text-volt"
               >
                 <i className="ti ti-id-badge-2 text-base" aria-hidden /> {t("sport.passport")}
               </Link>
@@ -114,7 +114,7 @@ export default function CheckinPage({
           </div>
         ) : already ? (
           <div className="mt-8 w-full">
-            <p className="inline-flex items-center gap-1.5 rounded-full bg-black/5 px-4 py-2 text-sm text-steel">
+            <p className="inline-flex items-center gap-1.5 rounded bg-black/5 px-4 py-2 text-sm text-steel">
               <i className="ti ti-circle-check text-volt" aria-hidden /> {t("sport.checkedIn")}
             </p>
             <div className="mt-4">
@@ -126,7 +126,7 @@ export default function CheckinPage({
         ) : (
           <button
             onClick={doCheckIn}
-            className="mt-8 flex items-center gap-2 rounded-full bg-volt px-8 py-3 text-base font-bold text-pitch transition hover:bg-volt-600"
+            className="mt-8 flex items-center gap-2 rounded bg-volt px-8 py-3 text-base font-bold text-pitch transition hover:bg-volt-600"
           >
             <i className="ti ti-qrcode text-xl" aria-hidden /> {t("sport.checkin")}
           </button>

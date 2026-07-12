@@ -20,7 +20,7 @@ export default function PassportPage() {
     <>
       <header className="sticky top-0 z-30 border-b border-black/10 bg-pitch/85 backdrop-blur">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 lg:px-8">
-          <h1 className="flex items-center gap-2 text-lg font-extrabold text-frost">
+          <h1 className="flex items-center gap-2 text-lg font-bold text-frost">
             <i className="ti ti-id-badge-2 text-volt" aria-hidden /> {t("sport.passport")}
           </h1>
           <LangSwitcher dark />
@@ -29,7 +29,7 @@ export default function PassportPage() {
 
       <main className="mx-auto w-full max-w-4xl flex-1 px-4 pb-10 pt-5 lg:px-8">
         {/* Score card */}
-        <section className="sport-card anim-rise rounded-3xl p-5 lg:p-6">
+        <section className="sport-card anim-rise rounded-md p-5 lg:p-6">
           {/* Profile row */}
           <div className="mb-4 flex items-center gap-3 border-b border-black/8 pb-4">
             <span
@@ -46,7 +46,7 @@ export default function PassportPage() {
                   onChange={(e) => setName(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && setEditing(false)}
                   placeholder={t("feed.editName")}
-                  className="w-full rounded-lg border border-black/15 bg-pitch-800 px-3 py-1.5 text-sm text-frost outline-none placeholder:text-steel focus:border-volt"
+                  className="w-full rounded border border-black/15 bg-pitch-800 px-3 py-1.5 text-sm text-frost outline-none placeholder:text-steel focus:border-volt"
                 />
                 <div className="mt-2 flex items-center gap-1.5">
                   {AVATAR_COLORS.map((c) => (
@@ -62,7 +62,7 @@ export default function PassportPage() {
                   ))}
                   <button
                     onClick={() => setEditing(false)}
-                    className="ml-auto rounded-full bg-volt px-3 py-1 text-xs font-bold text-pitch"
+                    className="ml-auto rounded bg-volt px-3 py-1 text-xs font-bold text-pitch"
                   >
                     OK
                   </button>
@@ -71,7 +71,7 @@ export default function PassportPage() {
             ) : (
               <>
                 <div className="min-w-0 flex-1">
-                  <div className="truncate text-base font-extrabold text-frost">
+                  <div className="truncate text-base font-bold text-frost">
                     {displayName(profile, lang)}
                   </div>
                   <div className="text-[11px] text-steel">Nan Game On</div>
@@ -109,7 +109,7 @@ export default function PassportPage() {
         </section>
 
         {/* Badges */}
-        <h2 className="mt-6 flex items-center gap-2 text-base font-extrabold text-frost">
+        <h2 className="mt-6 flex items-center gap-2 text-base font-bold text-frost">
           <i className="ti ti-medal-2 text-volt" aria-hidden /> {t("sport.badges")}
         </h2>
         <div className="stagger mt-3 grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
@@ -118,7 +118,7 @@ export default function PassportPage() {
             return (
               <div
                 key={b.id}
-                className={`sport-card rounded-2xl p-4 text-center ${earned ? "" : "opacity-40 grayscale"}`}
+                className={`sport-card rounded-md p-4 text-center ${earned ? "" : "opacity-40 grayscale"}`}
               >
                 <i className={`ti ${b.icon} text-3xl ${earned ? "text-volt" : "text-steel"}`} aria-hidden />
                 <div className="mt-1.5 text-sm font-bold text-frost">{loc(b.name, lang)}</div>
@@ -131,7 +131,7 @@ export default function PassportPage() {
         {/* History */}
         {hydrated && checkins.length > 0 && (
           <>
-            <h2 className="mt-6 flex items-center gap-2 text-base font-extrabold text-frost">
+            <h2 className="mt-6 flex items-center gap-2 text-base font-bold text-frost">
               <i className="ti ti-history text-volt" aria-hidden />{" "}
               {lang === "th" ? "ประวัติเช็คอิน" : "Check-in history"}
             </h2>
@@ -143,7 +143,7 @@ export default function PassportPage() {
                   <Link
                     key={c.eventId}
                     href={`/events/${e.id}`}
-                    className="sport-card flex items-center gap-3 rounded-xl p-3 transition hover:border-volt/40"
+                    className="sport-card flex items-center gap-3 rounded-md p-3 transition hover:border-volt/40"
                   >
                     <i className={`ti ${e.icon} text-xl text-volt`} aria-hidden />
                     <span className="min-w-0 flex-1 truncate text-sm font-semibold text-frost">
@@ -158,7 +158,7 @@ export default function PassportPage() {
         )}
 
         {hydrated && checkins.length === 0 && (
-          <div className="mt-6 rounded-2xl border border-dashed border-black/15 p-8 text-center">
+          <div className="mt-6 rounded-md border border-dashed border-black/15 p-8 text-center">
             <i className="ti ti-qrcode text-4xl text-steel" aria-hidden />
             <p className="mt-2 text-sm text-steel">
               {lang === "th"
