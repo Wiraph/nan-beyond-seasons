@@ -39,11 +39,24 @@ function fallback(reason: string) {
   return Response.json({ fallback: true, reason }, { status: 200 });
 }
 
+// App knowledge for the "help" bot — kept next to the real rules so it
+// never drifts from what the app actually does.
+const APP_GUIDE = `Nan Game On app guide (ground truth):
+- Home (/) is a Strava-style community feed: post updates, give kudos (flame button), see demo community posts. "Ranking" tab = points leaderboard.
+- Calendar (/calendar): 12-month sports festival calendar grouped by season (Green/Cool/Hot) with countdowns and live race-day weather.
+- Each event page: details, real weather, "Plan a trip around this" = AI builds a 2-day race-cation (event + nearby attractions, weather-adaptive).
+- Check-in: scan the QR at an event (or open /checkin/<event>) -> +50 points, auto-shares to the feed. One check-in per event.
+- Passport (/passport): set your display name + avatar colour, see points, badges, check-in history.
+- Badges (7): "Game On!" first check-in; "Green Season Raider" check in at a green-season event; "Cool Season Chaser" cool season; "Hot Season Hero" hot season; "Longboat Superfan" any longboat race; "Nan All-Season Athlete" all 3 seasons; "Nan Full House" every event on the calendar.
+- Points can be redeemed for discounts with participating local businesses (prototype).
+- No login needed — identity is anonymous per browser.
+- Explore (/explore): general Nan travel content and AI trip tools.`;
+
 export async function POST(req: NextRequest) {
   const key = process.env.OPENROUTER_API_KEY;
   if (!key) return fallback("no-key");
 
-  let body: { messages?: ChatMessage[]; lang?: string };
+  let body: { messages?: ChatMessage[]; lang?: string; mode?: string };
   try {
     body = await req.json();
   } catch {
@@ -59,7 +72,17 @@ export async function POST(req: NextRequest) {
   const forecast = await getNanForecast();
   const weatherContext = buildWeatherContext(forecast, new Date().getMonth() + 1);
 
-  const system = `You are the Nan Game On AI concierge — the sports-tourism guide for Nan province, Northern Thailand.
+  const system = body.mode === "help"
+    ? `You are the Nan Game On app helper.
+Rules:
+- Answer questions about how to use the app: feed, kudos, calendar, check-ins, points, badges, passport, AI trip planner.
+- Treat the guide below as ground truth. Do not invent features that are not listed.
+- Be short, friendly and practical (2-4 sentences; use a small list when listing badges or steps).
+- If asked about actual events or travel, give a one-line answer and suggest switching to the Sport Buddy bot.
+- Always reply in ${langName}, regardless of the language of the question.
+
+${APP_GUIDE}`
+    : `You are the Nan Game On AI concierge — the sports-tourism guide for Nan province, Northern Thailand.
 Rules:
 - Help with Nan's sports festivals (dates, what to expect, spectating vs competing, how to prepare) and travelling in Nan (places, food, stays, routes, culture).
 - Treat the lists below as ground truth. Recommend real events and places by name. Do not invent events or places that are not listed. If dates are asked, note they may await official announcement.

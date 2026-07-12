@@ -15,6 +15,7 @@ import {
 import { BADGES, usePassport } from "@/lib/PassportStore";
 import { displayName, initial, useProfile } from "@/lib/ProfileStore";
 import { useFeed, type FeedItem } from "@/lib/FeedStore";
+import { useLeaderboard } from "@/lib/useLeaderboard";
 
 /** Fictional community members on the demo leaderboard. */
 const RANK_SEED: { name: string; color: string; points: number }[] = [
@@ -378,6 +379,7 @@ function RankTab() {
   const { t, lang } = useI18n();
   const { points, hydrated } = usePassport();
   const { profile } = useProfile();
+  const dbRows = useLeaderboard();
 
   const rows = useMemo(() => {
     const me = {
@@ -386,10 +388,12 @@ function RankTab() {
       points,
       me: true,
     };
-    return [...RANK_SEED.map((r) => ({ ...r, me: false })), me].sort(
-      (a, b) => b.points - a.points
-    );
-  }, [profile, lang, points]);
+    return [
+      ...RANK_SEED.map((r) => ({ ...r, me: false })),
+      ...dbRows.map((r) => ({ ...r, me: false })),
+      me,
+    ].sort((a, b) => b.points - a.points);
+  }, [profile, lang, points, dbRows]);
 
   if (!hydrated) return null;
 

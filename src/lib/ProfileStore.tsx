@@ -1,6 +1,7 @@
 "use client";
 
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
+import { getUid, supabase } from "./supabase";
 
 export type Profile = {
   name: string;
@@ -55,8 +56,30 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
     setHydrated(true);
   }, []);
 
+  const syncTimer = useRef<number | null>(null);
+
   useEffect(() => {
-    if (hydrated) localStorage.setItem(STORAGE_KEY, JSON.stringify(profile));
+    if (!hydrated) return;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(profile));
+    // Debounced fire-and-forget upsert so the name lands on the shared
+    // feed/leaderboard; localStorage stays the source of truth locally.
+    if (supabase) {
+      const sb = supabase;
+      if (syncTimer.current) window.clearTimeout(syncTimer.current);
+      syncTimer.current = window.setTimeout(() => {
+        sb
+          .from("profiles")
+          .upsert({
+            uid: getUid(),
+            name: profile.name,
+            color: profile.color,
+            updated_at: new Date().toISOString(),
+          })
+          .then(({ error }) => {
+            if (error) console.warn("profile sync failed:", error.message);
+          });
+      }, 800);
+    }
   }, [profile, hydrated]);
 
   const value = useMemo<ProfileContextValue>(

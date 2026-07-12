@@ -6,45 +6,82 @@ import { useSearchParams } from "next/navigation";
 import LangSwitcher from "@/components/LangSwitcher";
 import { useI18n } from "@/i18n/I18nProvider";
 import { getAIResponse, matchPlaces } from "@/lib/mockAI";
+import { daysUntil, matchEvents, SEASON_ACCENT, type SportEvent } from "@/lib/sports";
 import { Place, districtLoc, loc } from "@/lib/types";
 import { LangCode } from "@/i18n/dictionaries";
 
+type BotMode = "sport" | "help";
+
 type Msg =
   | { from: "user"; text: string }
-  | { from: "ai"; text: string; places: Place[] };
+  | { from: "ai"; text: string; places: Place[]; events: SportEvent[] };
 
 function ChatInner() {
   const { t, lang, ready } = useI18n();
   const sp = useSearchParams();
   const initial = sp.get("q") ?? "";
-  const [messages, setMessages] = useState<Msg[]>([]);
+  const [mode, setMode] = useState<BotMode>("sport");
+  const [threads, setThreads] = useState<Record<BotMode, Msg[]>>({ sport: [], help: [] });
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
   const started = useRef(false);
 
+  const messages = threads[mode];
+  const setMessages = useCallback(
+    (updater: (prev: Msg[]) => Msg[], forMode: BotMode) => {
+      setThreads((prev) => ({ ...prev, [forMode]: updater(prev[forMode]) }));
+    },
+    []
+  );
+
   const send = useCallback(
     async (raw: string) => {
       const text = raw.trim();
       if (!text) return;
+      const botMode = mode;
       setInput("");
 
       const history = [
-        ...messages.map((m) => ({
+        ...threads[botMode].map((m) => ({
           role: m.from === "user" ? "user" : "assistant",
           content: m.text,
         })),
         { role: "user", content: text },
       ];
 
-      setMessages((m) => [...m, { from: "user", text }]);
+      setMessages((m) => [...m, { from: "user", text }], botMode);
       setTyping(true);
 
-      const cards = matchPlaces(text);
+      // Cards from the question; refined with the answer once it streams in.
+      const isSport = botMode === "sport";
+      const qPlaces = isSport ? matchPlaces(text).places : [];
+      const qEvents = isSport ? matchEvents(text) : [];
+
+      const attachCards = (answer: string) => {
+        if (!isSport) return;
+        const combined = `${text}\n${answer}`;
+        const places = matchPlaces(combined).places.slice(0, 3);
+        const events = matchEvents(combined);
+        setMessages((m) => {
+          const copy = [...m];
+          const last = copy[copy.length - 1];
+          if (last && last.from === "ai") {
+            copy[copy.length - 1] = { ...last, places, events };
+          }
+          return copy;
+        }, botMode);
+      };
 
       const runMockFallback = () => {
         const res = getAIResponse(text, lang as LangCode);
-        setMessages((m) => [...m, { from: "ai", text: res.reply, places: res.places }]);
+        setMessages(
+          (m) => [
+            ...m,
+            { from: "ai", text: res.reply, places: isSport ? res.places : [], events: qEvents },
+          ],
+          botMode
+        );
         setTyping(false);
       };
 
@@ -52,7 +89,7 @@ function ChatInner() {
         const resp = await fetch("/api/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ messages: history, lang }),
+          body: JSON.stringify({ messages: history, lang, mode: botMode }),
         });
         const ctype = resp.headers.get("content-type") ?? "";
 
@@ -62,7 +99,10 @@ function ChatInner() {
         }
 
         setTyping(false);
-        setMessages((m) => [...m, { from: "ai", text: "", places: cards.places }]);
+        setMessages(
+          (m) => [...m, { from: "ai", text: "", places: qPlaces, events: qEvents }],
+          botMode
+        );
 
         const reader = resp.body.getReader();
         const decoder = new TextDecoder();
@@ -77,7 +117,7 @@ function ChatInner() {
               copy[copy.length - 1] = { ...last, text: acc };
             }
             return copy;
-          });
+          }, botMode);
         };
 
         while (true) {
@@ -107,16 +147,23 @@ function ChatInner() {
             const copy = [...m];
             const last = copy[copy.length - 1];
             if (last && last.from === "ai") {
-              copy[copy.length - 1] = { from: "ai", text: res.reply, places: res.places };
+              copy[copy.length - 1] = {
+                from: "ai",
+                text: res.reply,
+                places: isSport ? res.places : [],
+                events: qEvents,
+              };
             }
             return copy;
-          });
+          }, botMode);
+        } else {
+          attachCards(acc);
         }
       } catch {
         runMockFallback();
       }
     },
-    [messages, lang]
+    [mode, threads, lang, setMessages]
   );
 
   useEffect(() => {
@@ -130,53 +177,83 @@ function ChatInner() {
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, typing]);
+  }, [threads, typing]);
 
-  const suggestions = [
-    t("sport.chatSuggest1"),
-    t("sport.chatSuggest2"),
-    t("sport.chatSuggest3"),
-  ];
+  const suggestions =
+    mode === "sport"
+      ? [t("sport.chatSuggest1"), t("sport.chatSuggest2"), t("sport.chatSuggest3")]
+      : [t("sport.helpSuggest1"), t("sport.helpSuggest2"), t("sport.helpSuggest3")];
+  const suggestionIcons =
+    mode === "sport"
+      ? ["ti-sailboat", "ti-cloud-rain", "ti-map-pin"]
+      : ["ti-qrcode", "ti-medal-2", "ti-bulb"];
 
   return (
     <>
       <header className="sticky top-0 z-30 border-b border-black/10 bg-pitch/85 backdrop-blur">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 lg:px-8">
           <h1 className="flex items-center gap-2 text-lg font-extrabold text-frost">
-            <i className="ti ti-message-chatbot text-volt" aria-hidden /> {t("sport.chatTitle")}
+            <i className="ti ti-message-chatbot text-volt" aria-hidden />
+            {mode === "sport" ? t("sport.botSport") : t("sport.botHelp")}
           </h1>
           <LangSwitcher dark />
         </div>
       </header>
 
       <main className="mx-auto flex w-full max-w-4xl flex-1 flex-col px-4 pb-6 pt-4 lg:px-8">
-        <div className="flex-1 space-y-4 overflow-y-auto">
+        {/* Bot switcher */}
+        <div className="grid grid-cols-2 rounded-full border border-black/10 bg-pitch-800 p-1 text-sm font-semibold">
+          {(["sport", "help"] as const).map((k) => (
+            <button
+              key={k}
+              onClick={() => setMode(k)}
+              aria-pressed={mode === k}
+              className={`flex items-center justify-center gap-1.5 rounded-full py-1.5 transition ${
+                mode === k ? "bg-volt text-white" : "text-steel hover:text-frost"
+              }`}
+            >
+              <i className={`ti ${k === "sport" ? "ti-bolt" : "ti-help-circle"} text-base`} aria-hidden />
+              {t(k === "sport" ? "sport.botSport" : "sport.botHelp")}
+            </button>
+          ))}
+        </div>
+
+        <div className="mt-4 flex-1 space-y-4 overflow-y-auto">
           {/* Intro bubble */}
           <div className="sport-card anim-rise flex items-start gap-3 rounded-2xl p-4">
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-volt text-pitch">
-              <i className="ti ti-bolt text-xl" aria-hidden />
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-volt text-white">
+              <i className={`ti ${mode === "sport" ? "ti-bolt" : "ti-help-circle"} text-xl`} aria-hidden />
             </span>
             <div>
               <div className="flex items-center gap-1.5 font-bold text-frost">
-                {t("sport.chatTitle")}
+                {mode === "sport" ? t("sport.botSport") : t("sport.botHelp")}
                 <i className="ti ti-sparkles text-sm text-volt" aria-hidden />
               </div>
-              <p className="mt-0.5 text-sm leading-relaxed text-steel">{t("sport.chatGreeting")}</p>
+              <p className="mt-0.5 text-sm leading-relaxed text-steel">
+                {mode === "sport" ? t("sport.chatGreeting") : t("sport.helpGreeting")}
+              </p>
             </div>
           </div>
 
           {messages.map((m, i) =>
             m.from === "user" ? (
               <div key={i} className="anim-rise flex justify-end">
-                <div className="max-w-[82%] rounded-2xl rounded-tr-sm bg-volt px-4 py-2.5 text-sm font-medium text-pitch lg:max-w-[62%]">
+                <div className="max-w-[82%] rounded-2xl rounded-tr-sm bg-volt px-4 py-2.5 text-sm font-medium text-white lg:max-w-[62%]">
                   {m.text}
                 </div>
               </div>
             ) : (
-              <AiBubble key={i}>
+              <AiBubble key={i} mode={mode}>
                 <p className="whitespace-pre-wrap break-words text-sm leading-relaxed text-frost">
                   {m.text}
                 </p>
+                {m.events.length > 0 && (
+                  <div className="mt-2 flex flex-col gap-2">
+                    {m.events.map((e) => (
+                      <EventMini key={e.id} event={e} lang={lang as LangCode} t={t} />
+                    ))}
+                  </div>
+                )}
                 {m.places.length > 0 && (
                   <div className="mt-2 flex flex-col gap-2">
                     {m.places.map((p) => (
@@ -189,7 +266,7 @@ function ChatInner() {
           )}
 
           {typing && (
-            <AiBubble>
+            <AiBubble mode={mode}>
               <span className="flex gap-1">
                 <Dot /> <Dot /> <Dot />
               </span>
@@ -206,12 +283,9 @@ function ChatInner() {
                 <button
                   key={s}
                   onClick={() => send(s)}
-                  className="flex shrink-0 items-center gap-1.5 rounded-full border border-black/15 px-3 py-1.5 text-xs text-steel transition hover:border-volt hover:text-volt lg:px-4 lg:text-sm"
+                  className="flex shrink-0 items-center gap-1.5 rounded-full border border-black/15 bg-pitch-800 px-3 py-1.5 text-xs text-steel transition hover:border-volt hover:text-volt lg:px-4 lg:text-sm"
                 >
-                  <i
-                    className={`ti ${["ti-sailboat", "ti-cloud-rain", "ti-map-pin"][i] ?? "ti-sparkles"} text-sm`}
-                    aria-hidden
-                  />
+                  <i className={`ti ${suggestionIcons[i] ?? "ti-sparkles"} text-sm`} aria-hidden />
                   {s}
                 </button>
               ))}
@@ -233,7 +307,7 @@ function ChatInner() {
             <button
               type="submit"
               aria-label={t("common.send")}
-              className="flex h-9 w-9 items-center justify-center rounded-full bg-volt text-pitch transition hover:bg-volt-600"
+              className="flex h-9 w-9 items-center justify-center rounded-full bg-volt text-white transition hover:bg-volt-600"
             >
               <i className="ti ti-send text-lg" aria-hidden />
             </button>
@@ -244,16 +318,49 @@ function ChatInner() {
   );
 }
 
-function AiBubble({ children }: { children: React.ReactNode }) {
+function AiBubble({ children, mode }: { children: React.ReactNode; mode: BotMode }) {
   return (
     <div className="anim-rise flex items-start gap-2 lg:gap-3">
       <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-volt/15 text-volt">
-        <i className="ti ti-bolt text-base" aria-hidden />
+        <i className={`ti ${mode === "sport" ? "ti-bolt" : "ti-help-circle"} text-base`} aria-hidden />
       </span>
       <div className="sport-card max-w-[88%] rounded-2xl rounded-tl-sm px-4 py-2.5 lg:max-w-[72%]">
         {children}
       </div>
     </div>
+  );
+}
+
+function EventMini({
+  event,
+  lang,
+  t,
+}: {
+  event: SportEvent;
+  lang: LangCode;
+  t: (k: string) => string;
+}) {
+  const accent = SEASON_ACCENT[event.season];
+  const days = daysUntil(event);
+  return (
+    <Link
+      href={`/events/${event.id}`}
+      className={`flex items-center gap-2.5 rounded-xl border border-black/10 bg-black/5 p-2.5 transition hover:border-volt/50 ${accent.flag}`}
+    >
+      <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white ${accent.text}`}>
+        <i className={`ti ${event.icon} text-xl`} aria-hidden />
+      </span>
+      <span className="min-w-0 flex-1">
+        <span className="block truncate text-[13px] font-semibold text-frost">
+          {loc(event.name, lang)}
+        </span>
+        <span className="block text-[10px] text-steel" suppressHydrationWarning>
+          {loc(event.monthLabel, lang)} · {districtLoc(event.venue.district, lang)}
+          {days > 0 ? ` · ${t("sport.daysLeft")} ${days} ${t("sport.days")}` : ""}
+        </span>
+      </span>
+      <i className="ti ti-chevron-right text-base text-steel" aria-hidden />
+    </Link>
   );
 }
 

@@ -107,3 +107,26 @@ export const SPORT_TYPE_LABEL: Record<string, { th: string; en: string }> = {
   cycling: { th: "จักรยาน", en: "Cycling" },
   rafting: { th: "ล่องแก่ง", en: "Rafting" },
 };
+
+/** Loose keywords per event so chat can attach event cards to answers. */
+const EVENT_KEYWORDS: Record<string, string[]> = {
+  "boat-race-opening": ["แข่งเรือ", "เรือยาว", "boat race", "longboat", "เปิดสนาม"],
+  "boat-race-royal-cup": ["แข่งเรือ", "เรือยาว", "ถ้วยพระราชทาน", "boat race", "longboat", "royal cup"],
+  "nan-marathon": ["มาราธอน", "marathon", "วิ่งเมือง"],
+  "doi-phu-kha-trail": ["เทรล", "trail", "ดอยภูคา", "phu kha"],
+  "cycling-route-1715": ["ปั่น", "จักรยาน", "1715", "cycling", "bike"],
+  "wa-river-rafting": ["ล่องแก่ง", "น้ำว้า", "rafting", "แก่ง", "wa river"],
+  "songkran-fun-run": ["สงกรานต์", "สาดน้ำ", "songkran", "splash"],
+};
+
+/** Events mentioned in a chunk of text (user question + AI answer). */
+export function matchEvents(text: string, max = 2): SportEvent[] {
+  const hay = text.toLowerCase();
+  const hits: SportEvent[] = [];
+  for (const e of sportEvents) {
+    const words = [e.name.th, e.name.en.toLowerCase(), ...(EVENT_KEYWORDS[e.id] ?? [])];
+    if (words.some((w) => w && hay.includes(w.toLowerCase()))) hits.push(e);
+    if (hits.length >= max) break;
+  }
+  return hits;
+}

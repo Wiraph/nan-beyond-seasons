@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { getEvent, sportEvents } from "./sports";
+import { getUid, supabase } from "./supabase";
 import type { SeasonKey } from "./weather";
 
 export type Checkin = {
@@ -123,6 +124,13 @@ export function PassportProvider({ children }: { children: React.ReactNode }) {
           { eventId, at: new Date().toISOString(), season: event.season },
         ];
         setCheckins(next);
+        // Mirror to Supabase so the shared leaderboard counts this device.
+        supabase
+          ?.from("checkins")
+          .insert({ uid: getUid(), event_id: eventId, season: event.season })
+          .then(({ error }) => {
+            if (error) console.warn("checkin sync failed:", error.message);
+          });
         return BADGES.filter((b) => b.earned(next) && !before.has(b.id)).map((b) => b.id);
       },
     };
