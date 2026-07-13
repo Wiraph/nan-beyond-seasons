@@ -12,6 +12,7 @@ import {
   fmtRange,
   getEvent,
   SEASON_ACCENT,
+  SEASON_HERO,
   SPORT_TYPE_LABEL,
 } from "@/lib/sports";
 import { fallbackRacePlan, type RacePlan } from "@/lib/raceplan";
@@ -85,7 +86,34 @@ export default function EventPage({
       </header>
 
       <main className="mx-auto w-full max-w-4xl flex-1 px-4 pb-10 pt-5 lg:px-8">
-        {/* Event hero */}
+        {/* Hero banner — real photo if provided, else a branded season gradient */}
+        <div className="anim-rise relative mb-4 h-44 overflow-hidden rounded-md lg:h-56">
+          {event.image ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={event.image} alt="" className="h-full w-full object-cover" />
+          ) : (
+            <div className="h-full w-full" style={{ background: SEASON_HERO[event.season] }} />
+          )}
+          {/* legibility scrim + big sport icon watermark */}
+          <div
+            className="absolute inset-0"
+            style={{ background: "linear-gradient(to top, rgba(0,0,0,0.35), transparent 55%)" }}
+          />
+          <i
+            className={`ti ${event.icon} pointer-events-none absolute -right-3 -top-3 text-[9rem] text-white/15`}
+            aria-hidden
+          />
+          <div className="absolute bottom-3 left-4 flex items-center gap-2">
+            <span className="flex h-9 w-9 items-center justify-center rounded bg-white/20 text-white backdrop-blur">
+              <i className={`ti ${event.icon} text-xl`} aria-hidden />
+            </span>
+            <span className="rounded bg-black/30 px-2 py-1 text-xs font-semibold text-white backdrop-blur">
+              {loc(SPORT_TYPE_LABEL[event.sportType] ?? { th: event.sportType, en: event.sportType }, lang)}
+            </span>
+          </div>
+        </div>
+
+        {/* Event details */}
         <section className={`sport-card anim-rise rounded-md p-5 lg:p-7 ${accent.flag}`}>
           <div className="flex flex-wrap items-center gap-2 text-[11px]">
             {status === "live" && (

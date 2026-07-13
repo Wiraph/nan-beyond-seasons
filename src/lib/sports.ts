@@ -18,8 +18,18 @@ export type SportEvent = {
   mode: ("spectate" | "compete")[];
   desc: { th: string; en: string };
   highlight: { th: string; en: string };
+  /** Optional promo/real photo (path under /public). Falls back to a
+   *  branded season-gradient banner when absent. */
+  image?: string;
   outdoor: boolean;
   verified: boolean;
+};
+
+/** Season-tinted gradient for event hero banners (used when no photo). */
+export const SEASON_HERO: Record<SeasonKey, string> = {
+  green: "linear-gradient(135deg, #16a34a, #14532d)",
+  cool: "linear-gradient(135deg, #0ea5e9, #075985)",
+  hot: "linear-gradient(135deg, #f97316, #9a3412)",
 };
 
 export const sportEvents = eventsJson as SportEvent[];
