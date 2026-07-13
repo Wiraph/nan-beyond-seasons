@@ -12,7 +12,9 @@ type I18nContextValue = {
 
 const I18nContext = createContext<I18nContextValue | null>(null);
 
-const langCodes: LangCode[] = ["th", "en", "zh", "ja", "lo", "id", "vi", "my"];
+// Only accept the languages we actually offer; a stale saved value (e.g. an
+// old "ja" from before we trimmed the switcher) falls back to the default.
+const langCodes: LangCode[] = ["th", "en"];
 
 function isLangCode(value: string | null): value is LangCode {
   return langCodes.includes(value as LangCode);

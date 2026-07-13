@@ -39,7 +39,7 @@
 ## Tech Stack
 
 Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4 · Supabase (Postgres + RLS) ·
-OpenRouter (free LLM chain) · Open-Meteo API (ฟรี ไม่ต้องมี key) · Leaflet · i18n 8 ภาษา
+OpenRouter (free LLM chain) · Open-Meteo API (ฟรี ไม่ต้องมี key) · Leaflet · i18n ไทย/อังกฤษ (สถาปัตยกรรมรองรับเพิ่มภาษา)
 
 ## วิธีรัน
 

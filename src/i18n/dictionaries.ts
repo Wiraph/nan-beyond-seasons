@@ -1,14 +1,11 @@
 export type LangCode = "th" | "en" | "zh" | "ja" | "lo" | "id" | "vi" | "my";
 
+// Only the two fully-localised languages are offered. The dictionaries and
+// LangCode type keep the other six so the i18n plumbing is ready to expand,
+// but we don't ship partially-translated (machine-fallback) UIs.
 export const languages: { code: LangCode; label: string; flag: string }[] = [
   { code: "th", label: "ไทย", flag: "🇹🇭" },
   { code: "en", label: "English", flag: "🇬🇧" },
-  { code: "zh", label: "中文", flag: "🇨🇳" },
-  { code: "ja", label: "日本語", flag: "🇯🇵" },
-  { code: "lo", label: "ລາວ", flag: "🇱🇦" },
-  { code: "id", label: "Indonesia", flag: "🇮🇩" },
-  { code: "vi", label: "Tiếng Việt", flag: "🇻🇳" },
-  { code: "my", label: "မြန်မာ", flag: "🇲🇲" },
 ];
 
 type Dict = Record<string, string>;
