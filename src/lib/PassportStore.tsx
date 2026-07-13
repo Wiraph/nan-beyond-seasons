@@ -77,26 +77,35 @@ export const BADGES: BadgeDef[] = [
 
 type PassportContextValue = {
   checkins: Checkin[];
+  /** Spendable balance = earned − redeemed. Shown as the user's wallet. */
   points: number;
+  /** Lifetime earned (check-ins × 50). Used for the leaderboard/achievement. */
+  earnedPoints: number;
   earnedBadges: BadgeDef[];
   hasCheckedIn: (eventId: string) => boolean;
   /** Returns the badge ids newly unlocked by this check-in. */
   checkIn: (eventId: string) => string[];
+  /** Deduct points when redeeming a reward; false if the balance is short. */
+  spend: (amount: number) => boolean;
   hydrated: boolean;
 };
 
 const PassportContext = createContext<PassportContextValue | null>(null);
 
 const STORAGE_KEY = "ngo-passport";
+const SPENT_KEY = "ngo-spent";
 
 export function PassportProvider({ children }: { children: React.ReactNode }) {
   const [checkins, setCheckins] = useState<Checkin[]>([]);
+  const [spent, setSpent] = useState(0);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) setCheckins(JSON.parse(raw));
+      const s = Number(localStorage.getItem(SPENT_KEY));
+      if (Number.isFinite(s) && s > 0) setSpent(s);
     } catch {
       // corrupted storage — start fresh
     }
@@ -107,14 +116,26 @@ export function PassportProvider({ children }: { children: React.ReactNode }) {
     if (hydrated) localStorage.setItem(STORAGE_KEY, JSON.stringify(checkins));
   }, [checkins, hydrated]);
 
+  useEffect(() => {
+    if (hydrated) localStorage.setItem(SPENT_KEY, String(spent));
+  }, [spent, hydrated]);
+
   const value = useMemo<PassportContextValue>(() => {
     const earnedBadges = BADGES.filter((b) => b.earned(checkins));
+    const earnedPoints = checkins.length * POINTS_PER_CHECKIN;
+    const points = Math.max(0, earnedPoints - spent);
     return {
       checkins,
-      points: checkins.length * POINTS_PER_CHECKIN,
+      points,
+      earnedPoints,
       earnedBadges,
       hydrated,
       hasCheckedIn: (eventId) => checkins.some((c) => c.eventId === eventId),
+      spend: (amount) => {
+        if (amount <= 0 || amount > points) return false;
+        setSpent((prev) => prev + amount);
+        return true;
+      },
       checkIn: (eventId) => {
         const event = getEvent(eventId);
         if (!event || checkins.some((c) => c.eventId === eventId)) return [];
@@ -134,7 +155,7 @@ export function PassportProvider({ children }: { children: React.ReactNode }) {
         return BADGES.filter((b) => b.earned(next) && !before.has(b.id)).map((b) => b.id);
       },
     };
-  }, [checkins, hydrated]);
+  }, [checkins, spent, hydrated]);
 
   return <PassportContext.Provider value={value}>{children}</PassportContext.Provider>;
 }

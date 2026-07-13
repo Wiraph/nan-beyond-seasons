@@ -165,7 +165,7 @@ export default function FeedHome() {
 function ProfileCard() {
   const { t, lang } = useI18n();
   const { profile } = useProfile();
-  const { points, earnedBadges, checkins, hydrated } = usePassport();
+  const { earnedPoints, earnedBadges, checkins, hydrated } = usePassport();
 
   return (
     <div className="sport-card rounded-md p-5">
@@ -182,7 +182,7 @@ function ProfileCard() {
       <div className="mt-4 grid grid-cols-3 divide-x divide-black/8 border-y border-black/8 py-3 text-center">
         <div>
           <div className="sport-num text-lg text-frost" suppressHydrationWarning>
-            {hydrated ? points : "—"}
+            {hydrated ? earnedPoints : "—"}
           </div>
           <div className="text-[10px] text-steel">{t("sport.points")}</div>
         </div>
@@ -462,7 +462,7 @@ function PostCard({
 
 function RankTab() {
   const { t, lang } = useI18n();
-  const { points, hydrated } = usePassport();
+  const { earnedPoints, hydrated } = usePassport();
   const { profile } = useProfile();
   const dbRows = useLeaderboard();
 
@@ -470,7 +470,7 @@ function RankTab() {
     const me = {
       name: displayName(profile, lang),
       color: profile.color,
-      points,
+      points: earnedPoints,
       me: true,
     };
     return [
@@ -478,7 +478,7 @@ function RankTab() {
       ...dbRows.map((r) => ({ ...r, me: false })),
       me,
     ].sort((a, b) => b.points - a.points);
-  }, [profile, lang, points, dbRows]);
+  }, [profile, lang, earnedPoints, dbRows]);
 
   if (!hydrated) return null;
 

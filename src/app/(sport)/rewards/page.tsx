@@ -30,7 +30,7 @@ function rewardCode(id: string): string {
 
 export default function RewardsPage() {
   const { t, lang } = useI18n();
-  const { points, hydrated } = usePassport();
+  const { points, spend, hydrated } = usePassport();
   const [redeemed, setRedeemed] = useState<string[]>([]);
   const [codeFor, setCodeFor] = useState<Reward | null>(null);
 
@@ -44,13 +44,17 @@ export default function RewardsPage() {
   }, []);
 
   const redeem = (r: Reward) => {
-    if (points < r.cost) return;
-    setCodeFor(r);
-    if (!redeemed.includes(r.id)) {
-      const next = [...redeemed, r.id];
-      setRedeemed(next);
-      localStorage.setItem(REDEEMED_KEY, JSON.stringify(next));
+    // Already redeemed → just show the code again (points already deducted).
+    if (redeemed.includes(r.id)) {
+      setCodeFor(r);
+      return;
     }
+    // Deduct real points; bail if the balance is short.
+    if (!spend(r.cost)) return;
+    setCodeFor(r);
+    const next = [...redeemed, r.id];
+    setRedeemed(next);
+    localStorage.setItem(REDEEMED_KEY, JSON.stringify(next));
   };
 
   return (

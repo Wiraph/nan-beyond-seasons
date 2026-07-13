@@ -88,7 +88,12 @@ ${context}`;
     .filter(Boolean);
   const candidates = [...new Set([...envModels, ...DEFAULT_CHAIN])];
 
+  // Shared 9s budget across attempts — return a clean fallback before the
+  // platform gateway times out rather than hanging into a 504.
+  const budget = AbortSignal.timeout(9000);
+
   for (const model of candidates) {
+    if (budget.aborted) break;
     let upstream: Response;
     try {
       upstream = await fetch("https://openrouter.ai/api/v1/chat/completions", {
@@ -97,18 +102,19 @@ ${context}`;
           Authorization: `Bearer ${key}`,
           "Content-Type": "application/json",
           "HTTP-Referer": process.env.OPENROUTER_SITE_URL ?? "http://localhost:3000",
-          "X-Title": process.env.OPENROUTER_APP_NAME ?? "Nan Connect",
+          "X-Title": process.env.OPENROUTER_APP_NAME ?? "Nan Game On",
         },
         body: JSON.stringify({
           model,
           stream: false,
           temperature: 0.4,
           // Reasoning models spend tokens thinking before the JSON comes out;
-          // keep effort low and leave plenty of room so the answer isn't cut.
-          max_tokens: 2500,
+          // keep effort low and leave room so the answer isn't cut.
+          max_tokens: 2000,
           reasoning: { effort: "low" },
           messages: [{ role: "system", content: system }],
         }),
+        signal: budget,
       });
     } catch {
       continue;

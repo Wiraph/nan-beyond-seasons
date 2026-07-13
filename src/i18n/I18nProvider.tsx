@@ -31,6 +31,11 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
     return () => window.clearTimeout(id);
   }, []);
 
+  // Keep <html lang> in sync with the chosen language (a11y / SEO).
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
+
   const setLang = (l: LangCode) => {
     setLangState(l);
     if (typeof window !== "undefined") {

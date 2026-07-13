@@ -91,7 +91,14 @@ ${placeContext}`;
     .filter(Boolean);
   const candidates = [...new Set([...envModels, ...DEFAULT_CHAIN])];
 
+  // One shared 9s budget across all model attempts: a fast model (gemma)
+  // can answer within it, rate-limited ones fail fast and we try the next,
+  // and we always return a clean fallback BEFORE the platform gateway
+  // times out (~14s on Vercel) instead of hanging into a 504.
+  const budget = AbortSignal.timeout(9000);
+
   for (const model of candidates) {
+    if (budget.aborted) break;
     let upstream: Response;
     try {
       upstream = await fetch("https://openrouter.ai/api/v1/chat/completions", {
@@ -106,13 +113,14 @@ ${placeContext}`;
           model,
           stream: false,
           temperature: 0.5,
-          max_tokens: 2500,
+          max_tokens: 2000,
           reasoning: { effort: "low" },
           messages: [{ role: "system", content: system }],
         }),
+        signal: budget,
       });
     } catch {
-      continue;
+      continue; // timeout / network — try next model (or exit if budget spent)
     }
 
     if (!upstream.ok) continue;
