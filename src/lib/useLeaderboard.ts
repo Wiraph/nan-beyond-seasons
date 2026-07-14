@@ -36,7 +36,7 @@ export function useLeaderboard(): LeaderRow[] {
       );
       setRows(
         Object.entries(counts).map(([u, n]) => ({
-          name: profiles.get(u)?.name || "Game On athlete",
+          name: profiles.get(u)?.name || "Muan Nan athlete",
           color: profiles.get(u)?.color || "#fc5200",
           points: n * POINTS_PER_CHECKIN,
         }))

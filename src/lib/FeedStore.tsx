@@ -166,7 +166,7 @@ export function FeedProvider({ children }: { children: React.ReactNode }) {
           id: `db-${r.id}`,
           own: false,
           demo: false,
-          author: r.author_name || "Game On athlete",
+          author: r.author_name || "Muan Nan athlete",
           avatarColor: r.author_color || "#fc5200",
           kind: r.kind,
           eventId: r.event_id ?? undefined,

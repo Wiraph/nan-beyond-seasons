@@ -23,7 +23,7 @@ export const AVATAR_COLORS = [
 /** Display name with a sensible default per language. */
 export function displayName(profile: Profile, lang: string): string {
   if (profile.name.trim()) return profile.name.trim();
-  return lang === "th" ? "นักกีฬา Game On" : "Game On athlete";
+  return lang === "th" ? "นักกีฬาม่วนน่าน" : "Muan Nan athlete";
 }
 
 export function initial(name: string): string {

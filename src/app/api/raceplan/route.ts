@@ -51,23 +51,32 @@ export async function POST(req: NextRequest) {
   const lang = body.lang ?? "th";
   const langName = LANG_NAME[lang] ?? "Thai";
 
+  const isThai = lang === "th";
   const nearby = placesNearVenue(event, 8);
+  // Feed the place list in the reply language so the model reuses the exact
+  // local names instead of transliterating them back into English.
   const placeContext = nearby
-    .map(
-      (p) =>
-        `- id:${p.id} | ${p.name.en} | ${p.district} | ${p.type} | ${p.km.toFixed(1)} km from venue | ${p.summary.en}`
-    )
+    .map((p) => {
+      const name = isThai ? p.name.th ?? p.name.en : p.name.en;
+      const summary = isThai ? p.summary.th ?? p.summary.en : p.summary.en;
+      return `- id:${p.id} | ${name} | ${p.district} | ${p.type} | ${p.km.toFixed(1)} km from venue | ${summary}`;
+    })
     .join("\n");
 
   const forecast = await getNanForecast();
   const weatherContext = buildWeatherContext(forecast, new Date(`${event.dates.start}T00:00:00`).getMonth() + 1);
 
+  const eventName = isThai ? event.name.th : event.name.en;
+  const venueName = isThai ? event.venue.name.th ?? event.venue.name.en : event.venue.name.en;
+  const eventDesc = isThai ? event.desc.th : event.desc.en;
+
   const system = `You are a "race-cation" trip planner for Nan province, Thailand — you build short trips around sports events so visitors stay longer and spend with local communities.
 
 Event:
-${event.name.en} (${event.name.th}) | ${event.dates.start} to ${event.dates.end} | venue: ${event.venue.name.en}, ${event.venue.district} | ${event.desc.en}
+${eventName} | ${event.dates.start} to ${event.dates.end} | venue: ${venueName}, ${event.venue.district} | ${eventDesc}
 
 Build a 2-day plan: Day 1 is the event day (attend the event, then nearby stops), Day 2 visits destinations near the venue. Adapt to the weather below — indoor stops for wet afternoons, outdoor beauty when clear. Favour local food and culture stops.
+Write EVERY string in ${langName}. Copy the event name and the place names EXACTLY as written above — never translate or transliterate them.
 Reply with STRICT JSON ONLY, no prose, no markdown fences:
 {"days":[{"label":"<short day label in ${langName}>","stops":[{"time":"HH:MM","title":"<stop title in ${langName}>","placeId":"<id from list or null for the event itself>","note":"<one short ${langName} sentence>"}]}],"tips":["<short ${langName} practical tip>"]}
 2 days, 3-4 stops each, max 2 tips. placeId must be an id from the list below or null.
@@ -107,7 +116,7 @@ ${placeContext}`;
           Authorization: `Bearer ${key}`,
           "Content-Type": "application/json",
           "HTTP-Referer": process.env.OPENROUTER_SITE_URL ?? "http://localhost:3000",
-          "X-Title": process.env.OPENROUTER_APP_NAME ?? "Nan Game On",
+          "X-Title": process.env.OPENROUTER_APP_NAME ?? "Ruedu Muan Nan",
         },
         body: JSON.stringify({
           model,

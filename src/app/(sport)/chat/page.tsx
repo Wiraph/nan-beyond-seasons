@@ -196,6 +196,8 @@ function ChatInner() {
     mode === "sport"
       ? ["ti-sailboat", "ti-cloud-rain", "ti-map-pin"]
       : ["ti-qrcode", "ti-medal-2", "ti-bulb"];
+  const greeting = mode === "sport" ? t("sport.chatGreeting") : t("sport.helpGreeting");
+  const isEmpty = messages.length === 0 && !typing;
 
   return (
     <>
@@ -204,8 +206,10 @@ function ChatInner() {
           <div className="flex min-w-0 items-center gap-2">
             <PublicBackButton fallbackHref="/" />
             <h1 className="flex min-w-0 items-center gap-2 text-lg font-bold text-frost">
-              <i className="ti ti-message-chatbot shrink-0 text-volt" aria-hidden />
-              <span className="truncate">{mode === "sport" ? t("sport.botSport") : t("sport.botHelp")}</span>
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-volt text-white">
+                <i className="ti ti-message-chatbot text-lg" aria-hidden />
+              </span>
+              <span className="truncate">{t("sport.botSport")}</span>
             </h1>
           </div>
           <GameOnHeaderActions dark />
@@ -214,39 +218,53 @@ function ChatInner() {
 
       <main className="mx-auto flex w-full max-w-4xl flex-1 flex-col px-4 pb-6 pt-4 lg:px-8">
         {/* Bot switcher */}
-        <div className="grid grid-cols-2 rounded-md border border-black/10 bg-pitch-800 p-1 text-sm font-semibold">
+        <div className="grid grid-cols-2 gap-1 rounded-full border border-black/10 bg-pitch-800 p-1 text-sm font-semibold">
           {(["sport", "help"] as const).map((k) => (
             <button
               key={k}
               onClick={() => setMode(k)}
               aria-pressed={mode === k}
-              className={`flex items-center justify-center gap-1.5 rounded py-1.5 transition ${
+              className={`flex items-center justify-center gap-1.5 rounded-full py-2 transition ${
                 mode === k ? "bg-volt text-white" : "text-steel hover:text-frost"
               }`}
             >
-              <i className={`ti ${k === "sport" ? "ti-bolt" : "ti-help-circle"} text-base`} aria-hidden />
-              {t(k === "sport" ? "sport.botSport" : "sport.botHelp")}
+              <i className={`ti ${k === "sport" ? "ti-compass" : "ti-help-circle"} text-base`} aria-hidden />
+              {t(k === "sport" ? "chat.tabSport" : "chat.tabHelp")}
             </button>
           ))}
         </div>
 
-        <div className="mt-4 flex-1 space-y-4 overflow-y-auto">
-          {/* Intro bubble */}
-          <div className="sport-card anim-rise flex items-start gap-3 rounded-md p-4">
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-volt text-white">
-              <i className={`ti ${mode === "sport" ? "ti-bolt" : "ti-help-circle"} text-xl`} aria-hidden />
+        {isEmpty && (
+          <div className="anim-rise flex flex-1 flex-col items-center justify-center py-10 text-center">
+            <span className="anim-pop flex h-20 w-20 items-center justify-center rounded-3xl bg-volt text-white shadow-lg shadow-volt/30">
+              <i className="ti ti-message-chatbot text-4xl" aria-hidden />
             </span>
-            <div>
-              <div className="flex items-center gap-1.5 font-bold text-frost">
-                {mode === "sport" ? t("sport.botSport") : t("sport.botHelp")}
-                <i className="ti ti-sparkles text-sm text-volt" aria-hidden />
-              </div>
-              <p className="mt-0.5 text-sm leading-relaxed text-steel">
-                {mode === "sport" ? t("sport.chatGreeting") : t("sport.helpGreeting")}
-              </p>
+            <h2 className="mt-5 flex items-center gap-1.5 text-2xl font-bold text-frost">
+              {t("sport.botSport")}
+              <i className="ti ti-sparkles text-lg text-volt" aria-hidden />
+            </h2>
+            <p className="mt-1 text-sm font-medium text-volt">{t("chat.botTagline")}</p>
+            <p className="mt-3 max-w-md text-sm leading-relaxed text-steel">{greeting}</p>
+
+            <div className="mt-7 grid w-full max-w-md gap-2">
+              {suggestions.map((s, i) => (
+                <button
+                  key={s}
+                  onClick={() => send(s)}
+                  className="sport-card group flex items-center gap-3 rounded-md p-3 text-left transition hover:border-volt/50"
+                >
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-volt/12 text-volt">
+                    <i className={`ti ${suggestionIcons[i] ?? "ti-sparkles"} text-lg`} aria-hidden />
+                  </span>
+                  <span className="min-w-0 flex-1 text-sm font-medium text-frost">{s}</span>
+                  <i className="ti ti-arrow-right text-base text-steel transition group-hover:text-volt" aria-hidden />
+                </button>
+              ))}
             </div>
           </div>
+        )}
 
+        <div className={`mt-4 flex-1 space-y-4 overflow-y-auto ${isEmpty ? "hidden" : ""}`}>
           {messages.map((m, i) =>
             m.from === "user" ? (
               <div key={i} className="anim-rise flex justify-end">
@@ -255,7 +273,7 @@ function ChatInner() {
                 </div>
               </div>
             ) : (
-              <AiBubble key={i} mode={mode}>
+              <AiBubble key={i}>
                 <p className="whitespace-pre-wrap break-words text-sm leading-relaxed text-frost">
                   {m.text}
                 </p>
@@ -278,7 +296,7 @@ function ChatInner() {
           )}
 
           {typing && (
-            <AiBubble mode={mode}>
+            <AiBubble>
               <span className="flex gap-1">
                 <Dot /> <Dot /> <Dot />
               </span>
@@ -287,28 +305,14 @@ function ChatInner() {
           <div ref={endRef} />
         </div>
 
-        {/* Suggestions + input */}
+        {/* Composer */}
         <div className="sticky bottom-0 mt-4 bg-pitch/90 pb-1 pt-2 backdrop-blur">
-          {messages.length === 0 && (
-            <div className="no-scrollbar mb-2 flex gap-2 overflow-x-auto">
-              {suggestions.map((s, i) => (
-                <button
-                  key={s}
-                  onClick={() => send(s)}
-                  className="flex shrink-0 items-center gap-1.5 rounded border border-black/15 bg-pitch-800 px-3 py-1.5 text-xs text-steel transition hover:border-volt hover:text-volt lg:px-4 lg:text-sm"
-                >
-                  <i className={`ti ${suggestionIcons[i] ?? "ti-sparkles"} text-sm`} aria-hidden />
-                  {s}
-                </button>
-              ))}
-            </div>
-          )}
           <form
             onSubmit={(e) => {
               e.preventDefault();
               send(input);
             }}
-            className="flex items-center gap-2 rounded-full border border-black/15 bg-pitch-800 py-1.5 pl-4 pr-1.5"
+            className="flex items-center gap-2 rounded-full border border-black/15 bg-pitch-800 py-1.5 pl-4 pr-1.5 shadow-sm transition focus-within:border-volt"
           >
             <input
               value={input}
@@ -319,7 +323,8 @@ function ChatInner() {
             <button
               type="submit"
               aria-label={t("common.send")}
-              className="flex h-9 w-9 items-center justify-center rounded-full bg-volt text-white transition hover:bg-volt-600"
+              disabled={!input.trim()}
+              className="flex h-9 w-9 items-center justify-center rounded-full bg-volt text-white transition hover:bg-volt-600 disabled:opacity-40"
             >
               <i className="ti ti-send text-lg" aria-hidden />
             </button>
@@ -330,11 +335,11 @@ function ChatInner() {
   );
 }
 
-function AiBubble({ children, mode }: { children: React.ReactNode; mode: BotMode }) {
+function AiBubble({ children }: { children: React.ReactNode }) {
   return (
     <div className="anim-rise flex items-start gap-2 lg:gap-3">
-      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-volt/15 text-volt">
-        <i className={`ti ${mode === "sport" ? "ti-bolt" : "ti-help-circle"} text-base`} aria-hidden />
+      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-volt text-white">
+        <i className="ti ti-message-chatbot text-base" aria-hidden />
       </span>
       <div className="sport-card max-w-[88%] rounded-md rounded-tl-sm px-4 py-2.5 lg:max-w-[72%]">
         {children}

@@ -41,7 +41,7 @@ function fallback(reason: string) {
 
 // App knowledge for the help bot is kept next to the real rules.
 // This prevents the guide from drifting from what the app actually does.
-const APP_GUIDE = `Nan Game On app guide (ground truth):
+const APP_GUIDE = `Ruedu Muan Nan (ฤดูม่วนน่าน) app guide (ground truth):
 - Home (/) is a Strava-style community feed: post updates, give kudos (flame button), see community posts. "Ranking" tab = points leaderboard.
 - Calendar (/calendar): 12-month sports festival calendar grouped by season (Green/Cool/Hot) with countdowns and live race-day weather.
 - Each event page: details, real weather, "Plan a trip around this" = AI builds a 2-day race-cation (event + nearby attractions, weather-adaptive).
@@ -73,17 +73,18 @@ export async function POST(req: NextRequest) {
   const weatherContext = buildWeatherContext(forecast, new Date().getMonth() + 1);
 
   const system = body.mode === "help"
-    ? `You are the Nan Game On app helper.
+    ? `You are "น้องกระซิบ" (Nong Krasip), the assistant of the Ruedu Muan Nan (ฤดูม่วนน่าน) app. In this mode you explain how to use the app.
 Rules:
 - Answer questions about how to use the app: feed, kudos, calendar, check-ins, points, badges, passport, AI trip planner.
 - Treat the guide below as ground truth. Do not invent features that are not listed.
 - Be short, friendly and practical (2-4 sentences; use a small list when listing badges or steps).
-- If asked about actual events or travel, give a one-line answer and suggest switching to the Sport Buddy bot.
+- If asked about actual events or travel, give a one-line answer and suggest switching to the "เที่ยว & งานกีฬา" (Travel & events) tab.
 - Always reply in ${langName}, regardless of the language of the question.
 
 ${APP_GUIDE}`
-    : `You are the Nan Game On AI concierge - the sports-tourism guide for Nan province, Northern Thailand.
+    : `You are "น้องกระซิบ" (Nong Krasip), the friendly AI guide of the Ruedu Muan Nan (ฤดูม่วนน่าน) app - a sports-tourism concierge for Nan province, Northern Thailand. Your name is a nod to the famous "whisper" mural at Wat Phumin; you whisper to visitors where Nan is most fun in every season.
 Rules:
+- If asked who you are, say you are น้องกระซิบ, the guide of ฤดูม่วนน่าน. Never call yourself by any other product name.
 - Help with Nan's sports festivals (dates, what to expect, spectating vs competing, how to prepare) and nearby destination context for a race weekend.
 - Treat the lists below as ground truth. Recommend real events and places by name. Do not invent events or places that are not listed. If dates are asked, note they may await official announcement.
 - Nan plays all year: use the season and weather context to tailor advice - longboat racing and rafting shine in Green Season, trails and cycling in the cool months. On rainy days steer to indoor culture and food.
@@ -125,7 +126,7 @@ ${PLACE_CONTEXT}`;
           "Content-Type": "application/json",
           "HTTP-Referer":
             process.env.OPENROUTER_SITE_URL ?? "http://localhost:3000",
-          "X-Title": process.env.OPENROUTER_APP_NAME ?? "Nan Game On",
+          "X-Title": process.env.OPENROUTER_APP_NAME ?? "Ruedu Muan Nan",
         },
         body: JSON.stringify({
           model,
