@@ -63,3 +63,56 @@ duration_ms 193.0749
 The passing suite includes all five role-access tests and all four retained
 public-navigation tests. `git diff --check` also completed with no whitespace
 errors.
+
+## Review fix: unknown paths must not navigate home
+
+### Changed files
+
+- `src/lib/public-navigation.ts`
+- `tests/public-navigation.test.mts`
+- `.superpowers/sdd/task-1-report.md`
+
+### Red
+
+Updated the deleted-tourist path assertions so `/map` and
+`/posts/travel/42` must both return `null`.
+
+Command:
+
+```powershell
+npm test
+```
+
+Output summary:
+
+```text
+tests 9
+pass 8
+fail 1
+```
+
+The failing assertion reported `actual: '/'` and `expected: null` for
+`/map`, confirming the unconditional default return was the cause.
+
+### Green
+
+Changed only the unmatched-path default in `getBackFallback` from `"/"` to
+`null`; all retained sport mappings are still explicitly returned before that
+default.
+
+Command:
+
+```powershell
+npm test
+```
+
+Output summary:
+
+```text
+tests 9
+pass 9
+fail 0
+duration_ms 205.6129
+```
+
+`git diff --check` completed without whitespace errors.

@@ -15,5 +15,5 @@ export function getBackFallback(pathname: string): string | null {
   if (checkinMatch) return `/events/${checkinMatch[1]}`;
   if (/^\/events\/[^/]+$/.test(path)) return "/calendar";
 
-  return "/";
+  return null;
 }

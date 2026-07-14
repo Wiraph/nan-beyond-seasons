@@ -15,10 +15,10 @@ test("returns the event and check-in parent routes", () => {
   assert.equal(getBackFallback("/checkin/nan-open"), "/events/nan-open");
 });
 
-test("keeps the sport home free of a fallback and returns home for other paths", () => {
+test("keeps home and deleted tourist paths free of a fallback", () => {
   assert.equal(getBackFallback("/"), null);
-  assert.equal(getBackFallback("/map"), "/");
-  assert.equal(getBackFallback("/posts/travel/42"), "/");
+  assert.equal(getBackFallback("/map"), null);
+  assert.equal(getBackFallback("/posts/travel/42"), null);
 });
 
 test("only uses browser history after an in-app public navigation", () => {
