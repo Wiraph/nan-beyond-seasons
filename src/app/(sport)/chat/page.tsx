@@ -3,18 +3,19 @@
 import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import LangSwitcher from "@/components/LangSwitcher";
+import GameOnHeaderActions from "@/components/GameOnHeaderActions";
+import PublicBackButton from "@/components/PublicBackButton";
 import { useI18n } from "@/i18n/I18nProvider";
-import { getAIResponse, matchPlaces } from "@/lib/mockAI";
+import { fallbackSportReply, matchDestinations } from "@/lib/destination-reference";
 import { daysUntil, matchEvents, SEASON_ACCENT, type SportEvent } from "@/lib/sports";
-import { Place, districtLoc, loc } from "@/lib/types";
+import { type Destination, districtLoc, loc } from "@/lib/types";
 import { LangCode } from "@/i18n/dictionaries";
 
 type BotMode = "sport" | "help";
 
 type Msg =
   | { from: "user"; text: string }
-  | { from: "ai"; text: string; places: Place[]; events: SportEvent[] };
+  | { from: "ai"; text: string; places: Destination[]; events: SportEvent[] };
 
 function ChatInner() {
   const { t, lang, ready } = useI18n();
@@ -55,13 +56,13 @@ function ChatInner() {
 
       // Cards from the question; refined with the answer once it streams in.
       const isSport = botMode === "sport";
-      const qPlaces = isSport ? matchPlaces(text).places : [];
+      const qPlaces = isSport ? matchDestinations(text) : [];
       const qEvents = isSport ? matchEvents(text) : [];
 
       const attachCards = (answer: string) => {
         if (!isSport) return;
         const combined = `${text}\n${answer}`;
-        const places = matchPlaces(combined).places.slice(0, 3);
+        const places = matchDestinations(combined);
         const events = matchEvents(combined);
         setMessages((m) => {
           const copy = [...m];
@@ -73,12 +74,16 @@ function ChatInner() {
         }, botMode);
       };
 
-      const runMockFallback = () => {
-        const res = getAIResponse(text, lang as LangCode);
+      const runLocalFallback = () => {
+        const reply = isSport
+          ? fallbackSportReply(lang === "th" ? "th" : "en")
+          : lang === "th"
+            ? "ฉันช่วยอธิบายการใช้งาน Nan Game On ได้ เช่น ปฏิทิน เช็กอิน แต้ม และพาสปอร์ต"
+            : "I can explain Nan Game On features such as the calendar, check-ins, points, and passport.";
         setMessages(
           (m) => [
             ...m,
-            { from: "ai", text: res.reply, places: isSport ? res.places : [], events: qEvents },
+            { from: "ai", text: reply, places: qPlaces, events: qEvents },
           ],
           botMode
         );
@@ -94,7 +99,7 @@ function ChatInner() {
         const ctype = resp.headers.get("content-type") ?? "";
 
         if (!resp.ok || !resp.body || ctype.includes("application/json")) {
-          runMockFallback();
+          runLocalFallback();
           return;
         }
 
@@ -142,15 +147,19 @@ function ChatInner() {
         }
 
         if (!acc.trim()) {
-          const res = getAIResponse(text, lang as LangCode);
+          const reply = isSport
+            ? fallbackSportReply(lang === "th" ? "th" : "en")
+            : lang === "th"
+              ? "ฉันช่วยอธิบายการใช้งาน Nan Game On ได้ เช่น ปฏิทิน เช็กอิน แต้ม และพาสปอร์ต"
+              : "I can explain Nan Game On features such as the calendar, check-ins, points, and passport.";
           setMessages((m) => {
             const copy = [...m];
             const last = copy[copy.length - 1];
             if (last && last.from === "ai") {
               copy[copy.length - 1] = {
                 from: "ai",
-                text: res.reply,
-                places: isSport ? res.places : [],
+                text: reply,
+                places: qPlaces,
                 events: qEvents,
               };
             }
@@ -160,7 +169,7 @@ function ChatInner() {
           attachCards(acc);
         }
       } catch {
-        runMockFallback();
+        runLocalFallback();
       }
     },
     [mode, threads, lang, setMessages]
@@ -192,11 +201,14 @@ function ChatInner() {
     <>
       <header className="sticky top-0 z-30 border-b border-black/10 bg-pitch/85 backdrop-blur">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 lg:px-8">
-          <h1 className="flex items-center gap-2 text-lg font-bold text-frost">
-            <i className="ti ti-message-chatbot text-volt" aria-hidden />
-            {mode === "sport" ? t("sport.botSport") : t("sport.botHelp")}
-          </h1>
-          <LangSwitcher dark />
+          <div className="flex min-w-0 items-center gap-2">
+            <PublicBackButton fallbackHref="/" />
+            <h1 className="flex min-w-0 items-center gap-2 text-lg font-bold text-frost">
+              <i className="ti ti-message-chatbot shrink-0 text-volt" aria-hidden />
+              <span className="truncate">{mode === "sport" ? t("sport.botSport") : t("sport.botHelp")}</span>
+            </h1>
+          </div>
+          <GameOnHeaderActions dark />
         </div>
       </header>
 
@@ -364,21 +376,17 @@ function EventMini({
   );
 }
 
-function PlaceMini({ place, lang }: { place: Place; lang: LangCode }) {
+function PlaceMini({ place, lang }: { place: Destination; lang: LangCode }) {
   return (
-    <Link
-      href={`/place/${place.id}`}
-      className="flex items-center gap-2.5 rounded-md border border-black/10 bg-black/5 p-2.5 transition hover:border-volt/50"
-    >
+    <div className="flex items-center gap-2.5 rounded-md border border-black/10 bg-black/5 p-2.5">
       <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded bg-volt/12 text-volt">
-        <i className={`ti ${place.icon} text-xl`} aria-hidden />
+        <i className="ti ti-map-pin text-xl" aria-hidden />
       </span>
       <span className="min-w-0 flex-1">
         <span className="block truncate text-[13px] font-semibold text-frost">{loc(place.name, lang)}</span>
         <span className="block text-[10px] text-steel">{districtLoc(place.district, lang)}</span>
       </span>
-      <i className="ti ti-chevron-right text-base text-steel" aria-hidden />
-    </Link>
+    </div>
   );
 }
 

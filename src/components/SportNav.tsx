@@ -8,8 +8,8 @@ const items = [
   { href: "/", icon: "ti-home", key: "feed.title" },
   { href: "/calendar", icon: "ti-calendar-bolt", key: "feed.nav.calendar" },
   { href: "/passport", icon: "ti-id-badge-2", key: "sport.passport" },
+  { href: "/rewards", icon: "ti-gift", key: "sport.rewards" },
   { href: "/chat", icon: "ti-message-chatbot", key: "common.askAI" },
-  { href: "/explore", icon: "ti-map-2", key: "sport.explore" },
 ];
 
 export default function SportNav() {

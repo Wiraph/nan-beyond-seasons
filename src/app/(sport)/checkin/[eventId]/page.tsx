@@ -2,8 +2,10 @@
 
 import { use, useState } from "react";
 import Link from "next/link";
-import { notFound, useRouter } from "next/navigation";
+import { notFound } from "next/navigation";
 import { useI18n } from "@/i18n/I18nProvider";
+import PublicBackButton from "@/components/PublicBackButton";
+import GameOnHeaderActions from "@/components/GameOnHeaderActions";
 import { districtLoc, loc } from "@/lib/types";
 import { getEvent, SEASON_ACCENT } from "@/lib/sports";
 import { BADGES, POINTS_PER_CHECKIN, usePassport } from "@/lib/PassportStore";
@@ -17,7 +19,6 @@ export default function CheckinPage({
 }) {
   const { eventId } = use(params);
   const { t, lang } = useI18n();
-  const router = useRouter();
   const { hasCheckedIn, checkIn, hydrated } = usePassport();
   const { addPost } = useFeed();
   const [newBadges, setNewBadges] = useState<string[] | null>(null);
@@ -44,14 +45,9 @@ export default function CheckinPage({
   return (
     <>
       <header className="sticky top-0 z-30 border-b border-black/10 bg-pitch/85 backdrop-blur">
-        <div className="mx-auto flex w-full max-w-7xl items-center px-4 py-3 lg:px-8">
-          <button
-            onClick={() => router.back()}
-            aria-label={t("common.back")}
-            className="flex h-9 w-9 items-center justify-center rounded-full text-steel transition hover:bg-black/5 hover:text-frost"
-          >
-            <i className="ti ti-arrow-left text-xl" aria-hidden />
-          </button>
+        <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 lg:px-8">
+          <PublicBackButton fallbackHref={`/events/${eventId}`} />
+          <GameOnHeaderActions dark />
         </div>
       </header>
 

@@ -1,14 +1,11 @@
 import type { Metadata } from "next";
 import { Noto_Sans_Thai, Chonburi } from "next/font/google";
-import "leaflet/dist/leaflet.css";
 import "./globals.css";
 import { I18nProvider } from "@/i18n/I18nProvider";
-import { DataStoreProvider } from "@/lib/DataStore";
-import { PlanStoreProvider } from "@/lib/PlanStore";
-import { PostStoreProvider } from "@/lib/PostStore";
 import { PassportProvider } from "@/lib/PassportStore";
 import { ProfileProvider } from "@/lib/ProfileStore";
 import { FeedProvider } from "@/lib/FeedStore";
+import { RoleProvider } from "@/lib/RoleStore";
 
 const notoThai = Noto_Sans_Thai({
   variable: "--font-noto-thai",
@@ -42,17 +39,13 @@ export default function RootLayout({
       </head>
       <body className="min-h-dvh antialiased">
         <I18nProvider>
-          <DataStoreProvider>
-            <PlanStoreProvider>
-              <PostStoreProvider>
-                <PassportProvider>
-                  <ProfileProvider>
-                    <FeedProvider>{children}</FeedProvider>
-                  </ProfileProvider>
-                </PassportProvider>
-              </PostStoreProvider>
-            </PlanStoreProvider>
-          </DataStoreProvider>
+          <RoleProvider>
+            <PassportProvider>
+              <ProfileProvider>
+                <FeedProvider>{children}</FeedProvider>
+              </ProfileProvider>
+            </PassportProvider>
+          </RoleProvider>
         </I18nProvider>
       </body>
     </html>

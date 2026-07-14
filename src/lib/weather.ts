@@ -1,5 +1,5 @@
 import seasonsData from "@/data/seasons.json";
-import { Place } from "./types";
+import type { Destination } from "./types";
 
 /** Mueang Nan city centre — used for the whole province forecast. */
 const NAN_LAT = 18.7756;
@@ -114,8 +114,8 @@ export function getSeason(month: number) {
 
 /** Nature spots are rain-sensitive; temples, museums, weaving houses and
  *  markets work in any weather. */
-export function isOutdoorPlace(place: Place): boolean {
-  return place.craftType === "nature";
+export function isOutdoorPlace(place: Destination): boolean {
+  return place.type === "outdoor";
 }
 
 export function isRainy(day: DailyForecast | undefined): boolean {

@@ -2,8 +2,9 @@
 
 import { use, useCallback, useEffect, useState } from "react";
 import Link from "next/link";
-import { notFound, useRouter } from "next/navigation";
-import LangSwitcher from "@/components/LangSwitcher";
+import { notFound } from "next/navigation";
+import GameOnHeaderActions from "@/components/GameOnHeaderActions";
+import PublicBackButton from "@/components/PublicBackButton";
 import { useI18n } from "@/i18n/I18nProvider";
 import { districtLoc, loc } from "@/lib/types";
 import {
@@ -27,7 +28,6 @@ export default function EventPage({
 }) {
   const { id } = use(params);
   const { t, lang } = useI18n();
-  const router = useRouter();
   const weather = useNanWeather();
 
   const [now, setNow] = useState<Date | null>(null);
@@ -74,14 +74,8 @@ export default function EventPage({
     <>
       <header className="sticky top-0 z-30 border-b border-black/10 bg-pitch/85 backdrop-blur">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 lg:px-8">
-          <button
-            onClick={() => router.back()}
-            aria-label={t("common.back")}
-            className="flex h-9 w-9 items-center justify-center rounded-full text-steel transition hover:bg-black/5 hover:text-frost"
-          >
-            <i className="ti ti-arrow-left text-xl" aria-hidden />
-          </button>
-          <LangSwitcher dark />
+          <PublicBackButton fallbackHref="/calendar" />
+          <GameOnHeaderActions dark />
         </div>
       </header>
 
@@ -218,7 +212,7 @@ export default function EventPage({
                 <i className="ti ti-route text-volt" aria-hidden /> {t("sport.tripAround")}
               </h2>
               <span className="rounded bg-volt/12 px-2.5 py-1 text-[11px] font-medium text-volt">
-                {planState === "ai" ? t("wellness.aiPicked") : t("plan.aiFallback")}
+                {planState === "ai" ? t("sport.aiPlan") : t("plan.aiFallback")}
               </span>
             </div>
 
@@ -231,13 +225,7 @@ export default function EventPage({
                       <div key={si} className="flex gap-3">
                         <span className="sport-num w-14 shrink-0 pt-0.5 text-sm text-volt">{s.time}</span>
                         <div className="min-w-0 flex-1 border-l border-black/10 pl-3">
-                          {s.placeId ? (
-                            <Link href={`/place/${s.placeId}`} className="font-semibold text-frost hover:text-volt hover:underline">
-                              {s.title}
-                            </Link>
-                          ) : (
-                            <div className="font-semibold text-frost">{s.title}</div>
-                          )}
+                          <div className="font-semibold text-frost">{s.title}</div>
                           {s.note && <p className="mt-0.5 text-[12px] text-steel">{s.note}</p>}
                         </div>
                       </div>

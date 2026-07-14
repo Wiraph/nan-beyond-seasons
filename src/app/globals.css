@@ -243,74 +243,8 @@ body {
   scrollbar-width: none;
 }
 
-.leaflet-container {
-  font-family: var(--font-sans);
-}
-
-.leaflet-control-attribution {
-  font-size: 10px;
-}
-
-.nan-map-marker-wrapper {
-  background: transparent;
-  border: 0;
-}
-
-.nan-map-marker {
-  align-items: center;
-  background: var(--marker-bg, var(--color-navy));
-  border: 3px solid #fff;
-  border-radius: 999px;
-  box-shadow: 0 8px 18px rgba(27, 42, 74, 0.28);
-  color: #fff;
-  display: inline-flex;
-  height: 36px;
-  justify-content: center;
-  transition:
-    box-shadow 0.2s ease,
-    height 0.2s ease,
-    width 0.2s ease;
-  width: 36px;
-}
-
-.nan-map-marker i {
-  font-size: 18px;
-  line-height: 1;
-}
-
-.nan-map-marker.is-active {
-  border-color: var(--color-gold);
-  box-shadow:
-    0 0 0 6px rgba(201, 162, 39, 0.22),
-    0 12px 24px rgba(27, 42, 74, 0.32);
-  height: 44px;
-  width: 44px;
-}
-
-.nan-map-marker.is-active i {
-  font-size: 22px;
-}
-
-.place-mini-map-marker-wrapper {
-  background: transparent;
-  border: 0;
-}
-
-.place-mini-map-marker {
-  align-items: center;
-  color: #d85a30;
-  display: inline-flex;
-  filter: drop-shadow(0 4px 8px rgba(27, 42, 74, 0.28));
-  font-size: 36px;
-  height: 36px;
-  justify-content: center;
-  line-height: 1;
-  text-shadow: 0 0 0 #fff;
-  width: 36px;
-}
-
 /* ---------- Animations ---------- */
-@keyframes nc-rise {
+@keyframes ngo-rise {
   from {
     opacity: 0;
     transform: translateY(10px);
@@ -320,7 +254,7 @@ body {
     transform: none;
   }
 }
-@keyframes nc-pop {
+@keyframes ngo-pop {
   from {
     opacity: 0;
     transform: scale(0.96);
@@ -330,7 +264,7 @@ body {
     transform: none;
   }
 }
-@keyframes nc-slide-up {
+@keyframes ngo-slide-up {
   from {
     opacity: 0;
     transform: translateY(28px);
@@ -340,7 +274,7 @@ body {
     transform: none;
   }
 }
-@keyframes nc-fade {
+@keyframes ngo-fade {
   from {
     opacity: 0;
   }
@@ -350,21 +284,21 @@ body {
 }
 
 .anim-rise {
-  animation: nc-rise 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation: ngo-rise 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) both;
 }
 .anim-pop {
-  animation: nc-pop 0.32s ease both;
+  animation: ngo-pop 0.32s ease both;
 }
 .anim-slide-up {
-  animation: nc-slide-up 0.34s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation: ngo-slide-up 0.34s cubic-bezier(0.22, 0.61, 0.36, 1) both;
 }
 .anim-fade {
-  animation: nc-fade 0.5s ease both;
+  animation: ngo-fade 0.5s ease both;
 }
 
 /* Staggered entrance for direct children of a list/grid */
 .stagger > * {
-  animation: nc-rise 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation: ngo-rise 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) both;
 }
 .stagger > *:nth-child(1) { animation-delay: 0.02s; }
 .stagger > *:nth-child(2) { animation-delay: 0.06s; }
@@ -447,17 +381,111 @@ body {
   }
 }
 
-/* Branded backdrop behind the mobile app frame on large screens */
-.tourist-bg {
-  background-color: var(--color-cream);
+/* ---------- Demo role session ---------- */
+.role-picker-page {
+  align-items: center;
+  background: linear-gradient(135deg, #fff 0%, #f6f7f9 55%, #fff3ed 100%);
+  display: flex;
+  justify-content: center;
+  min-height: 100dvh;
+  padding: 2rem 1rem;
 }
-@media (min-width: 1024px) {
-  .tourist-bg {
-    background-color: #101a30;
-    background-image: repeating-linear-gradient(
-      45deg,
-      rgba(201, 162, 39, 0.07) 0 2px,
-      transparent 2px 16px
-    );
+
+.role-picker-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+}
+
+.role-picker-card {
+  align-items: flex-start;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 1rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  min-height: 16rem;
+  padding: 1.5rem;
+  text-align: left;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.role-picker-card:hover {
+  border-color: var(--color-volt);
+  box-shadow: 0 12px 28px rgba(23, 32, 43, 0.12);
+  transform: translateY(-2px);
+}
+
+.role-picker-card:focus-visible,
+.role-account-action:focus-visible {
+  outline: 3px solid var(--color-volt);
+  outline-offset: 3px;
+}
+
+.role-picker-icon {
+  color: var(--color-volt);
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.role-account-menu {
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 0.75rem;
+  min-width: 10rem;
+  overflow: hidden;
+}
+
+.role-account-action {
+  align-items: center;
+  background: transparent;
+  cursor: pointer;
+  display: inline-flex;
+  flex: 1;
+  font-size: 0.75rem;
+  font-weight: 600;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.5rem;
+}
+
+.role-account-action:hover {
+  background: color-mix(in srgb, currentColor 8%, transparent);
+}
+
+/* Shared foundation for the organizer and administrator navigation added later. */
+.role-management-nav {
+  background: var(--color-pitch-800);
+  border-bottom: 1px solid #e5e5e5;
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding: 0.5rem 1rem;
+}
+
+.role-management-nav a {
+  align-items: center;
+  border-radius: 0.5rem;
+  color: var(--color-steel);
+  display: inline-flex;
+  min-height: 44px;
+  padding: 0.5rem 0.875rem;
+  white-space: nowrap;
+}
+
+.role-management-nav a:hover,
+.role-management-nav a[aria-current="page"] {
+  background: #fff3ed;
+  color: var(--color-volt);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .role-picker-card {
+    transition: none;
+  }
+
+  .role-picker-card:hover {
+    transform: none;
   }
 }

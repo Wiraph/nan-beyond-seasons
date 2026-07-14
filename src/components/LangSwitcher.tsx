@@ -14,7 +14,7 @@ export default function LangSwitcher({ dark = false }: { dark?: boolean }) {
       <button
         onClick={() => setOpen((o) => !o)}
         aria-label="Select language"
-        className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm transition ${
+        className={`flex min-h-11 items-center gap-1.5 rounded-full px-3 py-1.5 text-sm transition ${
           dark
             ? "bg-navy-600 text-cream hover:bg-navy-300/40"
             : "bg-cream-200 text-navy hover:bg-line"
@@ -36,7 +36,7 @@ export default function LangSwitcher({ dark = false }: { dark?: boolean }) {
                   setLang(l.code);
                   setOpen(false);
                 }}
-                className={`flex w-full items-center gap-2 px-3 py-2 text-left text-sm hover:bg-cream ${
+                className={`flex min-h-11 w-full items-center gap-2 px-3 py-2 text-left text-sm hover:bg-cream ${
                   l.code === lang ? "font-semibold text-navy" : "text-ink"
                 }`}
               >

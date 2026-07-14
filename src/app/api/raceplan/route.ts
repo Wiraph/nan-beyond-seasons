@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
   const placeContext = nearby
     .map(
       (p) =>
-        `- id:${p.id} | ${p.name.en} (${p.name.th}) | ${p.district} | ${p.craftType} | ${p.km.toFixed(1)} km from venue | ${p.summary.en}`
+        `- id:${p.id} | ${p.name.en} | ${p.district} | ${p.type} | ${p.km.toFixed(1)} km from venue | ${p.summary.en}`
     )
     .join("\n");
 
@@ -67,7 +67,7 @@ export async function POST(req: NextRequest) {
 Event:
 ${event.name.en} (${event.name.th}) | ${event.dates.start} to ${event.dates.end} | venue: ${event.venue.name.en}, ${event.venue.district} | ${event.desc.en}
 
-Build a 2-day plan: Day 1 is the event day (attend the event, then nearby stops), Day 2 explores attractions near the venue. Adapt to the weather below — indoor stops for wet afternoons, outdoor beauty when clear. Favour community businesses (markets, weaving houses, local food).
+Build a 2-day plan: Day 1 is the event day (attend the event, then nearby stops), Day 2 visits destinations near the venue. Adapt to the weather below — indoor stops for wet afternoons, outdoor beauty when clear. Favour local food and culture stops.
 Reply with STRICT JSON ONLY, no prose, no markdown fences:
 {"days":[{"label":"<short day label in ${langName}>","stops":[{"time":"HH:MM","title":"<stop title in ${langName}>","placeId":"<id from list or null for the event itself>","note":"<one short ${langName} sentence>"}]}],"tips":["<short ${langName} practical tip>"]}
 2 days, 3-4 stops each, max 2 tips. placeId must be an id from the list below or null.

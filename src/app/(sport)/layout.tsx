@@ -1,4 +1,7 @@
 import SportNav from "@/components/SportNav";
+import PublicFooter from "@/components/PublicFooter";
+import PublicNavigationTracker from "@/components/PublicNavigationTracker";
+import RoleGate from "@/components/RoleGate";
 
 export default function SportLayout({
   children,
@@ -6,9 +9,13 @@ export default function SportLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="sport-bg flex min-h-dvh flex-col text-frost">
-      <div className="flex min-h-0 flex-1 flex-col">{children}</div>
-      <SportNav />
-    </div>
+    <RoleGate>
+      <div className="sport-bg flex min-h-dvh flex-col text-frost">
+        <PublicNavigationTracker />
+        <div className="flex min-h-0 flex-1 flex-col">{children}</div>
+        <PublicFooter />
+        <SportNav />
+      </div>
+    </RoleGate>
   );
 }

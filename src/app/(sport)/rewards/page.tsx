@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import LangSwitcher from "@/components/LangSwitcher";
+import GameOnHeaderActions from "@/components/GameOnHeaderActions";
+import PublicBackButton from "@/components/PublicBackButton";
 import { useI18n } from "@/i18n/I18nProvider";
 import { loc } from "@/lib/types";
 import { districtLoc } from "@/lib/types";
@@ -61,10 +62,14 @@ export default function RewardsPage() {
     <>
       <header className="sticky top-0 z-30 border-b border-black/10 bg-pitch/85 backdrop-blur">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 lg:px-8">
-          <h1 className="flex items-center gap-2 text-lg font-bold text-frost">
-            <i className="ti ti-gift text-volt" aria-hidden /> {t("rewards.title")}
-          </h1>
-          <LangSwitcher dark />
+          <div className="flex min-w-0 items-center gap-2">
+            <PublicBackButton fallbackHref="/" />
+            <h1 className="flex min-w-0 items-center gap-2 text-lg font-bold text-frost">
+              <i className="ti ti-gift shrink-0 text-volt" aria-hidden />
+              <span className="truncate">{t("rewards.title")}</span>
+            </h1>
+          </div>
+          <GameOnHeaderActions dark />
         </div>
       </header>
 
