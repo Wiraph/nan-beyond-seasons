@@ -1,9 +1,7 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
-import { parseStoredDemoRole, type DemoRole } from "@/lib/role-access";
-
-export const DEMO_ROLE_STORAGE_KEY = "nan-game-on:demo-role";
+import { createContext, useContext, useState } from "react";
+import type { DemoRole } from "@/lib/role-access";
 
 type RoleSession = {
   loading: boolean;
@@ -16,38 +14,14 @@ const RoleContext = createContext<RoleSession | null>(null);
 
 export function RoleProvider({ children }: { children: React.ReactNode }) {
   const [role, setRole] = useState<DemoRole | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const hydrationId = window.setTimeout(() => {
-      try {
-        setRole(parseStoredDemoRole(window.localStorage.getItem(DEMO_ROLE_STORAGE_KEY)));
-      } catch {
-        setRole(null);
-      } finally {
-        setLoading(false);
-      }
-    }, 0);
-
-    return () => window.clearTimeout(hydrationId);
-  }, []);
+  const loading = false;
 
   const selectRole = (nextRole: DemoRole) => {
     setRole(nextRole);
-    try {
-      window.localStorage.setItem(DEMO_ROLE_STORAGE_KEY, JSON.stringify(nextRole));
-    } catch {
-      // The in-memory demo role remains usable when browser storage is unavailable.
-    }
   };
 
   const logout = () => {
     setRole(null);
-    try {
-      window.localStorage.removeItem(DEMO_ROLE_STORAGE_KEY);
-    } catch {
-      // Clearing in-memory state still ends the current demo session.
-    }
   };
 
   return (
