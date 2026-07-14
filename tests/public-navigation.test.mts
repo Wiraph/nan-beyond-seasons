@@ -10,27 +10,15 @@ test("uses the sport hub fallback routes", () => {
   assert.equal(getBackFallback("/chat"), "/");
 });
 
-test("returns the event and post parent routes", () => {
+test("returns the event and check-in parent routes", () => {
   assert.equal(getBackFallback("/events/nan-open"), "/calendar");
   assert.equal(getBackFallback("/checkin/nan-open"), "/events/nan-open");
-  assert.equal(getBackFallback("/posts/travel/42"), "/posts/travel");
 });
 
-test("returns explore for visitor utility, listing, and detail pages", () => {
-  assert.equal(getBackFallback("/map"), "/explore");
-  assert.equal(getBackFallback("/plan"), "/explore");
-  assert.equal(getBackFallback("/wellness"), "/explore");
-  assert.equal(getBackFallback("/search"), "/explore");
-  assert.equal(getBackFallback("/category/nature"), "/explore");
-  assert.equal(getBackFallback("/place/nan-museum"), "/explore");
-  assert.equal(getBackFallback("/biz/coffee"), "/explore");
-  assert.equal(getBackFallback("/posts/travel"), "/explore");
-});
-
-test("keeps hub pages free of a fallback and returns root for QR landing pages", () => {
+test("keeps the sport home free of a fallback and returns home for other paths", () => {
   assert.equal(getBackFallback("/"), null);
-  assert.equal(getBackFallback("/explore"), null);
-  assert.equal(getBackFallback("/s/example-qr"), "/");
+  assert.equal(getBackFallback("/map"), "/");
+  assert.equal(getBackFallback("/posts/travel/42"), "/");
 });
 
 test("only uses browser history after an in-app public navigation", () => {

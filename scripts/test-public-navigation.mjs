@@ -26,11 +26,16 @@ try {
     "false",
     "--skipLibCheck",
     "tests/public-navigation.test.mts",
+    "tests/role-access.test.mts",
     "src/lib/public-navigation.ts",
   ]);
 
   if (!process.exitCode) {
-    run(process.execPath, ["--test", `${outputDir}/tests/public-navigation.test.mjs`]);
+    run(process.execPath, [
+      "--test",
+      `${outputDir}/tests/public-navigation.test.mjs`,
+      `${outputDir}/tests/role-access.test.mjs`,
+    ]);
   }
 } finally {
   rmSync(outputDir, { recursive: true, force: true });
