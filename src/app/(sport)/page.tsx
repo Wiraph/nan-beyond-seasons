@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import LangSwitcher from "@/components/LangSwitcher";
+import GameOnHeaderActions from "@/components/GameOnHeaderActions";
 import { uploadPostImage } from "@/lib/uploadImage";
 import { useI18n } from "@/i18n/I18nProvider";
 import { loc } from "@/lib/types";
@@ -61,7 +61,7 @@ export default function FeedHome() {
               NAN <span className="text-volt">GAME ON</span>
             </span>
           </Link>
-          <LangSwitcher dark />
+          <GameOnHeaderActions dark />
         </div>
       </header>
 

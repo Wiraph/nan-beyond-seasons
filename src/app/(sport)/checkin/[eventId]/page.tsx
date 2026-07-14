@@ -5,6 +5,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { useI18n } from "@/i18n/I18nProvider";
 import PublicBackButton from "@/components/PublicBackButton";
+import GameOnHeaderActions from "@/components/GameOnHeaderActions";
 import { districtLoc, loc } from "@/lib/types";
 import { getEvent, SEASON_ACCENT } from "@/lib/sports";
 import { BADGES, POINTS_PER_CHECKIN, usePassport } from "@/lib/PassportStore";
@@ -44,8 +45,9 @@ export default function CheckinPage({
   return (
     <>
       <header className="sticky top-0 z-30 border-b border-black/10 bg-pitch/85 backdrop-blur">
-        <div className="mx-auto flex w-full max-w-7xl items-center px-4 py-3 lg:px-8">
+        <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 lg:px-8">
           <PublicBackButton fallbackHref={`/events/${eventId}`} variant="sport" />
+          <GameOnHeaderActions dark />
         </div>
       </header>
 

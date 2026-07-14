@@ -6,37 +6,25 @@ import { useI18n } from "@/i18n/I18nProvider";
 const organizationName =
   "สำนักงานพื้นที่พิเศษ 6 (อพท.) สำนักงานพื้นที่พิเศษเพื่อการท่องเที่ยวอย่างยั่งยืนเมืองเก่าน่าน (อพท. น่าน)";
 
-type PublicFooterProps = {
-  theme?: "tourist" | "sport";
-};
-
-export default function PublicFooter({ theme = "tourist" }: PublicFooterProps) {
+export default function PublicFooter() {
   const { t } = useI18n();
-  const isSport = theme === "sport";
-  const productName = isSport ? "Nan Game On" : "Nan Connect";
-  const surface = isSport
-    ? "border-black/10 bg-pitch-800 text-frost"
-    : "border-gold/25 bg-navy text-cream";
-  const muted = isSport ? "text-steel" : "text-cream/70";
-  const linkStyle = isSport
-    ? "border-white/10 text-frost hover:border-volt hover:text-volt"
-    : "border-cream/20 text-cream hover:border-gold hover:text-gold";
+  const surface = "border-black/10 bg-pitch-800 text-frost";
+  const muted = "text-steel";
+  const linkStyle = "border-white/10 text-frost hover:border-volt hover:text-volt";
 
   const shortcuts = [
-    { href: "/explore", icon: "ti-compass", label: t("footer.explore") },
+    { href: "/", icon: "ti-home", label: t("footer.home") },
     { href: "/calendar", icon: "ti-calendar-event", label: t("footer.calendar") },
-    { href: "/map", icon: "ti-map-2", label: t("footer.map") },
+    { href: "/passport", icon: "ti-id-badge-2", label: t("footer.passport") },
+    { href: "/rewards", icon: "ti-gift", label: t("footer.rewards") },
     { href: "/chat", icon: "ti-message-chatbot", label: t("footer.ai") },
-    { href: "/plan", icon: "ti-route", label: t("footer.plan") },
   ];
 
   return (
     <footer className={`border-t ${surface}`}>
       <div className="mx-auto grid w-full max-w-7xl gap-7 px-4 py-8 lg:grid-cols-[1.1fr_1fr_1.15fr] lg:px-8">
-        <section aria-label={productName}>
-          <p className={`text-lg font-bold ${isSport ? "text-volt" : "font-lanna text-gold"}`}>
-            {productName}
-          </p>
+        <section aria-label="Nan Game On">
+          <p className="text-lg font-bold text-volt">Nan Game On</p>
           <p className={`mt-2 max-w-sm text-sm leading-relaxed ${muted}`}>{t("footer.description")}</p>
           <div className="mt-4">
             <p className="text-sm font-semibold">{t("footer.links")}</p>

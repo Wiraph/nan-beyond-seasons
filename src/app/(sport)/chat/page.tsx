@@ -3,7 +3,7 @@
 import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import LangSwitcher from "@/components/LangSwitcher";
+import GameOnHeaderActions from "@/components/GameOnHeaderActions";
 import PublicBackButton from "@/components/PublicBackButton";
 import { useI18n } from "@/i18n/I18nProvider";
 import { getAIResponse, matchPlaces } from "@/lib/mockAI";
@@ -200,7 +200,7 @@ function ChatInner() {
               <span className="truncate">{mode === "sport" ? t("sport.botSport") : t("sport.botHelp")}</span>
             </h1>
           </div>
-          <LangSwitcher dark />
+          <GameOnHeaderActions dark />
         </div>
       </header>
 

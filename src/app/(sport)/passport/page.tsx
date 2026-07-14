@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import LangSwitcher from "@/components/LangSwitcher";
+import GameOnHeaderActions from "@/components/GameOnHeaderActions";
 import PublicBackButton from "@/components/PublicBackButton";
 import { useI18n } from "@/i18n/I18nProvider";
 import { loc } from "@/lib/types";
@@ -28,7 +28,7 @@ export default function PassportPage() {
               <span className="truncate">{t("sport.passport")}</span>
             </h1>
           </div>
-          <LangSwitcher dark />
+          <GameOnHeaderActions dark />
         </div>
       </header>
 

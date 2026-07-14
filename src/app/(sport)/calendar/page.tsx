@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import LangSwitcher from "@/components/LangSwitcher";
+import GameOnHeaderActions from "@/components/GameOnHeaderActions";
 import PublicBackButton from "@/components/PublicBackButton";
 import { useI18n } from "@/i18n/I18nProvider";
 import { LangCode } from "@/i18n/dictionaries";
@@ -54,7 +54,7 @@ export default function CalendarPage() {
               </span>
             </Link>
           </div>
-          <LangSwitcher dark />
+          <GameOnHeaderActions dark />
         </div>
       </header>
 

@@ -3,7 +3,7 @@
 import { use, useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import LangSwitcher from "@/components/LangSwitcher";
+import GameOnHeaderActions from "@/components/GameOnHeaderActions";
 import PublicBackButton from "@/components/PublicBackButton";
 import { useI18n } from "@/i18n/I18nProvider";
 import { districtLoc, loc } from "@/lib/types";
@@ -75,7 +75,7 @@ export default function EventPage({
       <header className="sticky top-0 z-30 border-b border-black/10 bg-pitch/85 backdrop-blur">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 lg:px-8">
           <PublicBackButton fallbackHref="/calendar" variant="sport" />
-          <LangSwitcher dark />
+          <GameOnHeaderActions dark />
         </div>
       </header>
 
