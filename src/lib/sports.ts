@@ -32,7 +32,22 @@ export const SEASON_HERO: Record<SeasonKey, string> = {
   hot: "linear-gradient(135deg, #f97316, #9a3412)",
 };
 
-export const sportEvents = eventsJson as SportEvent[];
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/$/, "");
+
+/**
+ * Event image files live in the public `event-images` Supabase bucket.  The
+ * local `/public/events` copy is only a development fallback when Supabase is
+ * not configured, so deployed pages always retrieve the published image.
+ */
+export const sportEvents = (eventsJson as SportEvent[]).map((event) => {
+  if (!event.image || !supabaseUrl) return event;
+
+  const filename = event.image.replace(/^\/events\//, "");
+  return {
+    ...event,
+    image: `${supabaseUrl}/storage/v1/object/public/event-images/events/${filename}`,
+  };
+});
 
 export function getEvent(id: string): SportEvent | undefined {
   return sportEvents.find((e) => e.id === id);
