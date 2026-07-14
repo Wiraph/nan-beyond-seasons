@@ -74,7 +74,7 @@ export default function EventPage({
     <>
       <header className="sticky top-0 z-30 border-b border-black/10 bg-pitch/85 backdrop-blur">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 lg:px-8">
-          <PublicBackButton fallbackHref="/calendar" variant="sport" />
+          <PublicBackButton fallbackHref="/calendar" />
           <GameOnHeaderActions dark />
         </div>
       </header>

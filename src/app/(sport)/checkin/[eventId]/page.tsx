@@ -46,7 +46,7 @@ export default function CheckinPage({
     <>
       <header className="sticky top-0 z-30 border-b border-black/10 bg-pitch/85 backdrop-blur">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 lg:px-8">
-          <PublicBackButton fallbackHref={`/events/${eventId}`} variant="sport" />
+          <PublicBackButton fallbackHref={`/events/${eventId}`} />
           <GameOnHeaderActions dark />
         </div>
       </header>

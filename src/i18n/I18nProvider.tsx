@@ -25,7 +25,7 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const saved = localStorage.getItem("nc-lang");
+    const saved = localStorage.getItem("ngo-lang");
     const id = window.setTimeout(() => {
       if (isLangCode(saved)) setLangState(saved);
       setReady(true);
@@ -41,7 +41,7 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
   const setLang = (l: LangCode) => {
     setLangState(l);
     if (typeof window !== "undefined") {
-      localStorage.setItem("nc-lang", l);
+      localStorage.setItem("ngo-lang", l);
     }
   };
 

@@ -44,7 +44,7 @@ export default function CalendarPage() {
       <header className="sticky top-0 z-30 border-b border-black/10 bg-pitch/85 backdrop-blur">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 lg:px-8">
           <div className="flex min-w-0 items-center gap-2">
-            <PublicBackButton fallbackHref="/" variant="sport" />
+            <PublicBackButton fallbackHref="/" />
             <Link href="/" className="flex min-w-0 items-center gap-2">
               <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-volt text-pitch">
                 <i className="ti ti-bolt text-xl" aria-hidden />

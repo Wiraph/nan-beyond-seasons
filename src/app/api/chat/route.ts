@@ -146,7 +146,7 @@ ${PLACE_CONTEXT}`;
           "Content-Type": "text/event-stream; charset=utf-8",
           "Cache-Control": "no-cache, no-transform",
           Connection: "keep-alive",
-          "x-nc-model": model,
+          "x-ngo-model": model,
         },
       });
     }

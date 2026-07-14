@@ -6,13 +6,9 @@ import { PUBLIC_NAVIGATION_HISTORY_KEY, shouldUseBrowserHistory } from "@/lib/pu
 
 type PublicBackButtonProps = {
   fallbackHref: string;
-  variant?: "tourist" | "sport";
 };
 
-export default function PublicBackButton({
-  fallbackHref,
-  variant = "tourist",
-}: PublicBackButtonProps) {
+export default function PublicBackButton({ fallbackHref }: PublicBackButtonProps) {
   const router = useRouter();
   const { t } = useI18n();
 
@@ -27,10 +23,7 @@ export default function PublicBackButton({
     router.push(fallbackHref);
   };
 
-  const theme =
-    variant === "sport"
-      ? "border-white/10 bg-white/5 text-frost hover:bg-white/10 hover:text-volt"
-      : "border-cream/20 bg-white/10 text-cream hover:bg-white/20";
+  const theme = "border-white/10 bg-white/5 text-frost hover:bg-white/10 hover:text-volt";
 
   return (
     <button
