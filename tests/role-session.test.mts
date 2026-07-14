@@ -7,3 +7,9 @@ test("keeps demo roles only in the open app session", () => {
   assert.match(storeSource, /useState<DemoRole \| null>\(null\)/);
   assert.doesNotMatch(storeSource, /localStorage|sessionStorage/);
 });
+
+test("lays account controls out on a single navbar row", () => {
+  const menuSource = readFileSync("src/components/RoleAccountMenu.tsx", "utf8");
+  assert.match(menuSource, /role-account-menu[^`]*flex[^`]*items-center/);
+  assert.doesNotMatch(menuSource, /flex border-t border-current\/15/);
+});

@@ -16,26 +16,25 @@ export default function RoleAccountMenu({ dark = false }: { dark?: boolean }) {
     : "border-line bg-white text-navy";
 
   return (
-    <div className={`role-account-menu ${tone}`} aria-label="Demo account controls">
-      <div className="min-w-0 px-3 py-2">
-        <p className="truncate text-xs font-semibold">Demo role · {display.label}</p>
-        <p className="truncate text-[11px] opacity-75">{display.title}</p>
-      </div>
-      <div className="flex border-t border-current/15">
-        <button type="button" className="role-account-action" onClick={() => router.push("/login")}>
-          Change role
-        </button>
-        <button
-          type="button"
-          className="role-account-action border-l border-current/15"
-          onClick={() => {
-            logout();
-            router.replace("/login");
-          }}
-        >
-          Log out
-        </button>
-      </div>
+    <div className={`role-account-menu flex items-center ${tone}`} aria-label="Demo account controls">
+      <p className="min-w-0 truncate px-3 text-xs font-semibold">Demo role · {display.label}</p>
+      <button
+        type="button"
+        className="role-account-action whitespace-nowrap border-l border-current/15"
+        onClick={() => router.push("/login")}
+      >
+        Change role
+      </button>
+      <button
+        type="button"
+        className="role-account-action whitespace-nowrap border-l border-current/15"
+        onClick={() => {
+          logout();
+          router.replace("/login");
+        }}
+      >
+        Log out
+      </button>
     </div>
   );
 }
