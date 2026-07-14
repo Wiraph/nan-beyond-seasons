@@ -30,7 +30,7 @@
 
 ## ข้อมูล (`src/data/`)
 
-`sportsEvents.json` งานกีฬา 7 งาน · `seasons.json` ปฏิทินฤดู 12 เดือน · `feedSeed.json` โพสต์ตัวอย่าง ·
+`sportsEvents.json` เทศกาลกีฬาจริง 16 งานครบ 3 ฤดู · `seasons.json` ปฏิทินฤดู 12 เดือน · `feedSeed.json` โพสต์ตัวอย่าง ·
 `places.json` สถานที่ 15 แห่ง · `wellness.json` ประสบการณ์ 15 รายการ · `hotels/operators.json` ผู้ประกอบการจริง 300+ ราย
 
 ## Supabase (`supabase/schema.sql` + `supabase/storage.sql`)

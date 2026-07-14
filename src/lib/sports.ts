@@ -120,17 +120,30 @@ export const SPORT_TYPE_LABEL: Record<string, { th: string; en: string }> = {
   trail: { th: "วิ่งเทรล", en: "Trail running" },
   cycling: { th: "จักรยาน", en: "Cycling" },
   rafting: { th: "ล่องแก่ง", en: "Rafting" },
+  folk: { th: "กีฬาพื้นบ้าน", en: "Folk sport" },
+  takraw: { th: "เซปักตะกร้อ", en: "Sepak takraw" },
+  woodball: { th: "วู้ดบอล", en: "Woodball" },
+  multi: { th: "วิ่ง+ปั่น", en: "Run + ride" },
 };
 
 /** Loose keywords per event so chat can attach event cards to answers. */
 const EVENT_KEYWORDS: Record<string, string[]> = {
-  "boat-race-opening": ["แข่งเรือ", "เรือยาว", "boat race", "longboat", "เปิดสนาม"],
-  "boat-race-royal-cup": ["แข่งเรือ", "เรือยาว", "ถ้วยพระราชทาน", "boat race", "longboat", "royal cup"],
-  "nan-marathon": ["มาราธอน", "marathon", "วิ่งเมือง"],
-  "doi-phu-kha-trail": ["เทรล", "trail", "ดอยภูคา", "phu kha"],
-  "cycling-route-1715": ["ปั่น", "จักรยาน", "1715", "cycling", "bike"],
-  "wa-river-rafting": ["ล่องแก่ง", "น้ำว้า", "rafting", "แก่ง", "wa river"],
-  "songkran-fun-run": ["สงกรานต์", "สาดน้ำ", "songkran", "splash"],
+  "wa-upper-rafting": ["น้ำว้าตอนบน", "ล่องแก่ง", "rafting", "upper wa"],
+  "wa-middle-rafting": ["น้ำว้าตอนกลาง", "น้ำว้า", "ล่องแก่ง", "rafting", "แก่ง", "wa river"],
+  "boat-race-festival": ["แข่งเรือ", "เรือยาว", "boat race", "longboat", "ตานก๋วยสลาก", "กฐิน"],
+  "kwang-fighting-festival": ["กว่าง", "ด้วง", "kwang", "beetle", "นักสู้แห่งขุนเขา"],
+  "nan-mountain-trail": ["nmt", "mountain trail", "ขุนสถาน", "เทรล 100", "วิ่งเทรล"],
+  "amazing-nan-marathon": ["มาราธอน", "marathon", "amazing nan", "ข่วงเมือง"],
+  "sepak-takraw-t20": ["ตะกร้อ", "takraw", "t20"],
+  "golden-orange-games": ["เรือบก", "ส้มสีทอง", "หน้าไม้", "ไทยภูเขา", "golden orange", "crossbow"],
+  "rak-pa-nan-trail": ["รักษ์ป่า", "เม้าเท่นรัน", "พญาผานอง", "mountain run"],
+  "doi-phu-kha-cycling": ["ปั่น", "จักรยาน", "ดอยภูคา", "1715", "cycling", "bike"],
+  "nan-open-woodball": ["วู้ดบอล", "woodball", "nan open"],
+  "walk-run-bike-pua": ["walk run bike", "คู่เสี่ยว", "อ่างเก็บน้ำ", "ร.ศ. 200"],
+  "klong-pu-ja-contest": ["ก๋องปูจา", "กลองสะบัดชัย", "ตีกลอง", "drum", "วัดสวนตาล"],
+  "songkran-folk-games": ["สงกรานต์", "ก่อเจดีย์ทราย", "ชักเย่อ", "songkran", "foam"],
+  "muterun-nan": ["muterun", "มูเตรัน", "สายมู", "mutelu"],
+  "wa-lower-rafting": ["น้ำว้าตอนล่าง", "ล่องแก่งครอบครัว", "family rafting"],
 };
 
 /** Events mentioned in a chunk of text (user question + AI answer). */

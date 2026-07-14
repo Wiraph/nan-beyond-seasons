@@ -1,162 +1,369 @@
 [
   {
-    "id": "boat-race-opening",
-    "name": { "th": "แข่งเรือยาวเมืองน่าน นัดเปิดสนาม", "en": "Nan Longboat Racing — Season Opener" },
+    "id": "wa-upper-rafting",
+    "name": { "th": "ล่องแก่งน้ำว้าตอนบน", "en": "Upper Wa River Rafting" },
+    "sportType": "rafting",
+    "icon": "ti-kayak",
+    "season": "green",
+    "dates": { "start": "2026-09-01", "end": "2026-09-30" },
+    "monthLabel": { "th": "เฉพาะเดือนกันยายน", "en": "September only" },
+    "venue": {
+      "name": { "th": "ลำน้ำว้าตอนบน", "en": "Upper Wa River" },
+      "district": "อ.บ่อเกลือ",
+      "lat": 19.1,
+      "lon": 101.12
+    },
+    "mode": ["compete"],
+    "desc": {
+      "th": "เส้นทางล่องแก่งที่อันตรายและเสี่ยงสูงที่สุดของน่าน เปิดเฉพาะเดือนกันยายน ระยะทาง 35–40 กม. ผ่านแก่งระดับ 3–5 กว่า 100 แก่ง ต้องใช้ทักษะและพละกำลังสูงมาก",
+      "en": "Nan's most dangerous rafting run, open in September only — 35–40 km through 100+ class 3–5 rapids. Serious skill and stamina required."
+    },
+    "highlight": { "th": "100+ แก่ง ระดับ 3–5 ใน 1 เดือนเดียวของปี", "en": "100+ class 3–5 rapids, one month a year" },
+    "outdoor": true,
+    "verified": false
+  },
+  {
+    "id": "wa-middle-rafting",
+    "name": { "th": "ล่องแก่งน้ำว้าตอนกลาง", "en": "Middle Wa River Rafting" },
+    "sportType": "rafting",
+    "icon": "ti-kayak",
+    "season": "green",
+    "dates": { "start": "2026-09-01", "end": "2027-02-28" },
+    "monthLabel": { "th": "กันยายน–กุมภาพันธ์ (น้ำแรงสุด ก.ย.–ต.ค.)", "en": "September–February (wildest Sep–Oct)" },
+    "venue": {
+      "name": { "th": "ลำน้ำว้าตอนกลาง", "en": "Middle Wa River" },
+      "district": "อ.สันติสุข–อ.แม่จริม",
+      "lat": 18.5951,
+      "lon": 101.0154
+    },
+    "mode": ["compete"],
+    "desc": {
+      "th": "เส้นทางยอดนิยมระยะทางยาวถึง 80 กม. แก่งขนาดใหญ่ โหดและสนุกท้าทายสุดๆ ช่วงกันยายน–ตุลาคมน้ำแรงที่สุดของปี",
+      "en": "The classic 80 km run with big, rowdy rapids — wildest water of the year in September–October."
+    },
+    "highlight": { "th": "80 กม. เส้นทางล่องแก่งยอดนิยมของน่าน", "en": "80 km of Nan's most popular whitewater" },
+    "outdoor": true,
+    "verified": false
+  },
+  {
+    "id": "boat-race-festival",
+    "name": { "th": "ประเพณีแข่งเรือยาวจังหวัดน่าน", "en": "Nan Longboat Racing Festival" },
     "sportType": "boat-race",
     "icon": "ti-sailboat",
     "season": "green",
-    "dates": { "start": "2026-09-19", "end": "2026-09-20" },
-    "monthLabel": { "th": "กลางเดือนกันยายน", "en": "Mid September" },
+    "dates": { "start": "2026-09-19", "end": "2026-10-31" },
+    "monthLabel": { "th": "กันยายน–ตุลาคม (หลายสนาม)", "en": "September–October (multiple venues)" },
     "venue": {
-      "name": { "th": "ริมแม่น้ำน่าน เชิงสะพานพัฒนาภาคเหนือ", "en": "Nan Riverside, Phatthana Phak Nuea Bridge" },
+      "name": { "th": "แม่น้ำน่าน (เมืองน่าน · ท่าวังผา · เวียงสา · ภูเพียง)", "en": "Nan River (Mueang Nan · Tha Wang Pha · Wiang Sa · Phu Phiang)" },
       "district": "อ.เมืองน่าน",
       "lat": 18.7756,
       "lon": 100.7789
     },
     "mode": ["spectate"],
     "desc": {
-      "th": "เปิดฤดูกาลแข่งเรือยาวเอกลักษณ์น่าน เรือขุดจากไม้ซุงทั้งต้น หัวพญานาค หางหงส์ ตื่นตาริมน้ำน่านช่วงน้ำหลาก",
-      "en": "Season opener of Nan's iconic longboat races — naga-prow boats carved from single logs, racing the swollen Nan River"
+      "th": "กีฬาทางน้ำที่สืบทอดกว่า 600 ปี แข่งด้วยเรือขุดจากไม้ซุงทั้งต้น หัวเรือสลักรูปพญานาค กระจายหลายสนาม: นัดเปิดสนามเมืองน่าน, ท่าวังผา, เวียงสา (ตานก๋วยสลากวันออกพรรษา), ภูเพียง และปิดสนามฉลองกฐินพระราชทานที่เมืองน่าน",
+      "en": "A 600-year-old river tradition — boats carved from single logs with naga prows, racing across venues: season opener in Mueang Nan, Tha Wang Pha, Wiang Sa (Tan Kuai Salak), Phu Phiang, and the royal-kathin closing round."
     },
-    "highlight": { "th": "ขบวนเรือพญานาคกว่า 20 ลำ + ตลาดริมน้ำ", "en": "20+ naga boats and a riverside market" },
+    "highlight": { "th": "มรดก 600 ปี เรือหัวพญานาค 5 สนามทั่วจังหวัด", "en": "600 years of naga boats across 5 venues" },
     "outdoor": true,
     "verified": false
   },
   {
-    "id": "boat-race-royal-cup",
-    "name": { "th": "แข่งเรือยาวชิงถ้วยพระราชทาน งานประเพณีแข่งเรือจังหวัดน่าน", "en": "Nan Longboat Racing — Royal Cup Finals" },
-    "sportType": "boat-race",
-    "icon": "ti-trophy",
+    "id": "kwang-fighting-festival",
+    "name": { "th": "เทศกาลโลกของกว่าง นักสู้แห่งขุนเขา", "en": "World of Kwang — Mountain Fighter Festival" },
+    "sportType": "folk",
+    "icon": "ti-bug",
     "season": "green",
-    "dates": { "start": "2026-10-24", "end": "2026-10-26" },
-    "monthLabel": { "th": "ปลายเดือนตุลาคม", "en": "Late October" },
+    "dates": { "start": "2026-09-15", "end": "2026-10-31" },
+    "monthLabel": { "th": "กันยายน–ตุลาคม", "en": "September–October" },
     "venue": {
-      "name": { "th": "แม่น้ำน่าน หน้าเทศบาลเมืองน่าน", "en": "Nan River, in front of Nan Municipality" },
-      "district": "อ.เมืองน่าน",
-      "lat": 18.7745,
-      "lon": 100.7797
+      "name": { "th": "อำเภอปัว", "en": "Pua district" },
+      "district": "อ.ปัว",
+      "lat": 19.18,
+      "lon": 100.91
     },
     "mode": ["spectate"],
     "desc": {
-      "th": "ศึกใหญ่ประจำปีของเรือแข่งทั่วเมืองน่าน ชิงถ้วยพระราชทาน พร้อมงานตานก๋วยสลากและถนนอาหารพื้นเมืองริมน้ำ",
-      "en": "The biggest longboat showdown of the year for the Royal Cup, with Tan Kuai Salak merit-making and riverside food streets"
+      "th": "กีฬาพื้นบ้านล้านนาที่นำกว่าง (ด้วงปีกแข็ง) มาประลองกำลังกันบนแกนกว่าง มีทั้งรุ่น 2 เขา, 3 เขา และ 5 เขา เอกลักษณ์หนึ่งเดียวช่วงปลายฝนของเมืองเหนือ",
+      "en": "A Lanna folk sport where rhinoceros beetles (kwang) wrestle on a log — with 2-horn, 3-horn and 5-horn classes. A late-monsoon northern tradition."
     },
-    "highlight": { "th": "รอบชิงถ้วยพระราชทาน + ทุ่งรวงทองรอบเมือง", "en": "Royal Cup finals amid golden rice fields" },
+    "highlight": { "th": "กีฬาพื้นบ้านล้านนา รุ่น 2 เขา / 3 เขา / 5 เขา", "en": "Lanna folk sport: 2-, 3- and 5-horn classes" },
+    "outdoor": false,
+    "verified": false
+  },
+  {
+    "id": "nan-mountain-trail",
+    "name": { "th": "Nan Mountain Trail (NMT)", "en": "Nan Mountain Trail (NMT)" },
+    "sportType": "trail",
+    "icon": "ti-mountain",
+    "season": "green",
+    "dates": { "start": "2026-10-10", "end": "2026-10-11" },
+    "monthLabel": { "th": "เดือนตุลาคม", "en": "October" },
+    "venue": {
+      "name": { "th": "อุทยานแห่งชาติขุนสถาน", "en": "Khun Sathan National Park" },
+      "district": "อ.นาน้อย",
+      "lat": 18.239,
+      "lon": 100.878
+    },
+    "mode": ["compete"],
+    "desc": {
+      "th": "หนึ่งในสนามวิ่งเทรล 100 กม. ที่ยากที่สุดในไทย ความสูงสะสมเกือบ 7,000 เมตร แบ่งระยะ 9, 20, 30, 60 และ 100.8 กม.",
+      "en": "One of Thailand's hardest 100 km trail races — nearly 7,000 m of elevation gain, with 9, 20, 30, 60 and 100.8 km distances."
+    },
+    "highlight": { "th": "100.8 กม. / D+ เกือบ 7,000 ม. โหดสุดในไทย", "en": "100.8 km / ~7,000 m gain — Thailand's toughest" },
     "outdoor": true,
     "verified": false
   },
   {
-    "id": "nan-marathon",
-    "name": { "th": "น่านมาราธอน", "en": "Nan Marathon" },
+    "id": "amazing-nan-marathon",
+    "name": { "th": "Amazing Nan Marathon", "en": "Amazing Nan Marathon" },
     "sportType": "run",
     "icon": "ti-run",
     "season": "cool",
-    "dates": { "start": "2026-12-13", "end": "2026-12-13" },
-    "monthLabel": { "th": "กลางเดือนธันวาคม", "en": "Mid December" },
+    "dates": { "start": "2026-11-15", "end": "2026-11-15" },
+    "monthLabel": { "th": "เดือนพฤศจิกายน", "en": "November" },
     "venue": {
-      "name": { "th": "เมืองเก่าน่าน (จุดปล่อยตัวข่วงเมือง)", "en": "Nan Old Town (start at Khuang Mueang)" },
+      "name": { "th": "ข่วงเมืองน่าน (วัดภูมินทร์)", "en": "Khuang Mueang Nan (Wat Phumin)" },
       "district": "อ.เมืองน่าน",
       "lat": 18.7767,
       "lon": 100.7714
     },
     "mode": ["compete", "spectate"],
     "desc": {
-      "th": "วิ่งผ่านเมืองเก่า วัดภูมินทร์ วัดพระธาตุช้างค้ำ ในอากาศหนาวเย็นที่สุดของปี ฟ้าใสไร้ฝน",
-      "en": "Run past the old town temples in the coolest, clearest air of the year"
+      "th": "มาราธอนกลางเมืองเก่า เริ่มต้นที่ข่วงเมืองน่าน วิ่งผ่านวัดและสถานที่ประวัติศาสตร์ ระยะ 5, 10, 21 และ 42 กม. ในอากาศต้นหนาว",
+      "en": "An old-town marathon starting at Khuang Mueang Nan, running past temples and historic sites — 5, 10, 21 and 42 km in cool-season air."
     },
-    "highlight": { "th": "เส้นทางลอดเมืองเก่า อากาศ 15–20°C", "en": "Old-town course in 15–20°C air" },
+    "highlight": { "th": "วิ่งลอดเมืองเก่า 4 ระยะ 5–42 กม.", "en": "Old-town course, 4 distances 5–42 km" },
     "outdoor": true,
     "verified": false
   },
   {
-    "id": "doi-phu-kha-trail",
-    "name": { "th": "เทรลดอยภูคา–บ่อเกลือ", "en": "Doi Phu Kha–Bo Kluea Trail" },
-    "sportType": "trail",
-    "icon": "ti-mountain",
+    "id": "sepak-takraw-t20",
+    "name": { "th": "Sepak Takraw T20 Super Match", "en": "Sepak Takraw T20 Super Match" },
+    "sportType": "takraw",
+    "icon": "ti-ball-volleyball",
     "season": "cool",
-    "dates": { "start": "2027-02-06", "end": "2027-02-07" },
-    "monthLabel": { "th": "ต้นเดือนกุมภาพันธ์", "en": "Early February" },
+    "dates": { "start": "2026-12-12", "end": "2026-12-13" },
+    "monthLabel": { "th": "เดือนธันวาคม", "en": "December" },
     "venue": {
-      "name": { "th": "อุทยานแห่งชาติดอยภูคา", "en": "Doi Phu Kha National Park" },
+      "name": { "th": "จังหวัดน่าน", "en": "Nan province" },
+      "district": "อ.เมืองน่าน",
+      "lat": 18.78,
+      "lon": 100.77
+    },
+    "mode": ["spectate", "compete"],
+    "desc": {
+      "th": "ทัวร์นาเมนต์เซปักตะกร้อรายการใหญ่ ชิงถ้วยผู้ว่าราชการจังหวัดน่าน ยกระดับนักกีฬาท้องถิ่นสู่ระดับชาติ",
+      "en": "A major sepak takraw tournament for the Nan Governor's Cup, lifting local athletes toward the national stage."
+    },
+    "highlight": { "th": "ชิงถ้วยผู้ว่าราชการจังหวัดน่าน", "en": "Nan Governor's Cup on the line" },
+    "outdoor": false,
+    "verified": false
+  },
+  {
+    "id": "golden-orange-games",
+    "name": { "th": "แข่งเรือบก & กีฬาชาวไทยภูเขา (งานส้มสีทอง)", "en": "Land-Boat Race & Hill-Tribe Games (Golden Orange Festival)" },
+    "sportType": "folk",
+    "icon": "ti-target-arrow",
+    "season": "cool",
+    "dates": { "start": "2026-12-25", "end": "2027-01-03" },
+    "monthLabel": { "th": "ธันวาคม–มกราคม", "en": "December–January" },
+    "venue": {
+      "name": { "th": "งานเทศกาลส้มสีทองและของดีเมืองน่าน", "en": "Golden Orange & Best of Nan Festival grounds" },
+      "district": "อ.เมืองน่าน",
+      "lat": 18.78,
+      "lon": 100.77
+    },
+    "mode": ["spectate"],
+    "desc": {
+      "th": "การแข่งเรือบกสุดครื้นเครง และกีฬาชาวไทยภูเขาอย่างยิงหน้าไม้ จัดควบคู่งานเทศกาลส้มสีทองและของดีเมืองน่าน",
+      "en": "Rollicking land-boat races and hill-tribe sports like crossbow shooting, held alongside the Golden Orange festival."
+    },
+    "highlight": { "th": "เรือบก + ยิงหน้าไม้ กลางงานส้มสีทอง", "en": "Land boats + crossbow at the Golden Orange fair" },
+    "outdoor": true,
+    "verified": false
+  },
+  {
+    "id": "rak-pa-nan-trail",
+    "name": { "th": "รักษ์ป่าน่าน เม้าเท่นรัน", "en": "Rak Pa Nan Mountain Run" },
+    "sportType": "trail",
+    "icon": "ti-trekking",
+    "season": "cool",
+    "dates": { "start": "2027-01-17", "end": "2027-01-17" },
+    "monthLabel": { "th": "เดือนมกราคม", "en": "January" },
+    "venue": {
+      "name": { "th": "สนามกีฬาพญาผานอง", "en": "Phaya Pha Nong Stadium" },
       "district": "อ.ปัว",
-      "lat": 19.1994,
-      "lon": 101.0866
+      "lat": 19.18,
+      "lon": 100.91
     },
     "mode": ["compete"],
     "desc": {
-      "th": "วิ่งเทรลบนหลังคาเมืองน่าน ช่วงดอกชมพูภูคาบานพอดี เส้นทางป่าดิบเขา ทะเลหมอกยามเช้า",
-      "en": "Trail running on the roof of Nan, timed with the once-a-year Chomphu Phu Kha bloom"
+      "th": "วิ่งเทรลสายอนุรักษ์ป่าน่าน อากาศหนาวกำลังดี ระยะ 5, 13 และ 25 กม. เริ่มจากสนามกีฬาพญาผานอง ปัว",
+      "en": "A forest-conservation trail run in crisp cool-season air — 5, 13 and 25 km from Phaya Pha Nong Stadium, Pua."
     },
-    "highlight": { "th": "วิ่งชมดอกชมพูภูคาบานปีละครั้ง", "en": "Race under the rare Chomphu Phu Kha bloom" },
+    "highlight": { "th": "วิ่งเพื่อรักษ์ป่าน่าน 3 ระยะ", "en": "Run for Nan's forests — 3 distances" },
     "outdoor": true,
     "verified": false
   },
   {
-    "id": "cycling-route-1715",
-    "name": { "th": "ปั่นพิชิตเส้น 1715 ปัว–บ่อเกลือ", "en": "Route 1715 Challenge — Pua to Bo Kluea" },
+    "id": "doi-phu-kha-cycling",
+    "name": { "th": "ครั้งหนึ่งในชีวิต ปั่นพิชิตดอยภูคา", "en": "Once in a Lifetime — Conquer Doi Phu Kha Ride" },
     "sportType": "cycling",
     "icon": "ti-bike",
     "season": "cool",
-    "dates": { "start": "2026-11-21", "end": "2026-11-22" },
-    "monthLabel": { "th": "ปลายเดือนพฤศจิกายน", "en": "Late November" },
+    "dates": { "start": "2027-01-24", "end": "2027-01-24" },
+    "monthLabel": { "th": "เดือนมกราคม", "en": "January" },
     "venue": {
-      "name": { "th": "ถนนหมายเลข 1715 ปัว–บ่อเกลือ (จุดชมวิว 1715)", "en": "Highway 1715 Pua–Bo Kluea (Viewpoint 1715)" },
-      "district": "อ.ปัว–อ.บ่อเกลือ",
-      "lat": 19.0847,
-      "lon": 101.0919
+      "name": { "th": "อ.ปัว → จุดชมวิว 1715 อุทยานแห่งชาติดอยภูคา", "en": "Pua → Viewpoint 1715, Doi Phu Kha National Park" },
+      "district": "อ.ปัว",
+      "lat": 19.176,
+      "lon": 100.905
     },
-    "mode": ["compete", "spectate"],
+    "mode": ["compete"],
     "desc": {
-      "th": "เส้นปั่นภูเขาที่สวยที่สุดสายหนึ่งของไทย โค้งเขาสลับซับซ้อน อากาศเย็น วิวหมอกเช้า จบทริปแช่สปาเกลือบ่อเกลือ",
-      "en": "One of Thailand's most beautiful mountain rides — endless switchbacks, cool air, morning mist, salt-spa finish at Bo Kluea"
+      "th": "ปั่นไต่เขาจากปัวขึ้นสู่จุดชมวิว 1715 อุทยานแห่งชาติดอยภูคา รวมระยะทาง 39 กม. สุดท้าทายครั้งหนึ่งในชีวิต",
+      "en": "A once-in-a-lifetime 39 km climb from Pua up to Viewpoint 1715 in Doi Phu Kha National Park."
     },
-    "highlight": { "th": "1,715 โค้งแห่งตำนาน + สปาเกลือหลังปั่น", "en": "Legendary switchbacks + post-ride salt spa" },
+    "highlight": { "th": "ไต่เขา 39 กม. สู่จุดชมวิว 1715", "en": "39 km climb to Viewpoint 1715" },
     "outdoor": true,
     "verified": false
   },
   {
-    "id": "wa-river-rafting",
-    "name": { "th": "ฤดูล่องแก่งลำน้ำว้า", "en": "Wa River White-Water Rafting Season" },
-    "sportType": "rafting",
-    "icon": "ti-kayak",
-    "season": "green",
-    "dates": { "start": "2026-07-15", "end": "2026-10-31" },
-    "monthLabel": { "th": "กรกฎาคม–ตุลาคม (น้ำหลาก)", "en": "July–October (high water)" },
+    "id": "nan-open-woodball",
+    "name": { "th": "วู้ดบอล น่านโอเพ่น (Nan Open)", "en": "Nan Open Woodball" },
+    "sportType": "woodball",
+    "icon": "ti-golf",
+    "season": "cool",
+    "dates": { "start": "2027-01-09", "end": "2027-01-10" },
+    "monthLabel": { "th": "เดือนมกราคม", "en": "January" },
     "venue": {
-      "name": { "th": "ลำน้ำว้า อุทยานแห่งชาติแม่จริม", "en": "Wa River, Mae Charim National Park" },
+      "name": { "th": "สนามกีฬาวู้ดบอล อบจ.น่าน", "en": "Nan PAO Woodball Field" },
+      "district": "อ.เมืองน่าน",
+      "lat": 18.78,
+      "lon": 100.77
+    },
+    "mode": ["compete"],
+    "desc": {
+      "th": "กีฬาวู้ดบอลส่งเสริมสุขภาพระดับมวลชน โดยเฉพาะผู้สูงอายุ — กีฬาเบาๆ กลางอากาศหนาวสบายของน่าน",
+      "en": "A mass-participation woodball open, beloved by seniors — easy-going sport in Nan's pleasant cool season."
+    },
+    "highlight": { "th": "กีฬามวลชนทุกวัย เด่นที่สายผู้สูงอายุ", "en": "All-ages sport with a strong seniors' field" },
+    "outdoor": true,
+    "verified": false
+  },
+  {
+    "id": "walk-run-bike-pua",
+    "name": { "th": "Walk Run Bike @ปัว น่าน", "en": "Walk Run Bike @Pua Nan" },
+    "sportType": "multi",
+    "icon": "ti-heartbeat",
+    "season": "cool",
+    "dates": { "start": "2027-02-14", "end": "2027-02-14" },
+    "monthLabel": { "th": "เดือนกุมภาพันธ์", "en": "February" },
+    "venue": {
+      "name": { "th": "อ่างเก็บน้ำ ร.ศ. 200 ปี", "en": "Ro So 200-Year Reservoir" },
+      "district": "อ.ปัว",
+      "lat": 19.17,
+      "lon": 100.93
+    },
+    "mode": ["compete"],
+    "desc": {
+      "th": "กิจกรรม \"คู่เสี่ยวดูแลสุขภาพ\" ริมอ่างเก็บน้ำ ร.ศ. 200 ปี — วิ่ง 3, 5, 15 กม. และปั่นเสือหมอบ 39 กม.",
+      "en": "The \"health buddies\" event by the Ro So 200-Year Reservoir — 3, 5, 15 km runs plus a 39 km road ride."
+    },
+    "highlight": { "th": "วิ่ง 3 ระยะ + ปั่นเสือหมอบ 39 กม.", "en": "3 run distances + 39 km road ride" },
+    "outdoor": true,
+    "verified": false
+  },
+  {
+    "id": "klong-pu-ja-contest",
+    "name": { "th": "ประกวดตีก๋องปูจาและกลองสะบัดชัย", "en": "Klong Pu Ja & Sabat Chai Drum Contest" },
+    "sportType": "folk",
+    "icon": "ti-music",
+    "season": "hot",
+    "dates": { "start": "2027-04-14", "end": "2027-04-14" },
+    "monthLabel": { "th": "14 เมษายน (สงกรานต์)", "en": "April 14 (Songkran)" },
+    "venue": {
+      "name": { "th": "วิหารวัดสวนตาล", "en": "Wat Suan Tan" },
+      "district": "อ.เมืองน่าน",
+      "lat": 18.7832,
+      "lon": 100.777
+    },
+    "mode": ["spectate"],
+    "desc": {
+      "th": "ศิลปะการต่อสู้ด้วยเสียงกลองล้านนา ใช้พละกำลังจากไหล่ ศอก และเข่า เหวี่ยงและเคลื่อนไหวอย่างหนักหน่วง ประชันกันกลางเทศกาลสงกรานต์",
+      "en": "Lanna 'battle of drums' — full-power strikes with shoulders, elbows and knees — contested at the heart of Songkran."
+    },
+    "highlight": { "th": "ศิลปะการต่อสู้ด้วยเสียงกลองล้านนา", "en": "Lanna martial drumming showdown" },
+    "outdoor": false,
+    "verified": false
+  },
+  {
+    "id": "songkran-folk-games",
+    "name": { "th": "กีฬาพื้นบ้านเทศกาลสงกรานต์", "en": "Songkran Folk Games" },
+    "sportType": "folk",
+    "icon": "ti-droplet",
+    "season": "hot",
+    "dates": { "start": "2027-04-12", "end": "2027-04-15" },
+    "monthLabel": { "th": "12–15 เมษายน", "en": "April 12–15" },
+    "venue": {
+      "name": { "th": "เมืองน่าน", "en": "Mueang Nan" },
+      "district": "อ.เมืองน่าน",
+      "lat": 18.7767,
+      "lon": 100.7714
+    },
+    "mode": ["compete", "spectate"],
+    "desc": {
+      "th": "กีฬาพื้นบ้านกลางสงกรานต์ — ประกวดก่อเจดีย์ทรายแบบโบราณ ชักเย่อ มอญซ่อนผ้า พร้อมลาน Foam Party ให้เยาวชนได้สนุกคลายร้อน",
+      "en": "Songkran folk games — traditional sand-pagoda contests, tug-of-war, mon son pha, plus a foam party zone to beat the heat."
+    },
+    "highlight": { "th": "ก่อเจดีย์ทราย · ชักเย่อ · Foam Party", "en": "Sand pagodas · tug-of-war · foam party" },
+    "outdoor": true,
+    "verified": false
+  },
+  {
+    "id": "muterun-nan",
+    "name": { "th": "MuTeRun Mini Marathon สนามน่าน", "en": "MuTeRun Mini Marathon — Nan" },
+    "sportType": "run",
+    "icon": "ti-star",
+    "season": "hot",
+    "dates": { "start": "2027-05-16", "end": "2027-05-16" },
+    "monthLabel": { "th": "เดือนพฤษภาคม", "en": "May" },
+    "venue": {
+      "name": { "th": "อำเภอปัว", "en": "Pua district" },
+      "district": "อ.ปัว",
+      "lat": 19.18,
+      "lon": 100.91
+    },
+    "mode": ["compete"],
+    "desc": {
+      "th": "งานวิ่งแนวมูเตลูที่ผสมผสานศรัทธา วัฒนธรรม กับการออกกำลังกาย ระยะ 5 และ 10 กม.",
+      "en": "A 'mutelu' fun run blending faith, culture and fitness — 5 and 10 km."
+    },
+    "highlight": { "th": "วิ่งสายมู ศรัทธา+สุขภาพ 5/10 กม.", "en": "Faith-meets-fitness run, 5/10 km" },
+    "outdoor": true,
+    "verified": false
+  },
+  {
+    "id": "wa-lower-rafting",
+    "name": { "th": "ล่องแก่งน้ำว้าตอนล่าง (ตลอดปี)", "en": "Lower Wa River Rafting (Year-round)" },
+    "sportType": "rafting",
+    "icon": "ti-ripple",
+    "season": "hot",
+    "dates": { "start": "2027-03-01", "end": "2027-05-31" },
+    "monthLabel": { "th": "ตลอดทั้งปี — ชูช่วงหน้าร้อน", "en": "Year-round — a summer favourite" },
+    "venue": {
+      "name": { "th": "ลำน้ำว้าตอนล่าง", "en": "Lower Wa River" },
       "district": "อ.แม่จริม",
       "lat": 18.5951,
       "lon": 101.0154
     },
     "mode": ["compete"],
     "desc": {
-      "th": "ล่องแก่งระดับ 3–5 ที่ดุดันที่สุดในหน้าฝน — กีฬาที่เล่นได้เฉพาะกรีนซีซันเท่านั้น น้ำแรง ป่าเขียว หมอกคลอเคลีย",
-      "en": "Class 3–5 rapids at their wildest — the sport you can ONLY do in Green Season, when the river runs high through emerald forest"
+      "th": "เส้นทางสั้น 12 กม. กระแสน้ำนิ่งปลอดภัย เหมาะล่องแก่งแบบครอบครัวสบายๆ คลายร้อน — เล่นได้ตลอดทั้งปีรวมฤดูร้อน",
+      "en": "A gentle, safe 12 km stretch — family-friendly rafting to cool off, available all year including summer."
     },
-    "highlight": { "th": "แก่งระดับ 5 เฉพาะหน้าฝน — จองกับผู้ประกอบการชุมชนแม่จริม", "en": "Class-5 rapids, Green Season only — book with Mae Charim community operators" },
-    "outdoor": true,
-    "verified": false
-  },
-  {
-    "id": "songkran-fun-run",
-    "name": { "th": "วิ่งสาดน้ำสงกรานต์เมืองน่าน", "en": "Nan Songkran Splash Run" },
-    "sportType": "run",
-    "icon": "ti-droplet",
-    "season": "hot",
-    "dates": { "start": "2027-04-13", "end": "2027-04-13" },
-    "monthLabel": { "th": "กลางเดือนเมษายน", "en": "Mid April" },
-    "venue": {
-      "name": { "th": "ข่วงเมืองน่าน–ถนนคนเดิน", "en": "Khuang Mueang Nan & Walking Street" },
-      "district": "อ.เมืองน่าน",
-      "lat": 18.7767,
-      "lon": 100.7714
-    },
-    "mode": ["compete", "spectate"],
-    "desc": {
-      "th": "ฟันรันสายเปียกกลางเทศกาลสงกรานต์ วิ่งผ่านซุ้มสาดน้ำรอบเมืองเก่า คลายร้อนเดือนที่ร้อนที่สุดของปี",
-      "en": "A soaking-wet fun run through Songkran water arches around the old town — beating the hottest month of the year"
-    },
-    "highlight": { "th": "ซุ้มน้ำ 9 จุดรอบเมืองเก่า", "en": "9 splash stations around the old town" },
+    "highlight": { "th": "12 กม. สายครอบครัว เล่นได้ทั้งปี", "en": "12 km family run, open all year" },
     "outdoor": true,
     "verified": false
   }
