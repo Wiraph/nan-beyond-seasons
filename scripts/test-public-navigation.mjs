@@ -28,6 +28,7 @@ try {
     "tests/public-navigation.test.mts",
     "tests/role-access.test.mts",
     "tests/management-workspaces.test.mts",
+    "tests/chat-guide.test.mts",
     "src/lib/public-navigation.ts",
     "src/lib/management-events.ts",
   ]);
@@ -38,6 +39,7 @@ try {
       `${outputDir}/tests/public-navigation.test.mjs`,
       `${outputDir}/tests/role-access.test.mjs`,
       `${outputDir}/tests/management-workspaces.test.mjs`,
+      `${outputDir}/tests/chat-guide.test.mjs`,
     ]);
   }
 } finally {
