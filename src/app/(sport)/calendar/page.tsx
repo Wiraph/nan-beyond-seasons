@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import LangSwitcher from "@/components/LangSwitcher";
+import PublicBackButton from "@/components/PublicBackButton";
 import { useI18n } from "@/i18n/I18nProvider";
 import { LangCode } from "@/i18n/dictionaries";
 import { loc, districtLoc } from "@/lib/types";
@@ -42,14 +43,17 @@ export default function CalendarPage() {
       {/* Header */}
       <header className="sticky top-0 z-30 border-b border-black/10 bg-pitch/85 backdrop-blur">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 lg:px-8">
-          <Link href="/" className="flex items-center gap-2">
-            <span className="flex h-9 w-9 items-center justify-center rounded-md bg-volt text-pitch">
-              <i className="ti ti-bolt text-xl" aria-hidden />
-            </span>
-            <span className="text-lg font-bold tracking-tight text-frost">
-              NAN <span className="text-volt">GAME ON</span>
-            </span>
-          </Link>
+          <div className="flex min-w-0 items-center gap-2">
+            <PublicBackButton fallbackHref="/" variant="sport" />
+            <Link href="/" className="flex min-w-0 items-center gap-2">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-volt text-pitch">
+                <i className="ti ti-bolt text-xl" aria-hidden />
+              </span>
+              <span className="truncate text-lg font-bold tracking-tight text-frost">
+                NAN <span className="text-volt">GAME ON</span>
+              </span>
+            </Link>
+          </div>
           <LangSwitcher dark />
         </div>
       </header>

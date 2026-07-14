@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import LangSwitcher from "./LangSwitcher";
+import PublicBackButton from "./PublicBackButton";
 import { useI18n } from "@/i18n/I18nProvider";
+import { getBackFallback } from "@/lib/public-navigation";
 
 const desktopLinks = [
   { href: "/", key: "nav.home" },
@@ -16,21 +18,15 @@ const desktopLinks = [
 export default function AppHeader({
   title,
   showBack = false,
+  fallbackHref,
 }: {
   title?: string;
   showBack?: boolean;
+  fallbackHref?: string;
 }) {
-  const router = useRouter();
   const pathname = usePathname();
   const { t } = useI18n();
-
-  const handleBack = () => {
-    if (typeof window !== "undefined" && window.history.length > 1) {
-      router.back();
-    } else {
-      router.push("/");
-    }
-  };
+  const backFallback = fallbackHref ?? getBackFallback(pathname) ?? "/";
 
   return (
     <header className="sticky top-0 z-20">
@@ -39,13 +35,7 @@ export default function AppHeader({
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 lg:px-8">
           <div className="flex items-center gap-2">
             {showBack ? (
-              <button
-                onClick={handleBack}
-                aria-label={t("common.back")}
-                className="-ml-1 flex h-8 w-8 items-center justify-center rounded-full hover:bg-navy-600"
-              >
-                <i className="ti ti-chevron-left text-xl" aria-hidden />
-              </button>
+              <PublicBackButton fallbackHref={backFallback} />
             ) : (
               <i className="ti ti-qrcode text-xl text-gold" aria-hidden />
             )}

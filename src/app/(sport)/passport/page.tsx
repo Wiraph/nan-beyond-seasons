@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import LangSwitcher from "@/components/LangSwitcher";
+import PublicBackButton from "@/components/PublicBackButton";
 import { useI18n } from "@/i18n/I18nProvider";
 import { loc } from "@/lib/types";
 import { fmtDate, getEvent } from "@/lib/sports";
@@ -20,9 +21,13 @@ export default function PassportPage() {
     <>
       <header className="sticky top-0 z-30 border-b border-black/10 bg-pitch/85 backdrop-blur">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 lg:px-8">
-          <h1 className="flex items-center gap-2 text-lg font-bold text-frost">
-            <i className="ti ti-id-badge-2 text-volt" aria-hidden /> {t("sport.passport")}
-          </h1>
+          <div className="flex min-w-0 items-center gap-2">
+            <PublicBackButton fallbackHref="/" variant="sport" />
+            <h1 className="flex min-w-0 items-center gap-2 text-lg font-bold text-frost">
+              <i className="ti ti-id-badge-2 shrink-0 text-volt" aria-hidden />
+              <span className="truncate">{t("sport.passport")}</span>
+            </h1>
+          </div>
           <LangSwitcher dark />
         </div>
       </header>

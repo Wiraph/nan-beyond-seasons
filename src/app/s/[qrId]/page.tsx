@@ -4,6 +4,9 @@ import { use } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import LangSwitcher from "@/components/LangSwitcher";
+import PublicBackButton from "@/components/PublicBackButton";
+import PublicFooter from "@/components/PublicFooter";
+import PublicNavigationTracker from "@/components/PublicNavigationTracker";
 import PlaceIllustration, { placeIllo } from "@/components/PlaceIllustration";
 import StarRating from "@/components/StarRating";
 import { useI18n } from "@/i18n/I18nProvider";
@@ -27,14 +30,18 @@ export default function ScanLanding({
   const craft = getCraft(place.craftType);
 
   return (
-    <div className="min-h-dvh bg-navy text-cream">
-    <div className="relative flex min-h-dvh w-full flex-col overflow-hidden bg-navy text-cream">
+    <div className="flex min-h-dvh flex-col bg-navy text-cream">
+    <PublicNavigationTracker />
+    <div className="relative flex min-h-0 w-full flex-1 flex-col overflow-hidden bg-navy text-cream">
       <div className="lanna-strip h-2.5 bg-navy" />
 
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 lg:px-8">
         <div className="flex items-center gap-2">
-          <i className="ti ti-qrcode text-xl text-gold" aria-hidden />
-          <span className="font-lanna text-lg">Nan Connect</span>
+          <PublicBackButton fallbackHref="/" />
+          <div className="flex items-center gap-2">
+            <i className="ti ti-qrcode text-xl text-gold" aria-hidden />
+            <span className="font-lanna text-lg">Nan Connect</span>
+          </div>
         </div>
         <LangSwitcher dark />
       </div>
@@ -104,6 +111,7 @@ export default function ScanLanding({
         </div>
       </div>
     </div>
+    <PublicFooter />
     </div>
   );
 }
