@@ -56,7 +56,7 @@ export default function CheckinPage({
           <i className={`ti ${event.icon} text-4xl`} aria-hidden />
         </span>
         <p className="mt-3 text-xs text-steel">
-          {lang === "th" ? "จุดเช็คอินงานกีฬา (จำลองการสแกน QR ณ งาน)" : "Event check-in point (simulated on-site QR scan)"}
+          {lang === "th" ? "จุดเช็กอินงานกีฬา" : "Event check-in point"}
         </p>
         <h1 className="mt-1 text-xl font-bold text-frost lg:text-2xl">{loc(event.name, lang)}</h1>
         <p className="mt-1 text-sm text-steel">

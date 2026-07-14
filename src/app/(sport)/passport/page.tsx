@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { BrandTagline } from "@/components/BrandWordmark";
 import GameOnHeaderActions from "@/components/GameOnHeaderActions";
 import PublicBackButton from "@/components/PublicBackButton";
 import { useI18n } from "@/i18n/I18nProvider";
@@ -79,7 +80,7 @@ export default function PassportPage() {
                   <div className="truncate text-base font-bold text-frost">
                     {displayName(profile, lang)}
                   </div>
-                  <div className="text-[11px] text-steel">Nan Game On</div>
+                  <div className="text-[11px] text-steel"><BrandTagline /></div>
                 </div>
                 <button
                   onClick={() => setEditing(true)}
@@ -176,7 +177,7 @@ export default function PassportPage() {
                 ? "ยังไม่มีเช็คอิน — ไปงานกีฬาแล้วสแกน QR เพื่อเริ่มสะสม"
                 : "No check-ins yet — scan the QR at an event to start collecting"}
             </p>
-            <Link href="/" className="mt-3 inline-block text-sm font-medium text-volt hover:underline">
+            <Link href="/calendar" className="mt-3 inline-block text-sm font-medium text-volt hover:underline">
               {t("sport.calendar")} →
             </Link>
           </div>

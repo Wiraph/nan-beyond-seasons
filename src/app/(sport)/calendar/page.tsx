@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { BrandName } from "@/components/BrandWordmark";
 import GameOnHeaderActions from "@/components/GameOnHeaderActions";
 import PublicBackButton from "@/components/PublicBackButton";
 import { useI18n } from "@/i18n/I18nProvider";
@@ -50,7 +51,7 @@ export default function CalendarPage() {
                 <i className="ti ti-bolt text-xl" aria-hidden />
               </span>
               <span className="truncate text-lg font-bold tracking-tight text-frost">
-                NAN <span className="text-volt">GAME ON</span>
+                <BrandName />
               </span>
             </Link>
           </div>

@@ -133,9 +133,6 @@ export default function RewardsPage() {
           })}
         </div>
 
-        <p className="mt-4 flex items-start gap-1.5 rounded-md bg-black/5 p-3 text-[11px] text-steel">
-          <i className="ti ti-info-circle mt-0.5 shrink-0" aria-hidden /> {t("rewards.demoNote")}
-        </p>
       </main>
 
       {/* Reward code modal */}

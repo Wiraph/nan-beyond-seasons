@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { BrandName, BrandTagline } from "@/components/BrandWordmark";
 import { useI18n } from "@/i18n/I18nProvider";
 
 const organizationName =
@@ -23,8 +24,9 @@ export default function PublicFooter() {
   return (
     <footer className={`border-t ${surface}`}>
       <div className="mx-auto grid w-full max-w-7xl gap-7 px-4 py-8 lg:grid-cols-[1.1fr_1fr_1.15fr] lg:px-8">
-        <section aria-label="Nan Game On">
-          <p className="text-lg font-bold text-volt">Nan Game On</p>
+        <section aria-label="Brand">
+          <p className="text-lg font-bold text-volt"><BrandName /></p>
+          <p className={`mt-1 text-sm ${muted}`}><BrandTagline /></p>
           <p className={`mt-2 max-w-sm text-sm leading-relaxed ${muted}`}>{t("footer.description")}</p>
           <div className="mt-4">
             <p className="text-sm font-semibold">{t("footer.links")}</p>

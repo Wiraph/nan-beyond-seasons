@@ -1,29 +1,21 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { ROLE_DISPLAY, ROLE_HOME, type DemoRole } from "@/lib/role-access";
+import { BrandName } from "@/components/BrandWordmark";
+import LangSwitcher from "@/components/LangSwitcher";
+import { useI18n } from "@/i18n/I18nProvider";
+import { ROLE_HOME, type DemoRole } from "@/lib/role-access";
 import { useRoleSession } from "@/lib/RoleStore";
 
-const roleChoices: Array<{ role: DemoRole; icon: string; summary: string }> = [
-  {
-    role: "user",
-    icon: "ti-run",
-    summary: "Follow events, collect passport stamps, and earn rewards.",
-  },
-  {
-    role: "organizer",
-    icon: "ti-calendar-cog",
-    summary: "Manage your events and event check-ins.",
-  },
-  {
-    role: "admin",
-    icon: "ti-shield-check",
-    summary: "Review events, organizers, and users.",
-  },
+const roleChoices: Array<{ role: DemoRole; icon: string }> = [
+  { role: "user", icon: "ti-run" },
+  { role: "organizer", icon: "ti-calendar-cog" },
+  { role: "admin", icon: "ti-shield-check" },
 ];
 
 export default function LoginPage() {
   const router = useRouter();
+  const { t } = useI18n();
   const { selectRole } = useRoleSession();
 
   const chooseRole = (role: DemoRole) => {
@@ -33,20 +25,28 @@ export default function LoginPage() {
 
   return (
     <main className="role-picker-page">
+      <div className="absolute right-4 top-4">
+        <LangSwitcher dark />
+      </div>
       <section className="w-full max-w-5xl" aria-labelledby="role-picker-title">
-        <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-volt">
-          Nan Game On demo
-        </p>
-        <h1 id="role-picker-title" className="font-lanna text-4xl text-frost sm:text-5xl">
-          Select a demo role
+        <div className="mb-4 flex items-center gap-2">
+          <span className="flex h-9 w-9 items-center justify-center rounded-md bg-volt text-pitch">
+            <i className="ti ti-bolt text-xl" aria-hidden />
+          </span>
+          <span className="text-lg font-bold tracking-tight text-frost">
+            <BrandName />
+          </span>
+        </div>
+        <h1 id="role-picker-title" className="text-3xl font-bold text-frost sm:text-4xl">
+          {t("login.title")}
         </h1>
         <p className="mt-3 max-w-2xl text-base text-steel">
-          เลือกบทบาทเพื่อทดลองใช้งาน ไม่มีการใช้ชื่อ อีเมล หรือรหัสผ่าน
+          {t("login.subtitle")}
         </p>
 
         <div className="role-picker-grid mt-8">
-          {roleChoices.map(({ role, icon, summary }) => {
-            const display = ROLE_DISPLAY[role];
+          {roleChoices.map(({ role, icon }) => {
+            const name = t(`role.${role}.name`);
             const descriptionId = `${role}-role-description`;
 
             return (
@@ -58,12 +58,11 @@ export default function LoginPage() {
                 onClick={() => chooseRole(role)}
               >
                 <i className={`ti ${icon} role-picker-icon`} aria-hidden />
-                <span className="text-sm font-semibold text-volt">{display.label}</span>
-                <span className="font-lanna text-3xl text-frost">{display.title}</span>
-                <span id={descriptionId} className="text-sm leading-6 text-steel">
-                  {summary}
+                <span className="text-2xl font-bold text-frost">{name}</span>
+                <span id={descriptionId} className="mt-1 text-sm leading-6 text-steel">
+                  {t(`role.${role}.desc`)}
                 </span>
-                <span className="mt-auto text-sm font-semibold text-volt">Choose {display.label}</span>
+                <span className="mt-auto text-sm font-semibold text-volt">{t("login.choose")} {name}</span>
               </button>
             );
           })}

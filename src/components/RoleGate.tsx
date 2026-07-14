@@ -18,7 +18,7 @@ export default function RoleGate({ children }: { children: React.ReactNode }) {
   if (loading || redirect) {
     return (
       <div className="flex min-h-dvh items-center justify-center p-6 text-sm text-steel" role="status">
-        {loading ? "Preparing demo session…" : "Redirecting…"}
+        {loading ? "Loading…" : "Redirecting…"}
       </div>
     );
   }

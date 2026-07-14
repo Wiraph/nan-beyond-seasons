@@ -21,7 +21,7 @@ export default function LangSwitcher({ dark = false }: { dark?: boolean }) {
         }`}
       >
         <i className="ti ti-world text-base text-gold" aria-hidden />
-        <span>{current.label}</span>
+        <span className="hidden sm:inline">{current.label}</span>
         <i className="ti ti-chevron-down text-sm" aria-hidden />
       </button>
 

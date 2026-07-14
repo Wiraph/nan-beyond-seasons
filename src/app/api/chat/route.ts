@@ -42,14 +42,14 @@ function fallback(reason: string) {
 // App knowledge for the help bot is kept next to the real rules.
 // This prevents the guide from drifting from what the app actually does.
 const APP_GUIDE = `Nan Game On app guide (ground truth):
-- Home (/) is a Strava-style community feed: post updates, give kudos (flame button), see demo community posts. "Ranking" tab = points leaderboard.
+- Home (/) is a Strava-style community feed: post updates, give kudos (flame button), see community posts. "Ranking" tab = points leaderboard.
 - Calendar (/calendar): 12-month sports festival calendar grouped by season (Green/Cool/Hot) with countdowns and live race-day weather.
 - Each event page: details, real weather, "Plan a trip around this" = AI builds a 2-day race-cation (event + nearby attractions, weather-adaptive).
 - Check-in: scan the QR at an event (or open /checkin/<event>) -> +50 points, auto-shares to the feed. One check-in per event.
 - Passport (/passport): set your display name + avatar colour, see points, badges, check-in history.
 - Badges (7): "Game On!" first check-in; "Green Season Raider" check in at a green-season event; "Cool Season Chaser" cool season; "Hot Season Hero" hot season; "Longboat Superfan" any longboat race; "Nan All-Season Athlete" all 3 seasons; "Nan Full House" every event on the calendar.
-- Points can be redeemed for discounts with participating local businesses (prototype).
-- Select one of the three demo roles on /login; no name or password is required.
+- Points can be redeemed for discounts with participating local businesses.
+- Select one of the three roles on /login; no name or password is required.
 `;
 
 export async function POST(req: NextRequest) {

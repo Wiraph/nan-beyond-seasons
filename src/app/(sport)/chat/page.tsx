@@ -78,8 +78,8 @@ function ChatInner() {
         const reply = isSport
           ? fallbackSportReply(lang === "th" ? "th" : "en")
           : lang === "th"
-            ? "ฉันช่วยอธิบายการใช้งาน Nan Game On ได้ เช่น ปฏิทิน เช็กอิน แต้ม และพาสปอร์ต"
-            : "I can explain Nan Game On features such as the calendar, check-ins, points, and passport.";
+            ? "ฉันช่วยอธิบายการใช้งาน ฤดูม่วนน่าน — ม่วนได้ทุกฤดู ที่น่าน ได้ เช่น ปฏิทิน เช็กอิน แต้ม และพาสปอร์ต"
+            : "I can explain Ruedu Muan Nan features such as the calendar, check-ins, points, and passport.";
         setMessages(
           (m) => [
             ...m,
@@ -150,8 +150,8 @@ function ChatInner() {
           const reply = isSport
             ? fallbackSportReply(lang === "th" ? "th" : "en")
             : lang === "th"
-              ? "ฉันช่วยอธิบายการใช้งาน Nan Game On ได้ เช่น ปฏิทิน เช็กอิน แต้ม และพาสปอร์ต"
-              : "I can explain Nan Game On features such as the calendar, check-ins, points, and passport.";
+              ? "ฉันช่วยอธิบายการใช้งาน ฤดูม่วนน่าน — ม่วนได้ทุกฤดู ที่น่าน ได้ เช่น ปฏิทิน เช็กอิน แต้ม และพาสปอร์ต"
+              : "I can explain Ruedu Muan Nan features such as the calendar, check-ins, points, and passport.";
           setMessages((m) => {
             const copy = [...m];
             const last = copy[copy.length - 1];

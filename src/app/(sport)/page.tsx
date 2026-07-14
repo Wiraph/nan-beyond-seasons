@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import { BrandName, BrandTagline } from "@/components/BrandWordmark";
 import GameOnHeaderActions from "@/components/GameOnHeaderActions";
 import { uploadPostImage } from "@/lib/uploadImage";
 import { useI18n } from "@/i18n/I18nProvider";
@@ -58,7 +59,7 @@ export default function FeedHome() {
               <i className="ti ti-bolt text-xl" aria-hidden />
             </span>
             <span className="text-lg font-bold tracking-tight text-frost">
-              NAN <span className="text-volt">GAME ON</span>
+              <BrandName />
             </span>
           </Link>
           <GameOnHeaderActions dark />
@@ -177,7 +178,7 @@ function ProfileCard() {
           {initial(displayName(profile, lang))}
         </span>
         <div className="mt-2.5 text-base font-bold text-frost">{displayName(profile, lang)}</div>
-        <div className="text-[11px] text-steel">Nan Game On</div>
+        <div className="text-[11px] text-steel"><BrandTagline /></div>
       </div>
       <div className="mt-4 grid grid-cols-3 divide-x divide-black/8 border-y border-black/8 py-3 text-center">
         <div>
@@ -371,11 +372,6 @@ function PostCard({
             {item.own && (
               <span className="rounded bg-volt/15 px-1.5 py-0.5 text-[9px] font-semibold text-volt">
                 {t("feed.you")}
-              </span>
-            )}
-            {item.demo && (
-              <span className="rounded bg-black/5 px-1.5 py-0.5 text-[9px] text-steel">
-                {t("feed.demo")}
               </span>
             )}
           </div>

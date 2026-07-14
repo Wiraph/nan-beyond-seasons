@@ -2,22 +2,23 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import LangSwitcher from "@/components/LangSwitcher";
-import RoleAccountMenu from "@/components/RoleAccountMenu";
+import { BrandName, BrandTagline } from "@/components/BrandWordmark";
+import GameOnHeaderActions from "@/components/GameOnHeaderActions";
+import { useI18n } from "@/i18n/I18nProvider";
 
 type ManagementRole = "organizer" | "admin";
 
-const navigation: Record<ManagementRole, { href: string; icon: string; label: string }[]> = {
+const navigation: Record<ManagementRole, { href: string; icon: string; labelKey: string }[]> = {
   organizer: [
-    { href: "/organizer", icon: "ti-layout-dashboard", label: "Overview / ภาพรวม" },
-    { href: "/organizer/events", icon: "ti-calendar-event", label: "My events / งานของฉัน" },
-    { href: "/organizer/events/new", icon: "ti-plus", label: "Create event / สร้างงาน" },
-    { href: "/organizer/checkins", icon: "ti-qrcode", label: "Event check-ins / เช็กอิน" },
+    { href: "/organizer", icon: "ti-layout-dashboard", labelKey: "mgmt.nav.overview" },
+    { href: "/organizer/events", icon: "ti-calendar-event", labelKey: "mgmt.nav.myEvents" },
+    { href: "/organizer/events/new", icon: "ti-plus", labelKey: "mgmt.nav.createEvent" },
+    { href: "/organizer/checkins", icon: "ti-qrcode", labelKey: "mgmt.nav.checkins" },
   ],
   admin: [
-    { href: "/admin", icon: "ti-layout-dashboard", label: "Overview / ภาพรวม" },
-    { href: "/admin/events", icon: "ti-calendar-event", label: "All events / งานทั้งหมด" },
-    { href: "/admin/users", icon: "ti-users", label: "Organizers & users / ผู้จัดและผู้ใช้" },
+    { href: "/admin", icon: "ti-layout-dashboard", labelKey: "mgmt.nav.overview" },
+    { href: "/admin/events", icon: "ti-calendar-event", labelKey: "mgmt.nav.allEvents" },
+    { href: "/admin/users", icon: "ti-users", labelKey: "mgmt.nav.users" },
   ],
 };
 
@@ -29,40 +30,44 @@ export default function ManagementShell({
   role: ManagementRole;
 }) {
   const pathname = usePathname();
-  const title = role === "organizer" ? "Organizer workspace / พื้นที่ผู้จัดงาน" : "Administrator workspace / พื้นที่ผู้ดูแล";
+  const { t } = useI18n();
+  const home = role === "organizer" ? "/organizer" : "/admin";
+  const workspace = role === "organizer" ? t("mgmt.organizer.workspace") : t("mgmt.admin.workspace");
 
   return (
-    <div className="min-h-dvh bg-[#f6f8f4] text-pitch">
-      <header className="sticky top-0 z-30 border-b border-pitch/10 bg-pitch text-frost shadow-sm">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6">
-          <Link href={role === "organizer" ? "/organizer" : "/admin"} className="flex min-h-11 items-center gap-3 rounded-md px-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-volt">
-            <span className="flex h-9 w-9 items-center justify-center rounded-md bg-volt text-pitch">
-              <i className="ti ti-trophy text-xl" aria-hidden />
+    <div className="sport-bg flex min-h-dvh flex-col text-frost">
+      <header className="sticky top-0 z-30 border-b border-black/10 bg-pitch/85 backdrop-blur">
+        <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-3 px-4 py-2.5 lg:px-8">
+          <Link href={home} className="flex min-w-0 items-center gap-2 rounded-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-volt">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-volt text-pitch">
+              <i className="ti ti-bolt text-xl" aria-hidden />
             </span>
-            <span>
-              <span className="block font-lanna text-xl leading-none">Nan Game On</span>
-              <span className="mt-1 block text-[11px] text-steel">{title}</span>
+            <span className="hidden min-w-0 flex-col leading-none">
+              <span className="truncate text-lg font-bold tracking-tight text-frost">
+                เล่น <span className="text-volt">ไร้ฤดู</span>
+              </span>
+              <span className="mt-0.5 truncate text-[11px] text-steel">{workspace}</span>
+            </span>
+            <span className="flex min-w-0 flex-col leading-none">
+              <span className="truncate text-lg font-bold tracking-tight text-frost"><BrandName /></span>
+              <span className="mt-0.5 truncate text-[11px] text-steel"><BrandTagline /></span>
             </span>
           </Link>
-          <div className="flex items-center gap-2">
-            <LangSwitcher dark />
-            <RoleAccountMenu dark />
-          </div>
+          <GameOnHeaderActions dark />
         </div>
-        <nav className="role-management-nav mx-auto max-w-7xl" aria-label={`${role} workspace navigation`}>
+        <nav className="role-management-nav mx-auto max-w-7xl" aria-label={workspace}>
           {navigation[role].map((item) => {
-            const active = item.href === `/${role}` ? pathname === item.href : pathname.startsWith(item.href);
+            const active = item.href === home ? pathname === item.href : pathname.startsWith(item.href);
             return (
               <Link key={item.href} href={item.href} aria-current={active ? "page" : undefined}>
                 <i className={`ti ${item.icon} text-base`} aria-hidden />
-                {item.label}
-                {item.href.endsWith("/new") && <span className="ml-1 rounded bg-volt/15 px-1.5 py-0.5 text-[10px]">Demo preview</span>}
+                {t(item.labelKey)}
               </Link>
             );
           })}
         </nav>
       </header>
-      <main className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:py-8">{children}</main>
+      <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-6 sm:px-6 lg:py-8">{children}</main>
     </div>
   );
 }
