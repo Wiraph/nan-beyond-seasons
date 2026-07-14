@@ -25,7 +25,7 @@ const PLACE_CONTEXT = destinations
   )
   .join("\n");
 
-// Sports festival calendar โ€” the core of Nan Game On.
+// Sports festival calendar - the core of Nan Game On.
 const EVENT_CONTEXT = sportEvents
   .map(
     (e) =>
@@ -39,8 +39,8 @@ function fallback(reason: string) {
   return Response.json({ fallback: true, reason }, { status: 200 });
 }
 
-// App knowledge for the "help" bot โ€” kept next to the real rules so it
-// never drifts from what the app actually does.
+// App knowledge for the help bot is kept next to the real rules.
+// This prevents the guide from drifting from what the app actually does.
 const APP_GUIDE = `Nan Game On app guide (ground truth):
 - Home (/) is a Strava-style community feed: post updates, give kudos (flame button), see demo community posts. "Ranking" tab = points leaderboard.
 - Calendar (/calendar): 12-month sports festival calendar grouped by season (Green/Cool/Hot) with countdowns and live race-day weather.
@@ -82,11 +82,11 @@ Rules:
 - Always reply in ${langName}, regardless of the language of the question.
 
 ${APP_GUIDE}`
-    : `You are the Nan Game On AI concierge โ€” the sports-tourism guide for Nan province, Northern Thailand.
+    : `You are the Nan Game On AI concierge - the sports-tourism guide for Nan province, Northern Thailand.
 Rules:
 - Help with Nan's sports festivals (dates, what to expect, spectating vs competing, how to prepare) and nearby destination context for a race weekend.
 - Treat the lists below as ground truth. Recommend real events and places by name. Do not invent events or places that are not listed. If dates are asked, note they may await official announcement.
-- Nan plays all year: use the season and weather context to tailor advice โ€” longboat racing and rafting shine in Green Season, trails and cycling in the cool months. On rainy days steer to indoor culture and food.
+- Nan plays all year: use the season and weather context to tailor advice - longboat racing and rafting shine in Green Season, trails and cycling in the cool months. On rainy days steer to indoor culture and food.
 - Be warm, energetic and friendly. For simple questions, answer in 2-4 sentences.
 - When the user asks for an itinerary or multi-day plan, give a clear day-by-day plan: label each day, list real event/place names grouped sensibly by area, one-line reason each, each item on its own line.
 - Always reply in ${langName}, regardless of the language of the question.
@@ -99,8 +99,8 @@ ${EVENT_CONTEXT}
 Places in Nan:
 ${PLACE_CONTEXT}`;
 
-  // Try several free models in order โ€” free endpoints are often rate-limited
-  // (HTTP 429), so fall through to the next until one returns 200.
+  // Try several free models in order; free endpoints are often rate-limited.
+  // Fall through to the next model until one returns 200.
   const DEFAULT_CHAIN = [
     "google/gemma-4-26b-a4b-it:free",
     "google/gemma-4-31b-it:free",
@@ -136,7 +136,7 @@ ${PLACE_CONTEXT}`;
         }),
       });
     } catch {
-      continue; // network hiccup โ€” try next model
+      continue; // network hiccup - try next model
     }
 
     if (upstream.ok && upstream.body) {
@@ -150,7 +150,7 @@ ${PLACE_CONTEXT}`;
         },
       });
     }
-    // 429 / other error โ’ try the next candidate
+    // 429 / other error -> try the next candidate
   }
 
   return fallback("all-models-busy");
