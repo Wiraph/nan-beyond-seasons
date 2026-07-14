@@ -38,6 +38,17 @@ export function isDemoRole(value: unknown): value is DemoRole {
   return value === "user" || value === "organizer" || value === "admin";
 }
 
+export function parseStoredDemoRole(value: string | null): DemoRole | null {
+  if (!value) return null;
+
+  try {
+    const parsed: unknown = JSON.parse(value);
+    return isDemoRole(parsed) ? parsed : null;
+  } catch {
+    return null;
+  }
+}
+
 export function isRoleRouteAllowed(role: DemoRole, pathname: string): boolean {
   const path = normalizePathname(pathname);
 

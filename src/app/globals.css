@@ -461,3 +461,112 @@ body {
     );
   }
 }
+
+/* ---------- Demo role session ---------- */
+.role-picker-page {
+  align-items: center;
+  background: linear-gradient(135deg, #fff 0%, #f6f7f9 55%, #fff3ed 100%);
+  display: flex;
+  justify-content: center;
+  min-height: 100dvh;
+  padding: 2rem 1rem;
+}
+
+.role-picker-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+}
+
+.role-picker-card {
+  align-items: flex-start;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 1rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  min-height: 16rem;
+  padding: 1.5rem;
+  text-align: left;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.role-picker-card:hover {
+  border-color: var(--color-volt);
+  box-shadow: 0 12px 28px rgba(23, 32, 43, 0.12);
+  transform: translateY(-2px);
+}
+
+.role-picker-card:focus-visible,
+.role-account-action:focus-visible {
+  outline: 3px solid var(--color-volt);
+  outline-offset: 3px;
+}
+
+.role-picker-icon {
+  color: var(--color-volt);
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.role-account-menu {
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 0.75rem;
+  min-width: 10rem;
+  overflow: hidden;
+}
+
+.role-account-action {
+  align-items: center;
+  background: transparent;
+  cursor: pointer;
+  display: inline-flex;
+  flex: 1;
+  font-size: 0.75rem;
+  font-weight: 600;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.5rem;
+}
+
+.role-account-action:hover {
+  background: color-mix(in srgb, currentColor 8%, transparent);
+}
+
+/* Shared foundation for the organizer and administrator navigation added later. */
+.role-management-nav {
+  background: var(--color-pitch-800);
+  border-bottom: 1px solid #e5e5e5;
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding: 0.5rem 1rem;
+}
+
+.role-management-nav a {
+  align-items: center;
+  border-radius: 0.5rem;
+  color: var(--color-steel);
+  display: inline-flex;
+  min-height: 44px;
+  padding: 0.5rem 0.875rem;
+  white-space: nowrap;
+}
+
+.role-management-nav a:hover,
+.role-management-nav a[aria-current="page"] {
+  background: #fff3ed;
+  color: var(--color-volt);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .role-picker-card {
+    transition: none;
+  }
+
+  .role-picker-card:hover {
+    transform: none;
+  }
+}

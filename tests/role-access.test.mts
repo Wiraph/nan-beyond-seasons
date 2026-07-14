@@ -7,6 +7,7 @@ import {
   getRoleRouteRedirect,
   isDemoRole,
   isRoleRouteAllowed,
+  parseStoredDemoRole,
 } from "../src/lib/role-access.js";
 
 test("recognizes only the three demo roles and exposes their homes", () => {
@@ -57,4 +58,11 @@ test("redirects anonymous visitors to login and wrong roles to their own home", 
   assert.equal(getRoleRouteRedirect("organizer", "/calendar"), "/organizer");
   assert.equal(getRoleRouteRedirect("admin", "/organizer/events"), "/admin");
   assert.equal(getRoleRouteRedirect("admin", "/admin/events"), null);
+});
+
+test("treats malformed or unsupported stored roles as anonymous", () => {
+  assert.equal(parseStoredDemoRole(null), null);
+  assert.equal(parseStoredDemoRole("not-json"), null);
+  assert.equal(parseStoredDemoRole(JSON.stringify("visitor")), null);
+  assert.equal(parseStoredDemoRole(JSON.stringify("organizer")), "organizer");
 });
