@@ -1,8 +1,7 @@
-import { places } from "./data";
-import { haversineKm } from "./planner";
+import { destinations } from "./destination-reference";
 import { isOutdoorPlace } from "./weather";
 import type { SportEvent } from "./sports";
-import type { Place } from "./types";
+import type { Destination } from "./types";
 
 export type RacePlanStop = {
   time: string;
@@ -21,10 +20,17 @@ export type RacePlan = {
   tips: string[];
 };
 
+function haversineKm(a: { lat: number; lon: number }, b: { lat: number; lon: number }) {
+  const dLat = ((b.lat - a.lat) * Math.PI) / 180;
+  const dLon = ((b.lon - a.lon) * Math.PI) / 180;
+  const h = Math.sin(dLat / 2) ** 2 + Math.cos((a.lat * Math.PI) / 180) * Math.cos((b.lat * Math.PI) / 180) * Math.sin(dLon / 2) ** 2;
+  return 2 * 6371 * Math.asin(Math.min(1, Math.sqrt(h)));
+}
+
 /** Places nearest to the event venue, mixed craft types, for AI context
  *  and the rule-based fallback. */
-export function placesNearVenue(event: SportEvent, max = 8): (Place & { km: number })[] {
-  return places
+export function placesNearVenue(event: SportEvent, max = 8): (Destination & { km: number })[] {
+  return destinations
     .map((p) => ({ ...p, km: haversineKm(event.venue, p) }))
     .sort((a, b) => a.km - b.km)
     .slice(0, max);
@@ -40,7 +46,7 @@ export function fallbackRacePlan(
 ): RacePlan {
   const th = lang === "th";
   const nearby = placesNearVenue(event, 8);
-  const pick = (pred: (p: Place & { km: number }) => boolean, n: number) =>
+  const pick = (pred: (p: Destination & { km: number }) => boolean, n: number) =>
     nearby.filter(pred).slice(0, n);
 
   const day1After = pick((p) => !isOutdoorPlace(p), 2);
@@ -62,7 +68,7 @@ export function fallbackRacePlan(
           },
           ...day1After.map((p, i) => ({
             time: i === 0 ? "14:30" : "17:00",
-            title: th ? p.name.th : p.name.en,
+            title: th ? p.name.th ?? p.name.en : p.name.en,
             placeId: p.id,
             note: th
               ? `ห่างจากงาน ${p.km.toFixed(1)} กม.`
@@ -74,9 +80,9 @@ export function fallbackRacePlan(
         label: th ? "วันเที่ยวต่อ" : "Day after",
         stops: day2.map((p, i) => ({
           time: ["09:00", "11:30", "14:30"][i] ?? "16:00",
-          title: th ? p.name.th : p.name.en,
+          title: th ? p.name.th ?? p.name.en : p.name.en,
           placeId: p.id,
-          note: th ? p.summary.th : p.summary.en,
+          note: th ? p.summary.th ?? p.summary.en : p.summary.en,
         })),
       },
     ],

@@ -1,5 +1,5 @@
 import type { NextRequest } from "next/server";
-import { places } from "@/lib/data";
+import { destinations } from "@/lib/destination-reference";
 import { sportEvents } from "@/lib/sports";
 import { buildWeatherContext, getNanForecast } from "@/lib/weather";
 
@@ -17,11 +17,11 @@ const LANG_NAME: Record<string, string> = {
   my: "Burmese",
 };
 
-// Compact ground-truth list of Nan places injected into the system prompt.
-const PLACE_CONTEXT = places
+// Compact local destination reference; no tourist content service is retained.
+const PLACE_CONTEXT = destinations
   .map(
     (p) =>
-      `- ${p.name.en} (${p.name.th}) | ${p.district} | ${p.craftType} | ${p.summary.en}`
+      `- ${p.name.en} | ${p.district} | ${p.type} | ${p.summary.en}`
   )
   .join("\n");
 
@@ -50,7 +50,7 @@ const APP_GUIDE = `Nan Game On app guide (ground truth):
 - Badges (7): "Game On!" first check-in; "Green Season Raider" check in at a green-season event; "Cool Season Chaser" cool season; "Hot Season Hero" hot season; "Longboat Superfan" any longboat race; "Nan All-Season Athlete" all 3 seasons; "Nan Full House" every event on the calendar.
 - Points can be redeemed for discounts with participating local businesses (prototype).
 - No login needed — identity is anonymous per browser.
-- Explore (/explore): general Nan travel content and AI trip tools.`;
+`;
 
 export async function POST(req: NextRequest) {
   const key = process.env.OPENROUTER_API_KEY;
@@ -84,7 +84,7 @@ Rules:
 ${APP_GUIDE}`
     : `You are the Nan Game On AI concierge — the sports-tourism guide for Nan province, Northern Thailand.
 Rules:
-- Help with Nan's sports festivals (dates, what to expect, spectating vs competing, how to prepare) and travelling in Nan (places, food, stays, routes, culture).
+- Help with Nan's sports festivals (dates, what to expect, spectating vs competing, how to prepare) and nearby destination context for a race weekend.
 - Treat the lists below as ground truth. Recommend real events and places by name. Do not invent events or places that are not listed. If dates are asked, note they may await official announcement.
 - Nan plays all year: use the season and weather context to tailor advice — longboat racing and rafting shine in Green Season, trails and cycling in the cool months. On rainy days steer to indoor culture and food.
 - Be warm, energetic and friendly. For simple questions, answer in 2-4 sentences.
@@ -125,7 +125,7 @@ ${PLACE_CONTEXT}`;
           "Content-Type": "application/json",
           "HTTP-Referer":
             process.env.OPENROUTER_SITE_URL ?? "http://localhost:3000",
-          "X-Title": process.env.OPENROUTER_APP_NAME ?? "Nan Connect",
+          "X-Title": process.env.OPENROUTER_APP_NAME ?? "Nan Game On",
         },
         body: JSON.stringify({
           model,

@@ -212,7 +212,7 @@ export default function EventPage({
                 <i className="ti ti-route text-volt" aria-hidden /> {t("sport.tripAround")}
               </h2>
               <span className="rounded bg-volt/12 px-2.5 py-1 text-[11px] font-medium text-volt">
-                {planState === "ai" ? t("wellness.aiPicked") : t("plan.aiFallback")}
+                {planState === "ai" ? t("sport.aiPlan") : t("plan.aiFallback")}
               </span>
             </div>
 
@@ -225,13 +225,7 @@ export default function EventPage({
                       <div key={si} className="flex gap-3">
                         <span className="sport-num w-14 shrink-0 pt-0.5 text-sm text-volt">{s.time}</span>
                         <div className="min-w-0 flex-1 border-l border-black/10 pl-3">
-                          {s.placeId ? (
-                            <Link href={`/place/${s.placeId}`} className="font-semibold text-frost hover:text-volt hover:underline">
-                              {s.title}
-                            </Link>
-                          ) : (
-                            <div className="font-semibold text-frost">{s.title}</div>
-                          )}
+                          <div className="font-semibold text-frost">{s.title}</div>
                           {s.note && <p className="mt-0.5 text-[12px] text-steel">{s.note}</p>}
                         </div>
                       </div>

@@ -1,11 +1,7 @@
 import type { Metadata } from "next";
 import { Noto_Sans_Thai, Chonburi } from "next/font/google";
-import "leaflet/dist/leaflet.css";
 import "./globals.css";
 import { I18nProvider } from "@/i18n/I18nProvider";
-import { DataStoreProvider } from "@/lib/DataStore";
-import { PlanStoreProvider } from "@/lib/PlanStore";
-import { PostStoreProvider } from "@/lib/PostStore";
 import { PassportProvider } from "@/lib/PassportStore";
 import { ProfileProvider } from "@/lib/ProfileStore";
 import { FeedProvider } from "@/lib/FeedStore";
@@ -44,17 +40,11 @@ export default function RootLayout({
       <body className="min-h-dvh antialiased">
         <I18nProvider>
           <RoleProvider>
-            <DataStoreProvider>
-              <PlanStoreProvider>
-                <PostStoreProvider>
-                  <PassportProvider>
-                    <ProfileProvider>
-                      <FeedProvider>{children}</FeedProvider>
-                    </ProfileProvider>
-                  </PassportProvider>
-                </PostStoreProvider>
-              </PlanStoreProvider>
-            </DataStoreProvider>
+            <PassportProvider>
+              <ProfileProvider>
+                <FeedProvider>{children}</FeedProvider>
+              </ProfileProvider>
+            </PassportProvider>
           </RoleProvider>
         </I18nProvider>
       </body>
