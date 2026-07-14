@@ -119,7 +119,8 @@
       "en": "600 years of naga boats across 5 venues"
     },
     "outdoor": true,
-    "verified": false
+    "verified": false,
+    "image": "/events/boat-race-festival.png"
   },
   {
     "id": "kwang-fighting-festival",
@@ -159,7 +160,8 @@
       "en": "Lanna folk sport: 2-, 3- and 5-horn classes"
     },
     "outdoor": false,
-    "verified": false
+    "verified": false,
+    "image": "/events/kwang-fighting-festival.png"
   },
   {
     "id": "nan-mountain-trail",
@@ -199,7 +201,8 @@
       "en": "100.8 km / ~7,000 m gain — Thailand's toughest"
     },
     "outdoor": true,
-    "verified": false
+    "verified": false,
+    "image": "/events/nan-mountain-trail.png"
   },
   {
     "id": "amazing-nan-marathon",
@@ -240,7 +243,8 @@
       "en": "Old-town course, 4 distances 5–42 km"
     },
     "outdoor": true,
-    "verified": false
+    "verified": false,
+    "image": "/events/amazing-nan-marathon.png"
   },
   {
     "id": "sepak-takraw-t20",
@@ -281,7 +285,8 @@
       "en": "Nan Governor's Cup on the line"
     },
     "outdoor": false,
-    "verified": false
+    "verified": false,
+    "image": "/events/sepak-takraw-t20.png"
   },
   {
     "id": "golden-orange-games",
@@ -321,7 +326,8 @@
       "en": "Land boats + crossbow at the Golden Orange fair"
     },
     "outdoor": true,
-    "verified": false
+    "verified": false,
+    "image": "/events/golden-orange-games.png"
   },
   {
     "id": "rak-pa-nan-trail",
@@ -361,7 +367,8 @@
       "en": "Run for Nan's forests — 3 distances"
     },
     "outdoor": true,
-    "verified": false
+    "verified": false,
+    "image": "/events/rak-pa-nan-trail.png"
   },
   {
     "id": "doi-phu-kha-cycling",
@@ -401,7 +408,8 @@
       "en": "39 km climb to Viewpoint 1715"
     },
     "outdoor": true,
-    "verified": false
+    "verified": false,
+    "image": "/events/doi-phu-kha-cycling.png"
   },
   {
     "id": "nan-open-woodball",
@@ -441,7 +449,8 @@
       "en": "All-ages sport with a strong seniors' field"
     },
     "outdoor": true,
-    "verified": false
+    "verified": false,
+    "image": "/events/nan-open-woodball.png"
   },
   {
     "id": "walk-run-bike-pua",
@@ -481,7 +490,8 @@
       "en": "3 run distances + 39 km road ride"
     },
     "outdoor": true,
-    "verified": false
+    "verified": false,
+    "image": "/events/walk-run-bike-pua.png"
   },
   {
     "id": "klong-pu-ja-contest",
@@ -521,7 +531,8 @@
       "en": "Lanna martial drumming showdown"
     },
     "outdoor": false,
-    "verified": false
+    "verified": false,
+    "image": "/events/klong-pu-ja-contest.png"
   },
   {
     "id": "songkran-folk-games",
@@ -562,7 +573,8 @@
       "en": "Sand pagodas · tug-of-war · foam party"
     },
     "outdoor": true,
-    "verified": false
+    "verified": false,
+    "image": "/events/songkran-folk-games.png"
   },
   {
     "id": "muterun-nan",
@@ -602,7 +614,8 @@
       "en": "Faith-meets-fitness run, 5/10 km"
     },
     "outdoor": true,
-    "verified": false
+    "verified": false,
+    "image": "/events/muterun-nan.png"
   },
   {
     "id": "wa-lower-rafting",
@@ -642,6 +655,7 @@
       "en": "12 km family run, open all year"
     },
     "outdoor": true,
-    "verified": false
+    "verified": false,
+    "image": "/events/wa-lower-rafting.png"
   }
 ]
