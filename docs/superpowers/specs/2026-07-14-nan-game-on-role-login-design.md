@@ -58,6 +58,21 @@ introduce a real user-account backend in this change.
   Delete obsolete code rather than leaving hidden routes or unused product
   branding.
 
+## Nan Connect Removal Completeness
+
+- Delete, rather than redirect or hide, the Nan Connect route group and its
+  route-specific components, data stores, APIs, mock AI matching, and static
+  data when they have no Nan Game On consumer.
+- Remove shared-looking code only when it is Nan Connect-specific. Keep generic
+  primitives and the sport event-image/Supabase code that Nan Game On still
+  uses.
+- Replace or remove references from headers, mobile navigation, footers, role
+  guards, route maps, TypeScript imports, and `package.json` dependencies when
+  they become unused.
+- Before delivery, search the source tree for `Nan Connect`, `explore`,
+  `wellness`, `DataStore`, and removed route imports; each remaining result
+  must be a deliberate Nan Game On usage or be deleted.
+
 ## Data and Security Boundaries
 
 - Existing Supabase event image storage remains unchanged.
@@ -85,6 +100,8 @@ introduce a real user-account backend in this change.
 - Run `npm test` and `npm run build`.
 - Check desktop and narrow mobile layouts for the login page, each role menu,
   footer, and the absence of Nan Connect labels/routes.
+- Confirm deleted Nan Connect routes return the normal not-found page and
+  TypeScript reports no import references to removed modules.
 
 ## Out of Scope
 
