@@ -67,6 +67,19 @@ npm run dev                  # → http://localhost:3000
 หน้าแรก (ฟีด) → แท็บอันดับ → ปฏิทิน → เข้างาน "ฤดูล่องแก่งลำน้ำว้า" → กด "จัดทริปรอบงานนี้" (AI) →
 "เช็คอินที่งาน" → ดูแบดจ์ใน Passport → กลับฟีดเห็นโพสต์ตัวเอง → ถาม AI ที่แท็บ "ถาม AI"
 
+## แหล่งข้อมูล (Data Sources)
+
+ข้อมูลสถานที่ · เทศกาลกีฬา · บริบทท่องเที่ยวน่าน อ้างอิง/ตรวจสอบจากแหล่งทางการ:
+
+- **ททท. จังหวัดน่าน** — [หน้าจังหวัดน่าน](https://thai.tourismthailand.org/Destinations/Provinces/น่าน/108) · [บทความ 5 Must Do In Nan](https://thai.tourismthailand.org/Articles/5-must-do-in-nan)
+- **ททท. สำนักงานน่าน (TAT Nan)** — [facebook.com/tat.nan.office](https://www.facebook.com/tat.nan.office/)
+- **สำนักงานการท่องเที่ยวและกีฬาจังหวัดน่าน** — [nan.mots.go.th](https://nan.mots.go.th/)
+- **TAT Data API** — [tatdataapi.io](https://tatdataapi.io/) (ฐานข้อมูลนักพัฒนา ททท. — attractions/hotels/routes)
+- **Open Government Data** ([gdcatalog.go.th](https://gdcatalog.go.th/)) — [สรุปสถานการณ์การท่องเที่ยวน่าน](https://gdcatalog.go.th/dataset/gdpublish-dataset-40-0111) · [ปฏิทินการท่องเที่ยวประจำปีน่าน](https://gdcatalog.go.th/dataset/gdpublish-40-021)
+- **เทศกาลกีฬาน่าน 16 งาน** รวบรวมจากหน่วยงานท่องเที่ยว/กีฬาจังหวัดน่าน
+
+> เนื้อหา/ภาพที่มีลิขสิทธิ์จากแหล่งข้างต้นใช้เพื่อ **อ้างอิงและตรวจสอบข้อเท็จจริงเท่านั้น** ไม่ได้นำมาแสดงซ้ำในแอป · ภาพ hero บางส่วนเป็นภาพที่สร้างด้วย AI และผ่านการตรวจแล้ว (Responsible AI)
+
 ## หมายเหตุความปลอดภัย / ข้อจำกัด prototype
 
 - ไม่มี secret ใน repo — ทุก key อยู่ใน env variables (`.env*` ถูก gitignore)
