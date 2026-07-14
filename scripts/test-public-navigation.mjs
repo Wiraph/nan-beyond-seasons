@@ -27,7 +27,9 @@ try {
     "--skipLibCheck",
     "tests/public-navigation.test.mts",
     "tests/role-access.test.mts",
+    "tests/management-workspaces.test.mts",
     "src/lib/public-navigation.ts",
+    "src/lib/management-events.ts",
   ]);
 
   if (!process.exitCode) {
@@ -35,6 +37,7 @@ try {
       "--test",
       `${outputDir}/tests/public-navigation.test.mjs`,
       `${outputDir}/tests/role-access.test.mjs`,
+      `${outputDir}/tests/management-workspaces.test.mjs`,
     ]);
   }
 } finally {
