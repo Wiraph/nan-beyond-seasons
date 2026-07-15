@@ -274,9 +274,7 @@ function ChatInner() {
               </div>
             ) : (
               <AiBubble key={i}>
-                <p className="whitespace-pre-wrap break-words text-sm leading-relaxed text-frost">
-                  {m.text}
-                </p>
+                <FormattedMessage text={m.text} />
                 {m.events.length > 0 && (
                   <div className="mt-2 flex flex-col gap-2">
                     {m.events.map((e) => (
@@ -333,6 +331,62 @@ function ChatInner() {
       </main>
     </>
   );
+}
+
+/** Inline `**bold**` → <strong>, everything else as-is. */
+function renderInline(text: string, keyBase: string) {
+  return text.split(/(\*\*[^*]+\*\*)/g).map((part, i) =>
+    part.startsWith("**") && part.endsWith("**") ? (
+      <strong key={`${keyBase}-${i}`} className="font-semibold text-frost">
+        {part.slice(2, -2)}
+      </strong>
+    ) : (
+      <span key={`${keyBase}-${i}`}>{part}</span>
+    )
+  );
+}
+
+/** Lightweight renderer for the model's markdown: paragraphs, `*`/`-` bullet
+ *  lists, and inline bold. Avoids a heavy markdown dependency. */
+function FormattedMessage({ text }: { text: string }) {
+  const lines = text.split("\n");
+  const blocks: React.ReactNode[] = [];
+  let bullets: string[] = [];
+
+  const flushBullets = (key: string) => {
+    if (!bullets.length) return;
+    const items = bullets;
+    bullets = [];
+    blocks.push(
+      <ul key={key} className="my-1.5 space-y-1">
+        {items.map((b, i) => (
+          <li key={i} className="flex gap-2">
+            <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-volt/70" aria-hidden />
+            <span className="min-w-0 flex-1">{renderInline(b, `${key}-${i}`)}</span>
+          </li>
+        ))}
+      </ul>
+    );
+  };
+
+  lines.forEach((raw, i) => {
+    const line = raw.trim();
+    const bullet = line.match(/^[*-]\s+(.*)$/);
+    if (bullet) {
+      bullets.push(bullet[1]);
+      return;
+    }
+    flushBullets(`ul-${i}`);
+    if (!line) return;
+    blocks.push(
+      <p key={`p-${i}`} className="break-words [&:not(:first-child)]:mt-2">
+        {renderInline(line, `p-${i}`)}
+      </p>
+    );
+  });
+  flushBullets("ul-end");
+
+  return <div className="text-sm leading-relaxed text-frost">{blocks}</div>;
 }
 
 function AiBubble({ children }: { children: React.ReactNode }) {

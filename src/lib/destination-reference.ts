@@ -5,19 +5,22 @@ import type { Destination } from "@/lib/types";
 // for Nan Game On chat cards and Racecation recommendations only.
 export const destinations = destinationJson as Destination[];
 
-const DEFAULT_DESTINATIONS = ["wat-phumin", "kad-khuang-walking-street", "doi-phu-kha"];
-
-export function matchDestinations(query: string): Destination[] {
-  const words = query.toLowerCase().match(/[a-z0-9]+/g) ?? [];
-  const matches = destinations.filter((destination) =>
-    words.some((word) =>
-      `${destination.name.en} ${destination.district} ${destination.type} ${destination.summary.en}`
-        .toLowerCase()
-        .includes(word)
+/** Attach a place card only when the destination is actually named in the text
+ *  (the user question + the AI answer), matching the Thai or English name as a
+ *  whole. This keeps the cards to things that were really mentioned instead of
+ *  loosely matching a shared word like "Nan". */
+export function matchDestinations(query: string, max = 4): Destination[] {
+  // Strip whitespace so spacing differences (e.g. "แห่งชาติ น่าน" vs
+  // "แห่งชาติน่าน") still match the full place name.
+  const hay = query.toLowerCase().replace(/\s+/g, "");
+  return destinations
+    .filter((destination) =>
+      [destination.name.th, destination.name.en].some((name) => {
+        const needle = name?.toLowerCase().replace(/\s+/g, "");
+        return needle && hay.includes(needle);
+      })
     )
-  );
-  const selected = matches.length ? matches : destinations.filter((destination) => DEFAULT_DESTINATIONS.includes(destination.id));
-  return selected.slice(0, 3);
+    .slice(0, max);
 }
 
 export function fallbackSportReply(lang: "th" | "en") {
